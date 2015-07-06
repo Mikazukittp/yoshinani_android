@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Yoshinani</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="btn_label">クリック!!</string>
+
+    <string name="sub_fragment_title">This is SubView!!</string>
+    <string name="btn_clicked">Button Clicked!!</string>
+    <string name="goToMain">メイン画面へ遷移</string>
+
+    <string name="menu_main">メイン</string>
+    <string name="menu_sub">サブ</string>
+    <string name="menu_setting">設定</string>
+    <string name="menu_about">このアプリについて</string>
+
+</resources>
