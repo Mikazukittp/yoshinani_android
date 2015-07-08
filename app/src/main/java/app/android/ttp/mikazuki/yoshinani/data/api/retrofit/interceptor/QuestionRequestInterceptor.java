@@ -1,4 +1,4 @@
-package app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit.interceptor;
+package app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor;
 
 import retrofit.RequestInterceptor;
 

@@ -1,4 +1,4 @@
-package app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit.repository;
+package app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository;
 
 import android.util.Log;
 
@@ -7,9 +7,9 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
-import app.android.ttp.mikazuki.yoshinani.data.repository.api.ApiUtil;
-import app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit.RetrofitQuestionService;
-import app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit.interceptor.QuestionRequestInterceptor;
+import app.android.ttp.mikazuki.yoshinani.data.api.ApiUtil;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitQuestionService;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Question;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.QuestionRepository;
@@ -45,8 +45,8 @@ public class RetrofitQuestionRepository implements QuestionRepository {
     public void getAll(final BaseCallback<List<Question>> cb) {
         API.getAllQuestions(new Callback<List<Question>>() {
             @Override
-            public void success(List<Question> plans, Response response) {
-                cb.onSuccess(plans);
+            public void success(List<Question> questions, Response response) {
+                cb.onSuccess(questions);
             }
 
             @Override
