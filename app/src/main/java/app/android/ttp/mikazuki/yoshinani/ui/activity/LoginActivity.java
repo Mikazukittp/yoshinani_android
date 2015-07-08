@@ -1,6 +1,8 @@
 package app.android.ttp.mikazuki.yoshinani.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -78,6 +80,17 @@ public class LoginActivity extends AppCompatActivity implements ToolBarListener,
             @Override
             public void onSuccess(Token token) {
                 Log.e("!!!!!", "success!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                SharedPreferences sp = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("token", token.getToken());
+                editor.apply();
+
+                SharedPreferences sp2 = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+                String token2 = sp2.getString("token", "");
+                String accessToken = "Bearer " + token2;
+                System.out.println(accessToken);
+
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
             }

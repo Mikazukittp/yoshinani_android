@@ -1,5 +1,6 @@
 package app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -42,8 +43,12 @@ public class RetrofitQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public void getAll(final BaseCallback<List<Question>> cb) {
-        API.getAllQuestions(new Callback<List<Question>>() {
+    public void getAll(BaseCallback<List<Question>> cb) {
+
+    }
+
+    public void getAll(Context context, final BaseCallback<List<Question>> cb) {
+        API.getAllQuestions(context, new Callback<List<Question>>() {
             @Override
             public void success(List<Question> questions, Response response) {
                 cb.onSuccess(questions);
