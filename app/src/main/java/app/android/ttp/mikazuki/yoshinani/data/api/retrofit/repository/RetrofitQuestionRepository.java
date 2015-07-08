@@ -27,15 +27,28 @@ public class RetrofitQuestionRepository implements QuestionRepository {
 
     final private String TAG = "QuestionRepository";
 
-    Gson GSON = new GsonBuilder().create();
+    private Context mContext = null;
+    RetrofitQuestionService mAPI;
 
-    RestAdapter REST_ADAPTER = new RestAdapter.Builder()
-            .setEndpoint(ApiUtil.API_URL)
-            .setConverter(new GsonConverter(GSON))
-            .setRequestInterceptor(new QuestionRequestInterceptor())
-            .build();
+    public RetrofitQuestionRepository() {
+        buildAPI();
+    }
 
-    final RetrofitQuestionService API = REST_ADAPTER.create(RetrofitQuestionService.class);
+    public RetrofitQuestionRepository(Context context) {
+        this.mContext = context;
+        buildAPI();
+    }
+
+    private void buildAPI() {
+        Gson GSON = new GsonBuilder().create();
+
+        RestAdapter REST_ADAPTER = new RestAdapter.Builder()
+                .setEndpoint(ApiUtil.API_URL)
+                .setConverter(new GsonConverter(GSON))
+                .setRequestInterceptor(new QuestionRequestInterceptor(mContext))
+                .build();
+        mAPI = REST_ADAPTER.create(RetrofitQuestionService.class);
+    }
 
     @Override
     public void get(int id, BaseCallback<Question> cb) {
@@ -43,12 +56,8 @@ public class RetrofitQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public void getAll(BaseCallback<List<Question>> cb) {
-
-    }
-
-    public void getAll(Context context, final BaseCallback<List<Question>> cb) {
-        API.getAllQuestions(context, new Callback<List<Question>>() {
+    public void getAll(final BaseCallback<List<Question>> cb) {
+        mAPI.getAllQuestions(new Callback<List<Question>>() {
             @Override
             public void success(List<Question> questions, Response response) {
                 cb.onSuccess(questions);

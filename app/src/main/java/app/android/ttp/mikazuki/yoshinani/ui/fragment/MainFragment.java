@@ -1,7 +1,6 @@
 package app.android.ttp.mikazuki.yoshinani.ui.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +17,6 @@ import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitQ
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Question;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.QuestionRepository;
-import app.android.ttp.mikazuki.yoshinani.ui.activity.MainActivity;
 import app.android.ttp.mikazuki.yoshinani.ui.adapter.QuestionListAdapter;
 import app.android.ttp.mikazuki.yoshinani.ui.listener.ToolBarListener;
 import butterknife.Bind;
@@ -56,7 +54,7 @@ public class MainFragment extends Fragment {
                 mToolbarListener.onMenuClicked();
             }
         });
-        mQuestionRepository = new RetrofitQuestionRepository();
+        mQuestionRepository = new RetrofitQuestionRepository(getActivity().getApplicationContext());
 
         setListData();
 
@@ -64,7 +62,7 @@ public class MainFragment extends Fragment {
     }
 
     private void setListData() {
-        mQuestionRepository.getAll(getActivity().getApplicationContext(), new BaseCallback<List<Question>>() {
+        mQuestionRepository.getAll(new BaseCallback<List<Question>>() {
             @Override
             public void onSuccess(List<Question> questions) {
                 QuestionListAdapter adapter = new QuestionListAdapter(getActivity().getApplicationContext(), 0, questions);

@@ -10,16 +10,20 @@ import retrofit.RequestInterceptor;
 public class QuestionRequestInterceptor implements RequestInterceptor  {
 
     //このcontentに値をいれたいのですが、、、
-    Context context;
+    Context mContext;
 
     public QuestionRequestInterceptor() {
+    }
+
+    public QuestionRequestInterceptor(Context context) {
+        this.mContext = context;
     }
 
     @Override
     public void intercept(RequestInterceptor.RequestFacade request) {
         // do something
 
-        SharedPreferences sp = context.getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+        SharedPreferences sp = mContext.getSharedPreferences("LocalData", Context.MODE_PRIVATE);
         String token = sp.getString("token", "");
         String accessToken = "Bearer " + token;
         System.out.println(accessToken);
