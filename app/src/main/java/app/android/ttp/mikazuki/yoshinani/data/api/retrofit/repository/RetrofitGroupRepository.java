@@ -29,7 +29,6 @@ public class RetrofitGroupRepository implements GroupRepository {
     final private String TAG = "GroupRepository";
 
     private Context mContext = null;
-    private String groupId = "559eaa98d430387816a640b1";
     RetrofitGroupService mAPI;
 
     public RetrofitGroupRepository(Context context) {
@@ -49,7 +48,7 @@ public class RetrofitGroupRepository implements GroupRepository {
     }
 
     public void getOverView(final BaseCallback<Group> cb) {
-        mAPI.getOverView(groupId, new Callback<Group>() {
+        mAPI.getOverView(ApiUtil.GROUP_ID, new Callback<Group>() {
             @Override
             public void success(Group group, Response response) {
                 cb.onSuccess(group);

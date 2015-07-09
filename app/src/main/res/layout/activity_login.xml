@@ -38,7 +38,7 @@
                 android:layout_alignParentTop="false"
                 android:layout_centerHorizontal="true">
 
-                <EditText
+                <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 android:layout_above="@+id/loginBtn"
                 android:layout_centerHorizontal="true">
 
-                <EditText
+                <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

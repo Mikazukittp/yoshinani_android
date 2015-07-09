@@ -15,9 +15,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by haijimakazuki on 15/07/07.
+ * Created by ishibetatsuya on 15/07/10.
  */
 public class PaymentListAdapter extends ArrayAdapter<Payment> {
+
     private LayoutInflater layoutInflater;
 
     public PaymentListAdapter(Context c, int id, List<Payment> payments) {
@@ -40,23 +41,18 @@ public class PaymentListAdapter extends ArrayAdapter<Payment> {
         }
 
         Payment payment = getItem(position);
-        holder.question.setText(payment.getAmount());
-        StringBuilder sb = new StringBuilder();
-//        for (Choice choice : question.getChoices()) {
-//            sb.append(choice.getChoice());
-//            sb.append("(");
-//            sb.append(choice.getVotes());
-//            sb.append(") ");
-//        }
-//        holder.choices.setText(new String(sb));
+        holder.name.setText(payment.getEvent() + ": " + payment.getDescription() + "(" + payment.getPaidUser().getName() + ")");
+        holder.price.setText(payment.getAmount() + "");
+
+
         return convertView;
     }
 
     static class ViewHolder {
-        @Bind(R.id.question)
-        TextView question;
-        @Bind(R.id.choices)
-        TextView choices;
+        @Bind(R.id.name)
+        TextView name;
+        @Bind(R.id.price)
+        TextView price;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -1,5 +1,7 @@
 package app.android.ttp.mikazuki.yoshinani.domain.entity;
 
+import java.util.List;
+
 /**
  * Created by haijimakazuki on 15/07/09.
  */
@@ -8,23 +10,23 @@ public class Payment {
     private String _id;
     private int amount;
     private String event;
-    private String descrption;
+    private String description;
     private String date;
     private User paidUser;
     private String paidUserId;
-    private User[] participants;
-    private String[] participantsIds;
+    private List<User> participants;
+    private List<String> participantsIds;
     private boolean isDelete;
     private int _v;
 
     public Payment() {
     }
 
-    public Payment(String _id, int amount, String event, String descrption, String date, User paidUser, String paidUserId, User[] participants, String[] participantsIds, boolean isDelete, int _v) {
+    public Payment(String _id, int amount, String event, String description, String date, User paidUser, String paidUserId, List<User> participants, List<String> participantsIds, boolean isDelete, int _v) {
         this._id = _id;
         this.amount = amount;
         this.event = event;
-        this.descrption = descrption;
+        this.description = description;
         this.date = date;
         this.paidUser = paidUser;
         this.paidUserId = paidUserId;
@@ -58,12 +60,12 @@ public class Payment {
         this.event = event;
     }
 
-    public String getDescrption() {
-        return descrption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrption(String descrption) {
-        this.descrption = descrption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDate() {
@@ -90,19 +92,19 @@ public class Payment {
         this.paidUserId = paidUserId;
     }
 
-    public User[] getParticipants() {
+    public List<User> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(User[] participants) {
+    public void setParticipants(List<User> participants) {
         this.participants = participants;
     }
 
-    public String[] getParticipantsIds() {
+    public List<String> getParticipantsIds() {
         return participantsIds;
     }
 
-    public void setParticipantsIds(String[] participantsIds) {
+    public void setParticipantsIds(List<String> participantsIds) {
         this.participantsIds = participantsIds;
     }
 
