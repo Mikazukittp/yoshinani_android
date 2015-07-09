@@ -49,26 +49,6 @@ public class RetrofitPaymentRepository implements PaymentRepository {
         mAPI = REST_ADAPTER.create(RetrofitPaymentService.class);
     }
 
-    public void getOverView(final BaseCallback<List<Payment>> cb) {
-        mAPI.getOverView(new Callback<List<Payment>>() {
-            @Override
-            public void success(List<Payment> payments, Response response) {
-                cb.onSuccess(payments);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (error.getResponse() != null) {
-                    Log.e(TAG, error.getResponse().getStatus() + " " + error.getMessage());
-                } else {
-                    Log.e(TAG, error.getMessage());
-                }
-                cb.onFailure();
-            }
-        });
-
-    }
-
     @Override
     public void get(int id, BaseCallback<Payment> cb) {
 

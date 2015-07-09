@@ -2,12 +2,13 @@ package app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import retrofit.RequestInterceptor;
 
 /**
  * Created by haijimakazuki on 15/07/07.
  */
-public class QuestionRequestInterceptor implements RequestInterceptor  {
+public class QuestionRequestInterceptor implements RequestInterceptor {
 
     //このcontentに値をいれたいのですが、、、
     Context mContext;

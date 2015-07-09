@@ -13,6 +13,7 @@ import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitGroupService
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitPaymentService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.BaseRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
+import app.android.ttp.mikazuki.yoshinani.domain.entity.Group;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
@@ -51,11 +52,11 @@ public class RetrofitGroupRepository implements GroupRepository {
         mAPI = REST_ADAPTER.create(RetrofitGroupService.class);
     }
 
-    public void getOverView(final BaseCallback<List<User>> cb) {
-        mAPI.getOverView(groupId, new Callback<List<User>>() {
+    public void getOverView(final BaseCallback<Group> cb) {
+        mAPI.getOverView(groupId, new Callback<Group>() {
             @Override
-            public void success(List<User> users, Response response) {
-                cb.onSuccess(users);
+            public void success(Group group, Response response) {
+                cb.onSuccess(group);
             }
 
             @Override

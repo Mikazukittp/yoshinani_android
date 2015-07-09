@@ -8,7 +8,7 @@ import retrofit.RequestInterceptor;
 /**
  * Created by haijimakazuki on 15/07/07.
  */
-public class BaseRequestInterceptor implements RequestInterceptor  {
+public class BaseRequestInterceptor implements RequestInterceptor {
 
     Context mContext;
 

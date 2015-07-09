@@ -12,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.Arrays;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitGroupRepository;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitPaymentRepository;
+import app.android.ttp.mikazuki.yoshinani.domain.entity.Group;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
@@ -63,15 +65,12 @@ public class SubFragment extends Fragment {
     }
 
     public void setOverView() {
-        mGroupRepository.getOverView(new BaseCallback<List<User>>() {
+        mGroupRepository.getOverView(new BaseCallback<Group>() {
 
             @Override
-            public void onSuccess(List<User> users) {
+            public void onSuccess(Group group) {
+                List<User> users = group.getMembers();
                 UserListAdapter adapter = new UserListAdapter(getActivity().getApplicationContext(), 0, users);
-                for (User user: users) {
-                    Log.e("!!!!!", user.getName());
-                }
-
                 overViewList.setAdapter(adapter);
             }
 

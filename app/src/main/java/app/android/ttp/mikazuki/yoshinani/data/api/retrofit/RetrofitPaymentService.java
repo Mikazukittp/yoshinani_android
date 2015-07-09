@@ -28,8 +28,5 @@ public interface RetrofitPaymentService {
     @GET(PATH_PAYMENT_WITH_ID)
     public void getPaymentById(@Path("id") String payment_id, Callback<Payment> cb);
 
-    @FormUrlEncoded
-    @GET(PATH_PAYMENTS_OVERVIEW)
-    public void getOverView(Callback<List<Payment>> cb);
 
 }
