@@ -7,20 +7,18 @@ import retrofit.Callback;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Path;
-import retrofit.http.Query;
 
 /**
  * Created by haijimakazuki on 15/07/09.
  */
 public interface RetrofitPaymentService {
 
-    static final String PATH_PAYMENTS = "/payments";
-    static final String PATH_PAYMENT_WITH_ID = "/payments/{id}";
+    static final String PATH_PAYMENTS = "/api/payments";
+    static final String PATH_PAYMENT_WITH_ID = "/api/payments/{id}";
 
     // 未実装(引数などは適当なので変えてください)
-    @FormUrlEncoded
     @GET(PATH_PAYMENTS)
-    public void getPaymentsByUserId(@Query("user_id") String user_id, Callback<List<Payment>> cb);
+    public void getPaymentsByUserId(Callback<List<Payment>> cb);
 
     // 未実装(引数などは適当なので変えてください)
     @FormUrlEncoded

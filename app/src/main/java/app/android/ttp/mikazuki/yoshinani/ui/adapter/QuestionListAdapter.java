@@ -30,38 +30,38 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+//        ViewHolder holder;
 
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.list_item, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
+//            holder = new ViewHolder(convertView);
+//            convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+//            holder = (ViewHolder) convertView.getTag();
         }
 
         Question question = getItem(position);
-        holder.question.setText(question.getQuestion());
-        StringBuilder sb = new StringBuilder();
-        for (Choice choice : question.getChoices()) {
-            sb.append(choice.getChoice());
-            sb.append("(");
-            sb.append(choice.getVotes());
-            sb.append(") ");
-        }
-        holder.choices.setText(new String(sb));
+//        holder.question.setText(question.getQuestion());
+//        StringBuilder sb = new StringBuilder();
+//        for (Choice choice : question.getChoices()) {
+//            sb.append(choice.getChoice());
+//            sb.append("(");
+//            sb.append(choice.getVotes());
+//            sb.append(") ");
+//        }
+//        holder.choices.setText(new String(sb));
         return convertView;
     }
 
-    static class ViewHolder {
-        @Bind(R.id.question)
-        TextView question;
-        @Bind(R.id.choices)
-        TextView choices;
-
-        public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
+//    static class ViewHolder {
+//        @Bind(R.id.question)
+//        TextView question;
+//        @Bind(R.id.choices)
+//        TextView choices;
+//
+//        public ViewHolder(View view) {
+//            ButterKnife.bind(this, view);
+//        }
+//    }
 
 }

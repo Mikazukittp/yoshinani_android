@@ -9,12 +9,8 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.data.api.ApiUtil;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitAuthService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitPaymentService;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitQuestionService;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.AuthRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.BaseRequestInterceptor;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.PaymentRepository;
@@ -23,6 +19,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
+
 
 /**
  * Created by haijimakazuki on 15/07/09.
@@ -56,9 +53,46 @@ public class RetrofitPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public void getAll(BaseCallback<List<Payment>> cb) {
+    public void getAll(final BaseCallback<List<Payment>> cb) {
+        mAPI.getPaymentsByUserId(new Callback<List<Payment>>() {
+            @Override
+            public void success(List<Payment> payments, Response response) {
+                cb.onSuccess(payments);
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                if (error.getResponse() != null) {
+                    Log.e(TAG, error.getResponse().getStatus() + " " + error.getMessage());
+                } else {
+                    Log.e(TAG, error.getMessage());
+                }
+                cb.onFailure();
+            }
+        });
     }
+
+//
+//    @Override
+//    public void getAll(final BaseCallback<List<Question>> cb) {
+//        mAPI.getAllQuestions(new Callback<List<Question>>() {
+//            @Override
+//            public void success(List<Question> questions, Response response) {
+//                cb.onSuccess(questions);
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                if (error.getResponse() != null) {
+//                    Log.e(TAG, error.getResponse().getStatus() + " " + error.getMessage());
+//                } else {
+//                    Log.e(TAG, error.getMessage());
+//                }
+//                cb.onFailure();
+//            }
+//        });
+//    }
+
 
     @Override
     public void create(Payment payment, BaseCallback<Payment> cb) {

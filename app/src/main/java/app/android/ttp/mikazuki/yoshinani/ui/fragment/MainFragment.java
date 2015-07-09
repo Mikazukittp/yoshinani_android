@@ -13,11 +13,11 @@ import android.widget.ListView;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitQuestionRepository;
-import app.android.ttp.mikazuki.yoshinani.domain.entity.Question;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitPaymentRepository;
+import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
-import app.android.ttp.mikazuki.yoshinani.domain.repository.QuestionRepository;
-import app.android.ttp.mikazuki.yoshinani.ui.adapter.QuestionListAdapter;
+import app.android.ttp.mikazuki.yoshinani.domain.repository.PaymentRepository;
+import app.android.ttp.mikazuki.yoshinani.ui.adapter.PaymentListAdapter;
 import app.android.ttp.mikazuki.yoshinani.ui.listener.ToolBarListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,7 +33,7 @@ public class MainFragment extends Fragment {
     @Bind(R.id.listview)
     ListView mListView;
 
-    private QuestionRepository mQuestionRepository;
+    private PaymentRepository mPaymentRepository;
     private OnFragmentInteractionListener mListener;
     private ToolBarListener mToolbarListener;
 
@@ -54,7 +54,7 @@ public class MainFragment extends Fragment {
                 mToolbarListener.onMenuClicked();
             }
         });
-        mQuestionRepository = new RetrofitQuestionRepository(getActivity().getApplicationContext());
+        mPaymentRepository = new RetrofitPaymentRepository(getActivity().getApplicationContext());
 
         setListData();
 
@@ -62,10 +62,10 @@ public class MainFragment extends Fragment {
     }
 
     private void setListData() {
-        mQuestionRepository.getAll(new BaseCallback<List<Question>>() {
+        mPaymentRepository.getAll(new BaseCallback<List<Payment>>() {
             @Override
-            public void onSuccess(List<Question> questions) {
-                QuestionListAdapter adapter = new QuestionListAdapter(getActivity().getApplicationContext(), 0, questions);
+            public void onSuccess(List<Payment> payments) {
+                PaymentListAdapter adapter = new PaymentListAdapter(getActivity().getApplicationContext(), 0, payments);
                 mListView.setAdapter(adapter);
             }
 
