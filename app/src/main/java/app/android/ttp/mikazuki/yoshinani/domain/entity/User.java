@@ -9,8 +9,8 @@ public class User {
     private String provider;
     private String name;
     private String email;
-    private int paid;
-    private int haveToPay;
+    private int currentPaid;
+    private int currentHaveToPay;
     private String role;
     private String _v;
 
@@ -22,8 +22,8 @@ public class User {
         this.provider = provider;
         this.name = name;
         this.email = email;
-        this.paid = paid;
-        this.haveToPay = haveToPay;
+        this.currentPaid = paid;
+        this.currentHaveToPay = haveToPay;
         this.role = role;
         this._v = _v;
     }
@@ -60,20 +60,20 @@ public class User {
         this.email = email;
     }
 
-    public int getPaid() {
-        return paid;
+    public int getCurrentPaid() {
+        return currentPaid;
     }
 
-    public void setPaid(int paid) {
-        this.paid = paid;
+    public void setCurrentPaid(int currentPaid) {
+        this.currentPaid = currentPaid;
     }
 
-    public int getHaveToPay() {
-        return haveToPay;
+    public int getCurrentHaveToPay() {
+        return currentHaveToPay;
     }
 
-    public void setHaveToPay(int haveToPay) {
-        this.haveToPay = haveToPay;
+    public void setCurrentHaveToPay(int currentHaveToPay) {
+        this.currentHaveToPay = currentHaveToPay;
     }
 
     public String getRole() {

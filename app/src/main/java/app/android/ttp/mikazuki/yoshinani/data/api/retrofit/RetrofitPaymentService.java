@@ -16,6 +16,7 @@ public interface RetrofitPaymentService {
 
     static final String PATH_PAYMENTS = "/payments";
     static final String PATH_PAYMENT_WITH_ID = "/payments/{id}";
+    static final String PATH_PAYMENTS_OVERVIEW = "/payments/overview";
 
     // 未実装(引数などは適当なので変えてください)
     @FormUrlEncoded
@@ -26,5 +27,9 @@ public interface RetrofitPaymentService {
     @FormUrlEncoded
     @GET(PATH_PAYMENT_WITH_ID)
     public void getPaymentById(@Path("id") String payment_id, Callback<Payment> cb);
+
+    @FormUrlEncoded
+    @GET(PATH_PAYMENTS_OVERVIEW)
+    public void getOverView(Callback<List<Payment>> cb);
 
 }

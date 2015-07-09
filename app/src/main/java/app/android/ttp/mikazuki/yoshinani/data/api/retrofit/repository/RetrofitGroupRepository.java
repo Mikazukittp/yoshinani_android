@@ -9,13 +9,14 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.data.api.ApiUtil;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitAuthService;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitGroupService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitPaymentService;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitQuestionService;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.AuthRequestInterceptor;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.BaseRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
+import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
+import app.android.ttp.mikazuki.yoshinani.domain.repository.GroupRepository;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.PaymentRepository;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -26,14 +27,15 @@ import retrofit.converter.GsonConverter;
 /**
  * Created by haijimakazuki on 15/07/09.
  */
-public class RetrofitPaymentRepository implements PaymentRepository {
+public class RetrofitGroupRepository implements GroupRepository {
 
     final private String TAG = "AuthRepository";
 
     private Context mContext = null;
-    RetrofitPaymentService mAPI;
+    private String groupId = "559eaa98d430387816a640b1";
+    RetrofitGroupService mAPI;
 
-    public RetrofitPaymentRepository(Context context) {
+    public RetrofitGroupRepository(Context context) {
         this.mContext = context;
         buildAPI();
     }
@@ -44,16 +46,16 @@ public class RetrofitPaymentRepository implements PaymentRepository {
         RestAdapter REST_ADAPTER = new RestAdapter.Builder()
                 .setEndpoint(ApiUtil.API_URL)
                 .setConverter(new GsonConverter(GSON))
-                .setRequestInterceptor(new QuestionRequestInterceptor(mContext))
+                .setRequestInterceptor(new BaseRequestInterceptor(mContext))
                 .build();
-        mAPI = REST_ADAPTER.create(RetrofitPaymentService.class);
+        mAPI = REST_ADAPTER.create(RetrofitGroupService.class);
     }
 
-    public void getOverView(final BaseCallback<List<Payment>> cb) {
-        mAPI.getOverView(new Callback<List<Payment>>() {
+    public void getOverView(final BaseCallback<List<User>> cb) {
+        mAPI.getOverView(groupId, new Callback<List<User>>() {
             @Override
-            public void success(List<Payment> payments, Response response) {
-                cb.onSuccess(payments);
+            public void success(List<User> users, Response response) {
+                cb.onSuccess(users);
             }
 
             @Override
