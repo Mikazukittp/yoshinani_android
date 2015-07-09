@@ -14,8 +14,8 @@ import retrofit.http.Query;
  */
 public interface RetrofitPaymentService {
 
-    static final String PATH_PAYMENTS = "/payments";
-    static final String PATH_PAYMENT_WITH_ID = "/payments/{id}";
+    static final String PATH_PAYMENTS = "/api/payments";
+    static final String PATH_PAYMENT_WITH_ID = "/api/payments/{id}";
 
     // 未実装(引数などは適当なので変えてください)
     @FormUrlEncoded
