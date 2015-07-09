@@ -1,4 +1,4 @@
-package app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit;
+package app.android.ttp.mikazuki.yoshinani.data.api.retrofit;
 
 import java.util.List;
 

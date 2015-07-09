@@ -13,7 +13,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
-import app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit.repository.RetrofitQuestionRepository;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitQuestionRepository;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Question;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.QuestionRepository;
@@ -54,7 +54,8 @@ public class MainFragment extends Fragment {
                 mToolbarListener.onMenuClicked();
             }
         });
-        mQuestionRepository = new RetrofitQuestionRepository();
+        mQuestionRepository = new RetrofitQuestionRepository(getActivity().getApplicationContext());
+
         setListData();
 
         return view;

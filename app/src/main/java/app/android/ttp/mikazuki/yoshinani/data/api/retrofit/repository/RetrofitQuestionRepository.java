@@ -1,5 +1,6 @@
-package app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit.repository;
+package app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -7,9 +8,9 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
-import app.android.ttp.mikazuki.yoshinani.data.repository.api.ApiUtil;
-import app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit.RetrofitQuestionService;
-import app.android.ttp.mikazuki.yoshinani.data.repository.api.retrofit.interceptor.QuestionRequestInterceptor;
+import app.android.ttp.mikazuki.yoshinani.data.api.ApiUtil;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitQuestionService;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Question;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.QuestionRepository;
@@ -26,15 +27,28 @@ public class RetrofitQuestionRepository implements QuestionRepository {
 
     final private String TAG = "QuestionRepository";
 
-    Gson GSON = new GsonBuilder().create();
+    private Context mContext = null;
+    RetrofitQuestionService mAPI;
 
-    RestAdapter REST_ADAPTER = new RestAdapter.Builder()
-            .setEndpoint(ApiUtil.API_URL)
-            .setConverter(new GsonConverter(GSON))
-            .setRequestInterceptor(new QuestionRequestInterceptor())
-            .build();
+    public RetrofitQuestionRepository() {
+        buildAPI();
+    }
 
-    final RetrofitQuestionService API = REST_ADAPTER.create(RetrofitQuestionService.class);
+    public RetrofitQuestionRepository(Context context) {
+        this.mContext = context;
+        buildAPI();
+    }
+
+    private void buildAPI() {
+        Gson GSON = new GsonBuilder().create();
+
+        RestAdapter REST_ADAPTER = new RestAdapter.Builder()
+                .setEndpoint(ApiUtil.API_URL)
+                .setConverter(new GsonConverter(GSON))
+                .setRequestInterceptor(new QuestionRequestInterceptor(mContext))
+                .build();
+        mAPI = REST_ADAPTER.create(RetrofitQuestionService.class);
+    }
 
     @Override
     public void get(int id, BaseCallback<Question> cb) {
@@ -43,10 +57,10 @@ public class RetrofitQuestionRepository implements QuestionRepository {
 
     @Override
     public void getAll(final BaseCallback<List<Question>> cb) {
-        API.getAllQuestions(new Callback<List<Question>>() {
+        mAPI.getAllQuestions(new Callback<List<Question>>() {
             @Override
-            public void success(List<Question> plans, Response response) {
-                cb.onSuccess(plans);
+            public void success(List<Question> questions, Response response) {
+                cb.onSuccess(questions);
             }
 
             @Override
