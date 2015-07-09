@@ -31,8 +31,11 @@ public class LoginActivity extends AppCompatActivity implements ToolBarListener,
     DrawerLayout mDrawerLayout;
     @Bind(R.id.navigation)
     NavigationView mNavigationView;
+    @Bind(R.id.email)
     EditText email;
+    @Bind(R.id.password)
     EditText password;
+
     private AuthRepository mAuthRepository;
     private ActionBarDrawerToggle mDrawerToggle;
     private boolean network;
@@ -105,9 +108,8 @@ public class LoginActivity extends AppCompatActivity implements ToolBarListener,
 
     @OnClick(R.id.loginBtn)
     void onClickButton() {
-        email = (EditText) findViewById(R.id.email);
-        password = (EditText) findViewById(R.id.password);
-        setListData(email.getText().toString(), password.getText().toString());
+//        setListData(email.getText().toString(), password.getText().toString());
+        setListData("haijima@r.recruit.co.jp", "haijima");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package app.android.ttp.mikazuki.yoshinani.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -74,11 +75,14 @@ public class MainActivity extends AppCompatActivity implements ToolBarListener, 
 
     @Override
     public void goToSubView() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, new SubFragment())
-                .addToBackStack(null)
-                .commit();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.fragment_container, new SubFragment())
+//                .addToBackStack(null)
+//                .commit();
+
+        Intent i = new Intent(this, PostActivity.class);
+        startActivity(i);
     }
 
     @Override

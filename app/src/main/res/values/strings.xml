@@ -14,4 +14,12 @@
     <string name="menu_setting">設定</string>
     <string name="menu_about">このアプリについて</string>
 
+    <string name="email">メールアドレス</string>
+    <string name="password">パスワード</string>
+    <string name="login">ログイン</string>
+
+    <string name="title_activity_post">送信</string>
+    <string name="payment">立替</string>
+    <string name="repayment">精算</string>
+
 </resources>
