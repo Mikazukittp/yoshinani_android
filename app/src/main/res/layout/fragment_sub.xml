@@ -27,6 +27,12 @@
             android:text="@string/sub_fragment_title"
             android:layout_alignParentTop="true" />
 
+        <ListView
+            android:id="@+id/overViewList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/button" />
+
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
