@@ -43,7 +43,7 @@ public class PaymentListAdapter  extends ArrayAdapter<Payment> {
         }
 
         Payment payment = getItem(position);
-        holder.name.setText(payment.getPaidUser());
+        holder.name.setText("sa");
         holder.price.setText(payment.getAmount());
 
         return convertView;
