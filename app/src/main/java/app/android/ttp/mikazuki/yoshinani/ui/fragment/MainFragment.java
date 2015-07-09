@@ -13,11 +13,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitQuestionRepository;
-import app.android.ttp.mikazuki.yoshinani.domain.entity.Question;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
-import app.android.ttp.mikazuki.yoshinani.domain.repository.QuestionRepository;
-import app.android.ttp.mikazuki.yoshinani.ui.adapter.QuestionListAdapter;
 import app.android.ttp.mikazuki.yoshinani.ui.listener.ToolBarListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;

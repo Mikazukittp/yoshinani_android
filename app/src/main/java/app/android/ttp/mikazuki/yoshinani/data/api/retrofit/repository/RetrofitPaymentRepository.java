@@ -1,7 +1,6 @@
 package app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,19 +8,12 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.data.api.ApiUtil;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitAuthService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitPaymentService;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitQuestionService;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.AuthRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.BaseRequestInterceptor;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.PaymentRepository;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
 /**

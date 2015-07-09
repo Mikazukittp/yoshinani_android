@@ -20,12 +20,12 @@ import butterknife.ButterKnife;
 
 public class PostActivity extends AppCompatActivity implements PostPaymentFragment.OnFragmentInteractionListener, PostRepaymentFragment.OnFragmentInteractionListener{
 
-    @Bind(R.id.view_pager)
-    ViewPager mViewPager;
     @Bind(R.id.tool_bar)
     Toolbar mToolbar;
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
+    @Bind(R.id.view_pager)
+    ViewPager mViewPager;
 
 
     @Override

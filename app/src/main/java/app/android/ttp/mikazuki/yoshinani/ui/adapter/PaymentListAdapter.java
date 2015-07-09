@@ -10,9 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
-import app.android.ttp.mikazuki.yoshinani.domain.entity.Choice;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
-import app.android.ttp.mikazuki.yoshinani.domain.entity.Question;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

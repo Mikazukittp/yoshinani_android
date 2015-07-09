@@ -10,15 +10,11 @@ import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.data.api.ApiUtil;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitGroupService;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitPaymentService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.BaseRequestInterceptor;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Group;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
-import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.GroupRepository;
-import app.android.ttp.mikazuki.yoshinani.domain.repository.PaymentRepository;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
