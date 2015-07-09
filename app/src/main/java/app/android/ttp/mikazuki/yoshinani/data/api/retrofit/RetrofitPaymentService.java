@@ -6,9 +6,7 @@ import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import retrofit.Callback;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
-import retrofit.http.POST;
 import retrofit.http.Path;
-import retrofit.http.Query;
 
 /**
  * Created by haijimakazuki on 15/07/09.
@@ -19,7 +17,6 @@ public interface RetrofitPaymentService {
     static final String PATH_PAYMENT_WITH_ID = "/api/payments/{id}";
 
     // 未実装(引数などは適当なので変えてください)
-    @FormUrlEncoded
     @GET(PATH_PAYMENTS)
     public void getPaymentsByUserId(Callback<List<Payment>> cb);
 
@@ -27,5 +24,6 @@ public interface RetrofitPaymentService {
     @FormUrlEncoded
     @GET(PATH_PAYMENT_WITH_ID)
     public void getPaymentById(@Path("id") String payment_id, Callback<Payment> cb);
+
 
 }

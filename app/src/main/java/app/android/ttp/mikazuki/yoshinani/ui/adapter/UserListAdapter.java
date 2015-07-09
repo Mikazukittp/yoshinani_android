@@ -10,19 +10,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
-import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
+import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by ishibetatsuya on 15/07/10.
+ * Created by haijimakazuki on 15/07/07.
  */
-public class PaymentListAdapter extends ArrayAdapter<Payment> {
-
+public class UserListAdapter extends ArrayAdapter<User> {
     private LayoutInflater layoutInflater;
 
-    public PaymentListAdapter(Context c, int id, List<Payment> payments) {
-        super(c, id, payments);
+    public UserListAdapter(Context c, int id, List<User> users) {
+        super(c, id, users);
         this.layoutInflater = (LayoutInflater) c.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE
         );
@@ -33,25 +32,26 @@ public class PaymentListAdapter extends ArrayAdapter<Payment> {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.list_item, parent, false);
+            convertView = layoutInflater.inflate(R.layout.overview_list, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Payment payment = getItem(position);
-        holder.name.setText(payment.getEvent()+": "+payment.getDescription());
-        holder.price.setText(payment.getAmount()+"");
+        User user = getItem(position);
+        holder.userName.setText(user.getName());
+        int amount = user.getCurrentPaid() - user.getCurrentHaveToPay();
+        holder.userAmount.setText(Integer.toString(amount));
 
         return convertView;
     }
 
     static class ViewHolder {
-        @Bind(R.id.name)
-        TextView name;
-        @Bind(R.id.price)
-        TextView price;
+        @Bind(R.id.userName)
+        TextView userName;
+        @Bind(R.id.userAmount)
+        TextView userAmount;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

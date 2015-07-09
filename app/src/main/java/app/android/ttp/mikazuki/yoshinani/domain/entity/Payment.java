@@ -8,7 +8,7 @@ public class Payment {
     private String _id;
     private int amount;
     private String event;
-    private String descrption;
+    private String description;
     private String date;
     private User paidUser;
     private String paidUserId;
@@ -20,11 +20,11 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(String _id, int amount, String event, String descrption, String date, User paidUser, String paidUserId, User[] participants, String[] participantsIds, boolean isDelete, int _v) {
+    public Payment(String _id, int amount, String event, String description, String date, User paidUser, String paidUserId, User[] participants, String[] participantsIds, boolean isDelete, int _v) {
         this._id = _id;
         this.amount = amount;
         this.event = event;
-        this.descrption = descrption;
+        this.description = description;
         this.date = date;
         this.paidUser = paidUser;
         this.paidUserId = paidUserId;
@@ -58,12 +58,12 @@ public class Payment {
         this.event = event;
     }
 
-    public String getDescrption() {
-        return descrption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrption(String descrption) {
-        this.descrption = descrption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDate() {
