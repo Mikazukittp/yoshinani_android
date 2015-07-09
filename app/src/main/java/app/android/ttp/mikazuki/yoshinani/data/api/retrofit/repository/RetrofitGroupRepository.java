@@ -30,7 +30,7 @@ import retrofit.converter.GsonConverter;
  */
 public class RetrofitGroupRepository implements GroupRepository {
 
-    final private String TAG = "AuthRepository";
+    final private String TAG = "GroupRepository";
 
     private Context mContext = null;
     private String groupId = "559eaa98d430387816a640b1";

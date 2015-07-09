@@ -13,6 +13,7 @@ import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitAuthService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitPaymentService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitQuestionService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.AuthRequestInterceptor;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.BaseRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
@@ -28,7 +29,7 @@ import retrofit.converter.GsonConverter;
  */
 public class RetrofitPaymentRepository implements PaymentRepository {
 
-    final private String TAG = "AuthRepository";
+    final private String TAG = "PaymentRepository";
 
     private Context mContext = null;
     RetrofitPaymentService mAPI;
@@ -44,7 +45,7 @@ public class RetrofitPaymentRepository implements PaymentRepository {
         RestAdapter REST_ADAPTER = new RestAdapter.Builder()
                 .setEndpoint(ApiUtil.API_URL)
                 .setConverter(new GsonConverter(GSON))
-                .setRequestInterceptor(new QuestionRequestInterceptor(mContext))
+                .setRequestInterceptor(new BaseRequestInterceptor(mContext))
                 .build();
         mAPI = REST_ADAPTER.create(RetrofitPaymentService.class);
     }

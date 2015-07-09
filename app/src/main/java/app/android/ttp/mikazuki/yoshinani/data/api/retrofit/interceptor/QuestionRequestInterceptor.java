@@ -10,7 +10,6 @@ import retrofit.RequestInterceptor;
  */
 public class QuestionRequestInterceptor implements RequestInterceptor {
 
-    //このcontentに値をいれたいのですが、、、
     Context mContext;
 
     public QuestionRequestInterceptor() {
