@@ -8,20 +8,19 @@ import retrofit.RequestInterceptor;
 /**
  * Created by haijimakazuki on 15/07/07.
  */
-public class QuestionRequestInterceptor implements RequestInterceptor {
+public class BaseRequestInterceptor implements RequestInterceptor {
 
     Context mContext;
 
-    public QuestionRequestInterceptor() {
+    public BaseRequestInterceptor() {
     }
 
-    public QuestionRequestInterceptor(Context context) {
+    public BaseRequestInterceptor(Context context) {
         this.mContext = context;
     }
 
     @Override
-    public void intercept(RequestInterceptor.RequestFacade request) {
-        // do something
+    public void intercept(RequestFacade request) {
 
         SharedPreferences sp = mContext.getSharedPreferences("LocalData", Context.MODE_PRIVATE);
         String token = sp.getString("token", "");
