@@ -5,15 +5,12 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.HashMap;
-
 import app.android.ttp.mikazuki.yoshinani.data.api.ApiUtil;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitAuthService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.AuthRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Token;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.AuthRepository;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
-import app.android.ttp.mikazuki.yoshinani.domain.repository.QuestionRepository;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

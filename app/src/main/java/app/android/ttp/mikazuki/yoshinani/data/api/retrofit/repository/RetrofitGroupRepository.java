@@ -10,15 +10,11 @@ import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.data.api.ApiUtil;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitGroupService;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.RetrofitPaymentService;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.BaseRequestInterceptor;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.interceptor.QuestionRequestInterceptor;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Group;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
-import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.GroupRepository;
-import app.android.ttp.mikazuki.yoshinani.domain.repository.PaymentRepository;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -33,7 +29,6 @@ public class RetrofitGroupRepository implements GroupRepository {
     final private String TAG = "GroupRepository";
 
     private Context mContext = null;
-    private String groupId = "559eaa98d430387816a640b1";
     RetrofitGroupService mAPI;
 
     public RetrofitGroupRepository(Context context) {
@@ -53,7 +48,7 @@ public class RetrofitGroupRepository implements GroupRepository {
     }
 
     public void getOverView(final BaseCallback<Group> cb) {
-        mAPI.getOverView(groupId, new Callback<Group>() {
+        mAPI.getOverView(ApiUtil.GROUP_ID, new Callback<Group>() {
             @Override
             public void success(Group group, Response response) {
                 cb.onSuccess(group);

@@ -4,34 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:textColor="@color/white" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sub_fragment_title"
-            android:layout_alignParentTop="true" />
-
         <ListView
-            android:id="@+id/overViewList"
+            android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/button" />
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 
@@ -39,12 +23,12 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
         android:src="@drawable/ic_add_white_24dp"
         design:fabSize="normal"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-
         design:layout_anchor="@id/coordinator_layout"
         design:layout_anchorGravity="bottom|right" />
 
 </android.support.design.widget.CoordinatorLayout>
+

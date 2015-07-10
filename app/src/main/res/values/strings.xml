@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Yoshinani</string>
+    <string name="app_name">よしなに</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
@@ -13,5 +13,21 @@
     <string name="menu_sub">サブ</string>
     <string name="menu_setting">設定</string>
     <string name="menu_about">このアプリについて</string>
+
+    <string name="email">メールアドレス</string>
+    <string name="password">パスワード</string>
+    <string name="login">ログイン</string>
+
+    <string name="title_activity_post">送信</string>
+    <string name="payment">立替</string>
+    <string name="repayment">精算</string>
+    <string name="amount">金額</string>
+    <string name="event">イベント名</string>
+    <string name="description">詳細</string>
+    <string name="date">日付</string>
+    <string name="send">作成</string>
+
+    <string name="log">ログ</string>
+    <string name="overview">グループ</string>
 
 </resources>

@@ -41,8 +41,9 @@ public class PaymentListAdapter extends ArrayAdapter<Payment> {
         }
 
         Payment payment = getItem(position);
-        holder.name.setText(payment.getEvent()+": "+payment.getDescription());
-        holder.price.setText(payment.getAmount()+"");
+        holder.name.setText(payment.getEvent() + ": " + payment.getDescription() + "(" + payment.getPaidUser().getName() + ")");
+        holder.price.setText(payment.getAmount() + "");
+
 
         return convertView;
     }

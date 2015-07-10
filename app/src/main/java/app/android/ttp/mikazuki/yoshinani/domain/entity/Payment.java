@@ -1,5 +1,7 @@
 package app.android.ttp.mikazuki.yoshinani.domain.entity;
 
+import java.util.List;
+
 /**
  * Created by haijimakazuki on 15/07/09.
  */
@@ -12,15 +14,15 @@ public class Payment {
     private String date;
     private User paidUser;
     private String paidUserId;
-    private User[] participants;
-    private String[] participantsIds;
+    private List<User> participants;
+    private List<String> participantsIds;
     private boolean isDelete;
     private int _v;
 
     public Payment() {
     }
 
-    public Payment(String _id, int amount, String event, String description, String date, User paidUser, String paidUserId, User[] participants, String[] participantsIds, boolean isDelete, int _v) {
+    public Payment(String _id, int amount, String event, String description, String date, User paidUser, String paidUserId, List<User> participants, List<String> participantsIds, boolean isDelete, int _v) {
         this._id = _id;
         this.amount = amount;
         this.event = event;
@@ -90,19 +92,19 @@ public class Payment {
         this.paidUserId = paidUserId;
     }
 
-    public User[] getParticipants() {
+    public List<User> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(User[] participants) {
+    public void setParticipants(List<User> participants) {
         this.participants = participants;
     }
 
-    public String[] getParticipantsIds() {
+    public List<String> getParticipantsIds() {
         return participantsIds;
     }
 
-    public void setParticipantsIds(String[] participantsIds) {
+    public void setParticipantsIds(List<String> participantsIds) {
         this.participantsIds = participantsIds;
     }
 

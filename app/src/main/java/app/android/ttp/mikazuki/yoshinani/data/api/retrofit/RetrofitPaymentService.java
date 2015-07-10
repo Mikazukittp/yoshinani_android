@@ -4,8 +4,10 @@ import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import retrofit.Callback;
+import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Path;
 
 /**
@@ -25,5 +27,15 @@ public interface RetrofitPaymentService {
     @GET(PATH_PAYMENT_WITH_ID)
     public void getPaymentById(@Path("id") String payment_id, Callback<Payment> cb);
 
+    @FormUrlEncoded
+    @POST(PATH_PAYMENTS)
+    public void createNewPayment(@Field("amount") int amount,
+                                 @Field("event") String event,
+                                 @Field("event") String description,
+                                 @Field("date") String date,
+                                 @Field("groupId") String groupId,
+                                 @Field("paidUserId") String paidUserId,
+                                 @Field("participantsIds") List<String> participantsIds,
+                                 Callback<Payment> cb);
 
 }

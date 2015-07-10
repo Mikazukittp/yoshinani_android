@@ -72,31 +72,19 @@ public class RetrofitPaymentRepository implements PaymentRepository {
         });
     }
 
-//
-//    @Override
-//    public void getAll(final BaseCallback<List<Question>> cb) {
-//        mAPI.getAllQuestions(new Callback<List<Question>>() {
-//            @Override
-//            public void success(List<Question> questions, Response response) {
-//                cb.onSuccess(questions);
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                if (error.getResponse() != null) {
-//                    Log.e(TAG, error.getResponse().getStatus() + " " + error.getMessage());
-//                } else {
-//                    Log.e(TAG, error.getMessage());
-//                }
-//                cb.onFailure();
-//            }
-//        });
-//    }
-
-
     @Override
-    public void create(Payment payment, BaseCallback<Payment> cb) {
+    public void create(Payment payment, final BaseCallback<Payment> cb) {
+        mAPI.createNewPayment(payment.getAmount(), payment.getEvent(), payment.getDescription(), payment.getDate(), ApiUtil.GROUP_ID, payment.getPaidUserId(), payment.getParticipantsIds(), new Callback<Payment>() {
+            @Override
+            public void success(Payment payment, Response response) {
+                cb.onSuccess(payment);
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                cb.onFailure();
+            }
+        });
     }
 
     @Override
