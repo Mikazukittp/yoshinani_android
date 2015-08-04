@@ -82,6 +82,11 @@ public class RetrofitPaymentRepository implements PaymentRepository {
 
             @Override
             public void failure(RetrofitError error) {
+                if (error.getResponse() != null) {
+                    Log.e(TAG, error.getResponse().getStatus() + " " + error.getMessage());
+                } else {
+                    Log.e(TAG, error.getMessage());
+                }
                 cb.onFailure();
             }
         });
