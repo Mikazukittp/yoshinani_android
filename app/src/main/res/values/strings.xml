@@ -26,6 +26,7 @@
     <string name="description">詳細</string>
     <string name="date">日付</string>
     <string name="post">作成</string>
+    <string name="opponent">誰に</string>
 
     <string name="log">ログ</string>
     <string name="overview">グループ</string>
