@@ -1,10 +1,57 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.android.ttp.mikazuki.yoshinani.ui.fragment.PostRepaymentFragment">
+    android:orientation="vertical">
+    <!-- TODO: 金額、日付、誰にのeditTextと決定ボタンを配置 -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/amount_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/theme600">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="This is a post REPAYMENT fragment." />
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/amount"
+            android:inputType="text|number"
+            android:textColor="@color/gray800" />
+    </android.support.design.widget.TextInputLayout>
 
-</FrameLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/date_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/theme600">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/date"
+            android:inputType="text|number"
+            android:textColor="@color/gray800" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/Opponent_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/theme600">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/opponent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/opponent"
+            android:inputType="text"
+            android:textColor="@color/gray800" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme600"
+        android:text="決定" />
+
+</LinearLayout>
