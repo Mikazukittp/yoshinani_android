@@ -45,7 +45,7 @@ public class PaymentListAdapter extends ArrayAdapter<Payment> {
 //        holder.price.setText(payment.getAmount() + "");
         holder.name.setText(payment.getPaidUser().getName());
         holder.price.setText(payment.getAmount());
-        holder.discription.setText(payment.getDescription());
+        holder.description.setText(payment.getDescription());
         holder.event.setText(payment.getEvent());
 
         return convertView;
@@ -56,8 +56,8 @@ public class PaymentListAdapter extends ArrayAdapter<Payment> {
         TextView name;
         @Bind(R.id.price)
         TextView price;
-        @Bind(R.id.discription)
-        TextView discription;
+        @Bind(R.id.description)
+        TextView description;
         @Bind(R.id.event)
         TextView event;
 
