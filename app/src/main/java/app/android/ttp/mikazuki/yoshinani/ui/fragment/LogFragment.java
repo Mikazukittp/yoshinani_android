@@ -3,6 +3,7 @@ package app.android.ttp.mikazuki.yoshinani.ui.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,8 @@ public class LogFragment extends MainFragment {
 
     @Bind(R.id.coordinator_layout)
     CoordinatorLayout mCoordinatorLayout;
+    @Bind(R.id.swipe_refresh)
+    SwipeRefreshLayout mSwipeRefresh;
     @Bind(R.id.listview)
     ListView mListView;
 
@@ -50,6 +53,13 @@ public class LogFragment extends MainFragment {
 
         mPaymentRepository = new RetrofitPaymentRepository(getActivity().getApplicationContext());
 
+        mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setListData();
+            }
+        });
         setListData();
 
         return view;
@@ -61,11 +71,17 @@ public class LogFragment extends MainFragment {
             public void onSuccess(List<Payment> payments) {
                 PaymentListAdapter adapter = new PaymentListAdapter(getActivity().getApplicationContext(), 0, payments);
                 mListView.setAdapter(adapter);
+                if (mSwipeRefresh.isRefreshing()) {
+                    mSwipeRefresh.setRefreshing(false);
+                }
             }
 
             @Override
             public void onFailure() {
                 Log.e("!!!!!", "failure");
+                if (mSwipeRefresh.isRefreshing()) {
+                    mSwipeRefresh.setRefreshing(false);
+                }
             }
         });
     }
