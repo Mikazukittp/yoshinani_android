@@ -59,16 +59,17 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("myId", user.get_id());
                         editor.apply();
+
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                        finish();
                     }
 
                     @Override
                     public void onFailure() {
                     }
                 });
-
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
             }
 
             @Override
