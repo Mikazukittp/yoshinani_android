@@ -11,9 +11,12 @@ import android.widget.EditText;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitAuthRepository;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitUserRepository;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Token;
+import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.AuthRepository;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
+import app.android.ttp.mikazuki.yoshinani.domain.repository.UserRepository;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
 
     private AuthRepository mAuthRepository;
+    private UserRepository mUserRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mAuthRepository = new RetrofitAuthRepository();
+        mUserRepository = new RetrofitUserRepository();
     }
 
 
@@ -47,14 +52,24 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("token", token.getToken());
                 editor.apply();
 
-                SharedPreferences sp2 = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
-                String token2 = sp2.getString("token", "");
-                String accessToken = "Bearer " + token2;
-                System.out.println(accessToken);
+                mUserRepository.getMe(new BaseCallback<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        SharedPreferences sp = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("myId", user.get_id());
+                        editor.apply();
 
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure() {
+                    }
+                });
             }
 
             @Override
