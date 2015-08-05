@@ -41,9 +41,12 @@ public class PaymentListAdapter extends ArrayAdapter<Payment> {
         }
 
         Payment payment = getItem(position);
-        holder.name.setText(payment.getEvent() + ": " + payment.getDescription() + "(" + payment.getPaidUser().getName() + ")");
-        holder.price.setText(payment.getAmount() + "");
-
+//        holder.name.setText(payment.getEvent() + ": " + payment.getDescription() + "(" + payment.getPaidUser().getName() + ")");
+//        holder.price.setText(payment.getAmount() + "");
+        holder.name.setText(payment.getPaidUser().getName());
+        holder.price.setText(payment.getAmount());
+        holder.discription.setText(payment.getDescription());
+        holder.event.setText(payment.getEvent());
 
         return convertView;
     }
@@ -53,6 +56,10 @@ public class PaymentListAdapter extends ArrayAdapter<Payment> {
         TextView name;
         @Bind(R.id.price)
         TextView price;
+        @Bind(R.id.discription)
+        TextView discription;
+        @Bind(R.id.event)
+        TextView event;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

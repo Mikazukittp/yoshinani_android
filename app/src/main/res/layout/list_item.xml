@@ -14,7 +14,6 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="buhibuhi"
             android:textColor="@color/theme600"
             android:textStyle="bold" />
 
@@ -22,7 +21,6 @@
             android:id="@+id/event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="hogehoge"
             android:textColor="@color/theme600"
             android:textStyle="bold" />
 
@@ -32,7 +30,6 @@
         android:id="@+id/discription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="fugafuga"
         android:textColor="@color/theme600"
         android:textStyle="bold" />
 
@@ -40,7 +37,6 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="piyopiyo"
         android:textColor="@color/gray600" />
 
 
