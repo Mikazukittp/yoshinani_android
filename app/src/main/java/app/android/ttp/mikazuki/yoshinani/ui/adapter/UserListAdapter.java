@@ -42,7 +42,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
         User user = getItem(position);
         holder.userName.setText(user.getName());
         int amount = user.getCurrentPaid() - user.getCurrentHaveToPay();
-        holder.userAmount.setText(Integer.toString(amount));
+        holder.userAmount.setText("￥"+Integer.toString(amount));
 
         return convertView;
     }

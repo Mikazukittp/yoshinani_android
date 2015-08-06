@@ -44,7 +44,8 @@ public class PaymentListAdapter extends ArrayAdapter<Payment> {
 //        holder.name.setText(payment.getEvent() + ": " + payment.getDescription() + "(" + payment.getPaidUser().getName() + ")");
 //        holder.price.setText(payment.getAmount() + "");
         holder.name.setText(payment.getPaidUser().getName());
-        holder.price.setText(payment.getAmount());
+        holder.description.setText(payment.getDescription());
+        holder.price.setText("￥"+payment.getAmount()+"");
         holder.description.setText(payment.getDescription());
         holder.event.setText(payment.getEvent());
 
