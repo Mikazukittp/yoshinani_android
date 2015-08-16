@@ -1,9 +1,12 @@
 package app.android.ttp.mikazuki.yoshinani.domain.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by haijimakazuki on 15/07/09.
  */
-public class User {
+public class User implements Parcelable {
 
     private String _id;
     private String provider;
@@ -12,21 +15,44 @@ public class User {
     private int currentPaid;
     private int currentHaveToPay;
     private String role;
-    private String _v;
+    private String __v;
 
     public User() {
     }
 
-    public User(String _id, String provider, String name, String email, int paid, int haveToPay, String role, String _v) {
+    public User(String _id, String provider, String name, String email, int currentPaid, int currentHaveToPay, String role, String __v) {
         this._id = _id;
         this.provider = provider;
         this.name = name;
         this.email = email;
-        this.currentPaid = paid;
-        this.currentHaveToPay = haveToPay;
+        this.currentPaid = currentPaid;
+        this.currentHaveToPay = currentHaveToPay;
         this.role = role;
-        this._v = _v;
+        this.__v = __v;
     }
+
+    protected User(Parcel in) {
+        _id = in.readString();
+        provider = in.readString();
+        name = in.readString();
+        email = in.readString();
+        currentPaid = in.readInt();
+        currentHaveToPay = in.readInt();
+        role = in.readString();
+        __v = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String get_id() {
         return _id;
@@ -84,11 +110,28 @@ public class User {
         this.role = role;
     }
 
-    public String get_v() {
-        return _v;
+    public String get__v() {
+        return __v;
     }
 
-    public void set_v(String _v) {
-        this._v = _v;
+    public void set__v(String __v) {
+        this.__v = __v;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(_id);
+        parcel.writeString(provider);
+        parcel.writeString(name);
+        parcel.writeString(email);
+//        parcel.writeInt(currentPaid);
+//        parcel.writeInt(currentHaveToPay);
+        parcel.writeString(role);
+        parcel.writeString(__v);
     }
 }

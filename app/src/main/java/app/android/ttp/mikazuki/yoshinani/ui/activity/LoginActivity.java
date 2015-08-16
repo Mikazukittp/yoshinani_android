@@ -23,6 +23,8 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
+
+    private static final String TAG = "LoginActivity";
     @Bind(R.id.email)
     EditText email;
     @Bind(R.id.password)
@@ -55,6 +57,16 @@ public class LoginActivity extends AppCompatActivity {
                 mUserRepository.getMe(new BaseCallback<User>() {
                     @Override
                     public void onSuccess(User user) {
+                        Log.d(TAG, "====ME====");
+                        Log.d(TAG, user.get_id());
+                        Log.d(TAG, user.getEmail());
+                        Log.d(TAG, user.getName());
+                        Log.d(TAG, user.getProvider());
+                        Log.d(TAG, user.getRole());
+                        Log.d(TAG, user.getCurrentHaveToPay()+"");
+                        Log.d(TAG, user.getCurrentPaid() + "");
+                        Log.d(TAG, "==========");
+
                         SharedPreferences sp = getSharedPreferences("LocalData", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("myId", user.get_id());

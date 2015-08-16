@@ -42,6 +42,13 @@ public class RetrofitUserRepository implements UserRepository {
                 .setEndpoint(ApiUtil.API_URL)
                 .setConverter(new GsonConverter(GSON))
                 .setRequestInterceptor(new BaseRequestInterceptor(mContext))
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new RestAdapter.Log() {
+                    @Override
+                    public void log(String msg) {
+                        Log.i(TAG, msg);
+                    }
+                })
                 .build();
         mAPI = REST_ADAPTER.create(RetrofitUserService.class);
     }

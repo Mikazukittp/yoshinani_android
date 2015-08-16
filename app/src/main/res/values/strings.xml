@@ -28,7 +28,14 @@
     <string name="post">作成</string>
     <string name="opponent">誰に</string>
 
+    <string name="dialog_participants_title">参加者</string>
+    <string name="all_check">全選択</string>
+
+
     <string name="log">ログ</string>
     <string name="overview">グループ</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

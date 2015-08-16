@@ -12,12 +12,11 @@ import android.view.MenuItem;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.ui.adapter.PostPagerAdapter;
-import app.android.ttp.mikazuki.yoshinani.ui.fragment.PostPaymentFragment;
 import app.android.ttp.mikazuki.yoshinani.ui.fragment.PostRepaymentFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PostActivity extends AppCompatActivity implements PostPaymentFragment.OnFragmentInteractionListener, PostRepaymentFragment.OnFragmentInteractionListener{
+public class PostActivity extends AppCompatActivity implements PostRepaymentFragment.OnFragmentInteractionListener{
 
     @Bind(R.id.tool_bar)
     Toolbar mToolbar;
