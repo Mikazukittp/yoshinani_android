@@ -26,6 +26,7 @@ public class RetrofitAuthRepository implements AuthRepository {
 
     Gson GSON = new GsonBuilder().create();
 
+
     RestAdapter REST_ADAPTER = new RestAdapter.Builder()
             .setEndpoint(ApiUtil.API_URL)
             .setConverter(new GsonConverter(GSON))

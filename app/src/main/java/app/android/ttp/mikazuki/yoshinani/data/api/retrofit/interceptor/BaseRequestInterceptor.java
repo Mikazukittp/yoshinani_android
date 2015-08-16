@@ -25,7 +25,6 @@ public class BaseRequestInterceptor implements RequestInterceptor {
         SharedPreferences sp = mContext.getSharedPreferences("LocalData", Context.MODE_PRIVATE);
         String token = sp.getString("token", "");
         String accessToken = "Bearer " + token;
-        System.out.println(accessToken);
         request.addHeader("Authorization", accessToken);
     }
 

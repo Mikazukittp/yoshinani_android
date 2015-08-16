@@ -31,7 +31,7 @@ public interface RetrofitPaymentService {
     @POST(PATH_PAYMENTS)
     public void createNewPayment(@Field("amount") int amount,
                                  @Field("event") String event,
-                                 @Field("event") String description,
+                                 @Field("description") String description,
                                  @Field("date") String date,
                                  @Field("groupId") String groupId,
                                  @Field("paidUserId") String paidUserId,
