@@ -1,22 +1,19 @@
 package app.android.ttp.mikazuki.yoshinani.ui.activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.ui.adapter.PostPagerAdapter;
-import app.android.ttp.mikazuki.yoshinani.ui.fragment.PostRepaymentFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PostActivity extends AppCompatActivity implements PostRepaymentFragment.OnFragmentInteractionListener{
+public class PostActivity extends BaseActivity {
 
     @Bind(R.id.tool_bar)
     Toolbar mToolbar;
@@ -51,11 +48,6 @@ public class PostActivity extends AppCompatActivity implements PostRepaymentFrag
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override

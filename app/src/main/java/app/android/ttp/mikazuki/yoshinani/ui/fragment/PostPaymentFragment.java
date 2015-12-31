@@ -65,7 +65,7 @@ public class PostPaymentFragment extends PostFragment implements DatePickerFragm
         ButterKnife.bind(this, view);
 
         mUserRepository = new RetrofitUserRepository(getActivity().getApplicationContext());
-        mUserRepository.getAll(new BaseCallback<List<User>>() {
+        mUserRepository.getAll(1, new BaseCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
                 mUsers = users;
@@ -97,7 +97,7 @@ public class PostPaymentFragment extends PostFragment implements DatePickerFragm
         Bundle args = new Bundle();
         CharSequence[] users = new CharSequence[mUsers.size()];
         for (int i = 0; i < users.length; i++) {
-            users[i] = mUsers.get(i).getName();
+            users[i] = mUsers.get(i).getUsername();
         }
         args.putCharSequenceArray("users", users);
         args.putIntegerArrayList("selected", mSelected);
@@ -106,12 +106,13 @@ public class PostPaymentFragment extends PostFragment implements DatePickerFragm
         dialogFragment.show(getFragmentManager(), "contact_us");
     }
 
+    // モーダルで選択されたユーザ名をViewに表示
     public void setParticipants(ArrayList<Integer> selected) {
         mSelected = selected;
         List<String> selectedUserName = new ArrayList<String>();
         for (int i = 0; i < Math.min(mSelected.size(), 3); i++) {
-            selectedUserName.add(mUsers.get(mSelected.get(i)).getName());
-            Log.d(TAG, mUsers.get(mSelected.get(i)).getName());
+            selectedUserName.add(mUsers.get(mSelected.get(i)).getUsername());
+            Log.d(TAG, mUsers.get(mSelected.get(i)).getUsername());
         }
         String names = TextUtils.join(", ", selectedUserName);
         if (mSelected.size() > 3) {
@@ -124,21 +125,25 @@ public class PostPaymentFragment extends PostFragment implements DatePickerFragm
     @OnClick(R.id.post)
     public void onPostPayment(View v) {
         SharedPreferences sp = getActivity().getSharedPreferences("LocalData", Context.MODE_PRIVATE);
-        List<String> participantsIds = new ArrayList<String>();
-        for (int i = 0; i < mSelected.size(); i++) {
-            participantsIds.add(mUsers.get(mSelected.get(i)).get_id());
+        User me = null;
+        for (User user : mUsers) {
+            if (user.getId() == sp.getInt("uid", -1)) {
+                me = user;
+                break;
+            }
         }
-        Payment payment = new Payment(null,
+        List<User> participants = new ArrayList<User>();
+        for (int i = 0; i < mSelected.size(); i++) {
+            participants.add(mUsers.get(mSelected.get(i)));
+        }
+        Payment payment = new Payment(-1,
                 Integer.parseInt(mAmount.getText() + ""),
                 mEvent.getText().toString(),
                 mDescription.getText().toString(),
                 mDate.getText().toString(),
-                null,
-                sp.getString("myId", ""),
-                null,
-                participantsIds,
-                false,
-                0);
+                me,
+                participants,
+                true);
         mPaymentRepository = new RetrofitPaymentRepository(getActivity().getApplicationContext());
         mPaymentRepository.create(payment, new BaseCallback<Payment>() {
             @Override

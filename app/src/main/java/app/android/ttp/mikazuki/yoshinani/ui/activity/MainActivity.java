@@ -10,18 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.ui.adapter.MainPagerAdapter;
-import app.android.ttp.mikazuki.yoshinani.ui.fragment.LogFragment;
+import app.android.ttp.mikazuki.yoshinani.ui.event.ActivityTransitionEvent;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
-public class MainActivity extends AppCompatActivity implements LogFragment.OnFragmentInteractionListener {
-
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -52,24 +51,33 @@ public class MainActivity extends AppCompatActivity implements LogFragment.OnFra
         if (actionBar != null) {
             actionBar.setDisplayShowHomeEnabled(true);
         }
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                menuItem.setChecked(true);
-                int itemId = menuItem.getItemId();
-                if (itemId == R.id.menu_log) {
-                    mViewPager.setCurrentItem(0);
-                    mDrawerLayout.closeDrawers();
-                    return true;
-                } else if (itemId == R.id.menu_overview) {
-                    mViewPager.setCurrentItem(1);
-                    mDrawerLayout.closeDrawers();
-                    return true;
-                }
-                return false;
+        mNavigationView.setNavigationItemSelectedListener(menuItem -> {
+            menuItem.setChecked(true);
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.menu_log) {
+                mViewPager.setCurrentItem(0);
+                mDrawerLayout.closeDrawers();
+                return true;
+            } else if (itemId == R.id.menu_overview) {
+                mViewPager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
+                return true;
             }
+            return false;
         });
         initTabLayout();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        EventBus.getDefault().unregister(this);
+        super.onPause();
     }
 
     private void initTabLayout() {
@@ -102,9 +110,8 @@ public class MainActivity extends AppCompatActivity implements LogFragment.OnFra
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void createNewPayment() {
-        Intent i = new Intent(this, PostActivity.class);
+    public void onEvent(ActivityTransitionEvent event) {
+        Intent i = new Intent(this, event.getDestinationActivity());
         i.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         startActivity(i);
         overridePendingTransition(R.anim.in_bottom, R.anim.stay);

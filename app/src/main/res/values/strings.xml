@@ -37,5 +37,7 @@
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_groups">Groups</string>
 
 </resources>

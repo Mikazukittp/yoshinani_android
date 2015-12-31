@@ -7,41 +7,35 @@ import java.util.List;
  */
 public class Payment {
 
-    private String _id;
+    private int id;
     private int amount;
     private String event;
     private String description;
     private String date;
     private User paidUser;
-    private String paidUserId;
     private List<User> participants;
-    private List<String> participantsIds;
-    private boolean isDelete;
-    private int _v;
+    private boolean isRepayment;
 
     public Payment() {
     }
 
-    public Payment(String _id, int amount, String event, String description, String date, User paidUser, String paidUserId, List<User> participants, List<String> participantsIds, boolean isDelete, int _v) {
-        this._id = _id;
+    public Payment(int id, int amount, String event, String description, String date, User paidUser, List<User> participants, boolean isRepayment) {
+        this.id = id;
         this.amount = amount;
         this.event = event;
         this.description = description;
         this.date = date;
         this.paidUser = paidUser;
-        this.paidUserId = paidUserId;
         this.participants = participants;
-        this.participantsIds = participantsIds;
-        this.isDelete = isDelete;
-        this._v = _v;
+        this.isRepayment = isRepayment;
     }
 
-    public String get_id() {
-        return _id;
+    public int getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAmount() {
@@ -84,14 +78,6 @@ public class Payment {
         this.paidUser = paidUser;
     }
 
-    public String getPaidUserId() {
-        return paidUserId;
-    }
-
-    public void setPaidUserId(String paidUserId) {
-        this.paidUserId = paidUserId;
-    }
-
     public List<User> getParticipants() {
         return participants;
     }
@@ -100,27 +86,11 @@ public class Payment {
         this.participants = participants;
     }
 
-    public List<String> getParticipantsIds() {
-        return participantsIds;
+    public boolean isRepayment() {
+        return isRepayment;
     }
 
-    public void setParticipantsIds(List<String> participantsIds) {
-        this.participantsIds = participantsIds;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(boolean isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public int get_v() {
-        return _v;
-    }
-
-    public void set_v(int _v) {
-        this._v = _v;
+    public void setIsRepayment(boolean isRepayment) {
+        this.isRepayment = isRepayment;
     }
 }

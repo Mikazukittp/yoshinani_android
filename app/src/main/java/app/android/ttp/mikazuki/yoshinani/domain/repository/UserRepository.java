@@ -1,5 +1,7 @@
 package app.android.ttp.mikazuki.yoshinani.domain.repository;
 
+import java.util.List;
+
 import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 
 /**
@@ -7,5 +9,7 @@ import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
  */
 public interface UserRepository extends BaseRepository<User> {
 
-    public void getMe(BaseCallback<User> cb);
+    void getAll(int groupId, BaseCallback<List<User>> cb);
+
+    void signIn(String email, String password, BaseCallback<User> cb);
 }

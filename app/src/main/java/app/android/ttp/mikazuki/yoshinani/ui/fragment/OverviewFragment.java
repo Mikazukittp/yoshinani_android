@@ -10,10 +10,10 @@ import android.widget.ListView;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
-import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitGroupRepository;
-import app.android.ttp.mikazuki.yoshinani.domain.entity.Group;
+import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitUserRepository;
 import app.android.ttp.mikazuki.yoshinani.domain.entity.User;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
+import app.android.ttp.mikazuki.yoshinani.domain.repository.UserRepository;
 import app.android.ttp.mikazuki.yoshinani.ui.adapter.UserListAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,7 +23,7 @@ public class OverviewFragment extends MainFragment {
     @Bind(R.id.overViewList)
     ListView overViewList;
 
-    private RetrofitGroupRepository mGroupRepository;
+    private UserRepository mUserRepository;
 
     public static OverviewFragment newInstance() {
         OverviewFragment fragment = new OverviewFragment();
@@ -39,19 +39,18 @@ public class OverviewFragment extends MainFragment {
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
         ButterKnife.bind(this, view);
 
-        mGroupRepository = new RetrofitGroupRepository(getActivity().getApplicationContext());
+        mUserRepository = new RetrofitUserRepository(getActivity().getApplicationContext());
 
-        setOverView();
+        setOverView(1);
 
         return view;
     }
 
-    public void setOverView() {
-        mGroupRepository.getOverView(new BaseCallback<Group>() {
+    public void setOverView(int group_id) {
+        mUserRepository.getAll(group_id, new BaseCallback<List<User>>() {
 
             @Override
-            public void onSuccess(Group group) {
-                List<User> users = group.getMembers();
+            public void onSuccess(List<User> users) {
                 UserListAdapter adapter = new UserListAdapter(getActivity().getApplicationContext(), 0, users);
                 overViewList.setAdapter(adapter);
             }

@@ -1,6 +1,5 @@
 package app.android.ttp.mikazuki.yoshinani.ui.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,10 +16,13 @@ import app.android.ttp.mikazuki.yoshinani.data.api.retrofit.repository.RetrofitP
 import app.android.ttp.mikazuki.yoshinani.domain.entity.Payment;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.BaseCallback;
 import app.android.ttp.mikazuki.yoshinani.domain.repository.PaymentRepository;
+import app.android.ttp.mikazuki.yoshinani.ui.activity.PostActivity;
 import app.android.ttp.mikazuki.yoshinani.ui.adapter.PaymentListAdapter;
+import app.android.ttp.mikazuki.yoshinani.ui.event.ActivityTransitionEvent;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -35,7 +37,6 @@ public class LogFragment extends MainFragment {
     ListView mListView;
 
     private PaymentRepository mPaymentRepository;
-    private OnFragmentInteractionListener mListener;
 
     public static LogFragment newInstance() {
         LogFragment fragment = new LogFragment();
@@ -57,16 +58,16 @@ public class LogFragment extends MainFragment {
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                setListData();
+                setListData(1);
             }
         });
-        setListData();
+        setListData(1);
 
         return view;
     }
 
-    private void setListData() {
-        mPaymentRepository.getAll(new BaseCallback<List<Payment>>() {
+    private void setListData(int groupId) {
+        mPaymentRepository.getAll(groupId, new BaseCallback<List<Payment>>() {
             @Override
             public void onSuccess(List<Payment> payments) {
                 PaymentListAdapter adapter = new PaymentListAdapter(getActivity().getApplicationContext(), 0, payments);
@@ -88,43 +89,16 @@ public class LogFragment extends MainFragment {
 
     @OnClick(R.id.fab)
     public void onButtonPressed(View v) {
-        mListener.createNewPayment();
+        EventBus.getDefault().post(new ActivityTransitionEvent(PostActivity.class));
 //        Snackbar.make(mCoordinatorLayout, getString(R.string.btn_clicked), Snackbar.LENGTH_LONG)
-//                .setAction(getString(R.string.goToMain), new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mListener.createNewPayment();
-//                    }
-//                })
+//                .setAction(getString(R.string.goToMain), (View v) -> { mListener.createNewPayment(); })
 //                .show();
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void createNewPayment();
     }
 
 }

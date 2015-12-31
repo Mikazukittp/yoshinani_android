@@ -3,43 +3,37 @@ package app.android.ttp.mikazuki.yoshinani.domain.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by haijimakazuki on 15/07/09.
  */
 public class User implements Parcelable {
 
-    private String _id;
-    private String provider;
-    private String name;
+    private int id;
+    private String account;
+    private String username;
     private String email;
-    private int currentPaid;
-    private int currentHaveToPay;
-    private String role;
-    private String __v;
+    private String token;
+    private List<Total> totals;
 
     public User() {
     }
 
-    public User(String _id, String provider, String name, String email, int currentPaid, int currentHaveToPay, String role, String __v) {
-        this._id = _id;
-        this.provider = provider;
-        this.name = name;
+    public User(int id, String account, String username, String email, String token) {
+        this.id = id;
+        this.account = account;
+        this.username = username;
         this.email = email;
-        this.currentPaid = currentPaid;
-        this.currentHaveToPay = currentHaveToPay;
-        this.role = role;
-        this.__v = __v;
+        this.token = token;
     }
 
     protected User(Parcel in) {
-        _id = in.readString();
-        provider = in.readString();
-        name = in.readString();
+        id = in.readInt();
+        account = in.readString();
+        username = in.readString();
         email = in.readString();
-        currentPaid = in.readInt();
-        currentHaveToPay = in.readInt();
-        role = in.readString();
-        __v = in.readString();
+        token = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -54,28 +48,28 @@ public class User implements Parcelable {
         }
     };
 
-    public String get_id() {
-        return _id;
+    public int getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getProvider() {
-        return provider;
+    public String getAccount() {
+        return account;
     }
 
-    public void setProvider(String provider) {
-        this.provider = provider;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -86,36 +80,20 @@ public class User implements Parcelable {
         this.email = email;
     }
 
-    public int getCurrentPaid() {
-        return currentPaid;
+    public String getToken() {
+        return token;
     }
 
-    public void setCurrentPaid(int currentPaid) {
-        this.currentPaid = currentPaid;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public int getCurrentHaveToPay() {
-        return currentHaveToPay;
+    public List<Total> getTotals() {
+        return totals;
     }
 
-    public void setCurrentHaveToPay(int currentHaveToPay) {
-        this.currentHaveToPay = currentHaveToPay;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String get__v() {
-        return __v;
-    }
-
-    public void set__v(String __v) {
-        this.__v = __v;
+    public void setTotals(List<Total> totals) {
+        this.totals = totals;
     }
 
     @Override
@@ -125,13 +103,10 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(_id);
-        parcel.writeString(provider);
-        parcel.writeString(name);
+        parcel.writeInt(id);
+        parcel.writeString(account);
+        parcel.writeString(username);
         parcel.writeString(email);
-//        parcel.writeInt(currentPaid);
-//        parcel.writeInt(currentHaveToPay);
-        parcel.writeString(role);
-        parcel.writeString(__v);
+        parcel.writeString(token);
     }
 }

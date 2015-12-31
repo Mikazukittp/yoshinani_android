@@ -1,7 +1,6 @@
 package app.android.ttp.mikazuki.yoshinani.ui.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,17 +41,9 @@ public class UserListAdapter extends ArrayAdapter<User> {
         }
 
         User user = getItem(position);
-        Log.d(TAG, "==========");
-        Log.d(TAG, user.get_id());
-        Log.d(TAG, user.getEmail());
-        Log.d(TAG, user.getName());
-        Log.d(TAG, user.getProvider());
-        Log.d(TAG, user.getRole());
-        Log.d(TAG, user.getCurrentHaveToPay()+"");
-        Log.d(TAG, user.getCurrentPaid()+"");
-        Log.d(TAG, "==========");
-        holder.userName.setText(user.getName());
-        int amount = user.getCurrentPaid() - user.getCurrentHaveToPay();
+        holder.userName.setText(user.getUsername());
+         int amount = (int)Math.round(user.getTotals().get(0).getPaid() - user.getTotals().get(0).getToPay());
+//         int amount = 0;
         holder.userAmount.setText("￥"+Integer.toString(amount));
 
         return convertView;

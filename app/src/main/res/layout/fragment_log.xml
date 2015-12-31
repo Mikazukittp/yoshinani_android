@@ -21,6 +21,8 @@
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="64dp"
                 android:scrollingCache="false" />
 
         </android.support.v4.widget.SwipeRefreshLayout>

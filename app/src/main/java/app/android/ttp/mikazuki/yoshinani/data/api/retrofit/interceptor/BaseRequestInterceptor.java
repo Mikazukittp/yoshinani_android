@@ -23,9 +23,10 @@ public class BaseRequestInterceptor implements RequestInterceptor {
     public void intercept(RequestFacade request) {
 
         SharedPreferences sp = mContext.getSharedPreferences("LocalData", Context.MODE_PRIVATE);
+        int uid = sp.getInt("uid", -1);
         String token = sp.getString("token", "");
-        String accessToken = "Bearer " + token;
-        request.addHeader("Authorization", accessToken);
+        request.addHeader("UID", uid+"");
+        request.addHeader("TOKEN", token);
     }
 
 }

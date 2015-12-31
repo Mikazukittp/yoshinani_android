@@ -1,7 +1,5 @@
 package app.android.ttp.mikazuki.yoshinani.ui.fragment;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +9,6 @@ import app.android.ttp.mikazuki.yoshinani.R;
 import butterknife.ButterKnife;
 
 public class PostRepaymentFragment extends PostFragment {
-
-    private OnFragmentInteractionListener mListener;
 
     public static PostRepaymentFragment newInstance() {
         PostRepaymentFragment fragment = new PostRepaymentFragment();
@@ -30,37 +26,10 @@ public class PostRepaymentFragment extends PostFragment {
         return view;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
     }
 
 }
