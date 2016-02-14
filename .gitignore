@@ -20,3 +20,5 @@ app/build/
 .DS_Store
 
 build/
+
+app/signingConfigs/
