@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="payment"
+            type="app.android.ttp.mikazuki.yoshinani.model.PaymentModel"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="right"
+            android:text='@{payment.amount}'
+            android:textColor="@color/theme600"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="¥9,999"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/price"
+            android:text='@{payment.paidUser.account}'
+            android:textColor="@color/gray600"
+            android:textSize="13sp"
+            tools:text="name"/>
+
+        <TextView
+            android:id="@+id/event_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:ellipsize="end"
+            android:text='@{payment.event}'
+            android:textColor="@color/gray600"
+            android:textSize="13sp"
+            tools:text="イベント: 詳細"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text='@{payment.date}'
+            android:textColor="@color/gray600"
+            android:textSize="13sp"
+            tools:text="2015-01-01"/>
+    </RelativeLayout>
+</layout>

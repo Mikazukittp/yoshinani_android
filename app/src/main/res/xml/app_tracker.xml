@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- How long a session exists before giving up -->
+    <integer name="ga_sessionTimeout">300</integer>
+    <!-- Enable automatic Activity measurement -->
+    <bool name="ga_autoActivityTracking">true</bool>
+    <!-- The screen names that will appear in reports -->
+    <screenName name="app.android.ttp.mikazuki.yoshinani.view.activity.LoginActivity">
+        ログイン
+    </screenName>
+    <screenName name="app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity">
+        メイン画面
+    </screenName>
+    <string name="ga_trackingId">UA-64303218-3</string>
+</resources>

@@ -1,42 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.android.ttp.mikazuki.yoshinani">
+          package="app.android.ttp.mikazuki.yoshinani">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <!--android:name=".App"-->
     <application
-        android:name=".App"
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".view.activity.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MainActivity"
-            android:label="@string/app_name" />
+            android:name=".view.activity.GroupActivity"/>
         <activity
-            android:name=".ui.activity.PostActivity"
-            android:label="@string/title_activity_post" />
+            android:name=".view.activity.PostActivity"
+            android:label="@string/title_activity_post"/>
         <activity
-            android:name=".ui.activity.BaseActivity"
-            android:label="@string/title_activity_base" />
+            android:name=".view.activity.BaseActivity"
+            android:label="@string/title_activity_base"/>
         <activity
-            android:name=".ui.activity.GroupsActivity"
-            android:label="@string/title_activity_groups"
-            android:parentActivityName=".BaseActivity"
+            android:name=".view.activity.MainActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".view.activity.BaseActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="BaseActivity" />
         </activity>
+        <!--Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent"/>
+
+        <!-- ANALYTICS -->
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false"/>
+        <!--This meta-data tag is required to use Google Play Services.-->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d4c64d3b1050d78232362b2c9d7bff55bb4c5cc8"/>
     </application>
 
 </manifest>

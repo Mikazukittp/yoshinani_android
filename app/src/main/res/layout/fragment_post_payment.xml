@@ -1,73 +1,134 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/amount_input_layout"
+    <data>
+
+        <variable
+            name="payment"
+            type="app.android.ttp.mikazuki.yoshinani.model.PaymentModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/theme600">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/amount"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/amount_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/amount"
-            android:inputType="text|number"
-            android:textColor="@color/gray800" />
-    </android.support.design.widget.TextInputLayout>
+            android:textColorHint="@color/theme600">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/event_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/theme600">
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:inputType="numberDecimal"
+                android:maxLength="9"
+                android:singleLine="true"
+                android:textColor="@color/theme600"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                app:binding='@{payment.amount}' />
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/event"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/event"
-            android:textColor="@color/gray800" />
-    </android.support.design.widget.TextInputLayout>
+            android:orientation="horizontal">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/description_input_layout"
-        android:layout_width="match_parent"
+            <TextView
+                style="@style/table_header_column"
+                android:text="イベント" />
 
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/theme600">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/event_input_layout"
+                style="@style/table_input_column.textInputLayout">
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/description"
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/event"
+                    android:paddingLeft="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/gray800"
+                    android:textSize="14sp"
+                    app:binding='@{payment.event}' />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/description"
-            android:textColor="@color/gray800" />
-    </android.support.design.widget.TextInputLayout>
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:editable="false"
-        android:hint="@string/date"
-        android:textColor="@color/gray600" />
+            <TextView
+                style="@style/table_header_column"
+                android:text="詳細" />
 
-    <TextView
-        android:id="@+id/participants"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="参加者選択"/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/description_input_layout"
+                style="@style/table_input_column.textInputLayout">
 
-    <Button
-        android:id="@+id/post"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/theme600"
-        android:text="@string/post" />
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description"
+                    android:paddingLeft="12dp"
+                    android:singleLine="true"
+                    android:textColor="@color/gray800"
+                    android:textSize="14sp"
+                    app:binding='@{payment.description}' />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/table_header_column"
+                android:text="日付" />
+
+            <Button
+                android:id="@+id/date"
+                style="@style/table_input_column.button"
+                android:gravity="bottom|left"
+                android:text='@{payment.date}'
+                android:textColor="@color/gray800"
+                android:textSize="14sp" />
+            <!--style="@style/table_input_column"-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/table_header_column"
+                android:text="参加者" />
+
+            <Button
+                android:id="@+id/participants"
+                style="@style/table_input_column.button"
+                android:gravity="bottom|left"
+                android:text="参加者選択"
+                android:textColor="@color/gray800" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/post"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/post" />
+
+
+    </LinearLayout>
+</layout>
