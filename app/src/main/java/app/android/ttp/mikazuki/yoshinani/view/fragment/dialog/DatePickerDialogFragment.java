@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import app.android.ttp.mikazuki.yoshinani.event.DateSetEvent;
-import de.greenrobot.event.EventBus;
 
 /**
  * @author haijimakazuki

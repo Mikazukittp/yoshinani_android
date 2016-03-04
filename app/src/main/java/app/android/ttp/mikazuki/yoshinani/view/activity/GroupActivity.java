@@ -5,7 +5,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import app.android.ttp.mikazuki.yoshinani.R;
@@ -24,11 +25,10 @@ import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.pager.GroupPagerAdapter;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.GroupDetailDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserSearchDialogFragment;
-import app.android.ttp.mikazuki.yoshinani.viewModel.GroupViewModel;
+import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * @author haijimakazuki
@@ -38,14 +38,15 @@ public class GroupActivity extends BaseActivity {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.tab_layout)
-    TabLayout tabLayout;
+    TabLayout mTabLayout;
     @Bind(R.id.view_pager)
     ViewPager mViewPager;
     @Bind(R.id.fab)
     FloatingActionButton mFab;
 
-    private GroupViewModel mGroupViewModel;
+    private GroupService mGroupService;
     private GroupModel mGroupModel;
+    private GroupPagerAdapter mPagerAdapter;
 
     /* ------------------------------------------------------------------------------------------ */
     /*
@@ -58,9 +59,9 @@ public class GroupActivity extends BaseActivity {
         setContentView(R.layout.activity_group);
         ButterKnife.bind(this);
 
-        mGroupViewModel = new GroupViewModel(getApplicationContext());
+        mGroupService = new GroupService(getApplicationContext());
         mGroupModel = Parcels.unwrap(getIntent().getExtras().getParcelable(Constants.BUNDLE_GROUP_KEY));
-        mGroupViewModel.get(mGroupModel.getId());
+        mGroupService.get(mGroupModel.getId());
 
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
@@ -120,12 +121,13 @@ public class GroupActivity extends BaseActivity {
     /* ------------------------------------------------------------------------------------------ */
     /* ------------------------------------------------------------------------------------------ */
     private void initTabLayout() {
-        tabLayout.setBackgroundColor(getResources().getColor(R.color.theme600));
-        PagerAdapter pagerAdapter = new GroupPagerAdapter(GroupActivity.this, mViewPager, getIntent().getExtras());
-        tabLayout.setTabsFromPagerAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.setBackgroundColor(getResources().getColor(R.color.theme600));
+        mPagerAdapter = new GroupPagerAdapter(GroupActivity.this, mViewPager);
+        mPagerAdapter.setGroup(mGroupModel);
+        mTabLayout.setTabsFromPagerAdapter(mPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
     /* ------------------------------------------------------------------------------------------ */
@@ -133,14 +135,20 @@ public class GroupActivity extends BaseActivity {
      * onEvent methods
      */
     /* ------------------------------------------------------------------------------------------ */
+    @Subscribe
     public void onEvent(FetchDataEvent<GroupModel> event) {
+        if (!event.isType(GroupModel.class)) {
+            return;
+        }
         mGroupModel = event.getData();
         setTitle(mGroupModel.getName().get());
         mToolbar.setSubtitle(mGroupModel.getDescription().get());
+        mPagerAdapter.setGroup(mGroupModel);
     }
 
+    @Subscribe
     public void onEvent(RefreshEvent event) {
-        mGroupViewModel.get(mGroupModel.getId());
+        mGroupService.get(mGroupModel.getId());
     }
 
     /* ------------------------------------------------------------------------------------------ */

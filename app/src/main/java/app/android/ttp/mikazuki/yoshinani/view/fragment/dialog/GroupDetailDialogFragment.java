@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import app.android.ttp.mikazuki.yoshinani.R;
@@ -17,10 +19,9 @@ import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
-import app.android.ttp.mikazuki.yoshinani.viewModel.GroupViewModel;
+import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * @author haijimakazuki
@@ -33,7 +34,7 @@ public class GroupDetailDialogFragment extends DialogFragment {
     EditText mDescription;
 
     private GroupModel mGroupModel;
-    private GroupViewModel mGroupViewModel;
+    private GroupService mGroupService;
     private DialogGroupDetailBinding mBinding;
 
     @Override
@@ -41,7 +42,7 @@ public class GroupDetailDialogFragment extends DialogFragment {
         final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_group_detail, null, false);
         ButterKnife.bind(this, view);
 
-        mGroupViewModel = new GroupViewModel(getActivity().getApplicationContext());
+        mGroupService = new GroupService(getActivity().getApplicationContext());
 
         String title;
         String positiveLabel;
@@ -61,15 +62,15 @@ public class GroupDetailDialogFragment extends DialogFragment {
         }
         mBinding = DialogGroupDetailBinding.bind(view);
         mBinding.setGroup(mGroupModel);
-        mGroupViewModel = new GroupViewModel(getActivity().getApplicationContext());
+        mGroupService = new GroupService(getActivity().getApplicationContext());
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle(title)
                 .setView(view)
                 .setPositiveButton(positiveLabel, (dialog, which) -> {
                     if (getArguments() != null) {
-                        mGroupViewModel.update(mGroupModel);
+                        mGroupService.update(mGroupModel);
                     } else {
-                        mGroupViewModel.create(mGroupModel);
+                        mGroupService.create(mGroupModel);
                     }
                 })
                 .setNegativeButton("キャンセル", (dialog, which) -> dismiss());
@@ -93,6 +94,7 @@ public class GroupDetailDialogFragment extends DialogFragment {
      * onEvent methods
      */
     /* ------------------------------------------------------------------------------------------ */
+    @Subscribe
     public void onEvent(@NonNull final FetchDataEvent<GroupModel> event) {
         EventBus.getDefault().post(new RefreshEvent());
         dismiss();

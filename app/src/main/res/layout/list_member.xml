@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"/>
 
     <TextView
         android:id="@+id/userName"
@@ -15,9 +20,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="false"
         android:layout_centerVertical="true"
-        android:textColor="@color/gray600"
+        android:textColor="@color/grey600"
         android:textSize="16sp"
-        tools:text="よしなに太郎" />
+        tools:text="よしなに太郎"
+        android:layout_marginLeft="56dp"/>
 
     <TextView
         android:id="@+id/userAmount"
@@ -28,5 +34,5 @@
         android:layout_centerVertical="true"
         android:textColor="@color/theme600"
         android:textSize="16sp"
-        tools:text="-¥12,345" />
+        tools:text="-¥12,345"/>
 </RelativeLayout>

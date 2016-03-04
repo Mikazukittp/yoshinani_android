@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/account_hint"
                 android:inputType="text"
-                android:textColor="@color/gray800"/>
+                android:textColor="@color/grey800"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button

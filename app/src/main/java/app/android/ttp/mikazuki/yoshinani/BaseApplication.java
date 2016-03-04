@@ -4,7 +4,6 @@ import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 
 /**
@@ -21,12 +20,7 @@ public class BaseApplication extends MultiDexApplication {
      */
     synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-//            analytics.setLocalDispatchPeriod(15);
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-            mTracker = analytics.newTracker(R.xml.global_tracker);
-//            mTracker.enableAutoActivityTracking(true);
-//            mTracker.enableExceptionReporting(true);
+            createTracker();
         }
         return mTracker;
     }
@@ -34,14 +28,19 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-//        analytics.setLocalDispatchPeriod(15);
-        if (BuildConfig.DEBUG) {
-            analytics.setDryRun(true);
-            analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-        }
-        mTracker = analytics.newTracker(R.xml.global_tracker);
-//        mTracker.enableAutoActivityTracking(true);
-//        mTracker.enableExceptionReporting(true);
+        createTracker();
     }
+
+    private void createTracker() {
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+        analytics.setLocalDispatchPeriod(0);
+//        if (BuildConfig.DEBUG) {
+//            analytics.setDryRun(true);
+//            analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
+//        }
+        // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+        mTracker = analytics.newTracker(R.xml.app_tracker);
+        mTracker.enableExceptionReporting(true);
+    }
+
 }

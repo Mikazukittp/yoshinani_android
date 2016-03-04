@@ -66,5 +66,13 @@
     <string name="account">ID</string>
 
 
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id">ca-app-pub-8668651775161815/7720270684</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-8668651775161815/5685134282</string>
+    <string name="test_device_id">417B222F70913CAC12ECE9B9DD3EABE8</string>
+
+    <string name="facebook_app_id">654520651355162</string>
+    <string name="menu_account">アカウント設定</string>
+    <string name="version">バージョン %1$s</string>
+    <string name="menu_top">TOP画面</string>
+
 </resources>

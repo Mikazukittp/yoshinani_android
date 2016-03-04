@@ -48,7 +48,7 @@
                 style="@style/table_input_column.button"
                 android:gravity="bottom|left"
                 android:text='@{payment.date}'
-                android:textColor="@color/gray800"
+                android:textColor="@color/grey800"
                 android:textSize="14sp" />
             <!--style="@style/table_input_column"-->
         </LinearLayout>
@@ -67,7 +67,7 @@
                 style="@style/table_input_column.button"
                 android:gravity="bottom|left"
                 android:text="返済相手選択"
-                android:textColor="@color/gray800" />
+                android:textColor="@color/grey800" />
         </LinearLayout>
 
         <Button

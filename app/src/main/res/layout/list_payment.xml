@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
+
 
     <data>
 
@@ -15,6 +17,9 @@
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="16dp">
 
         <TextView
@@ -24,10 +29,10 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="right"
-            android:text='@{payment.amount}'
             android:textColor="@color/theme600"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:currency='@{payment.amount.get()}'
             tools:text="¥9,999"/>
 
         <TextView
@@ -36,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/price"
             android:text='@{payment.paidUser.account}'
-            android:textColor="@color/gray600"
+            android:textColor="@color/grey600"
             android:textSize="13sp"
             tools:text="name"/>
 
@@ -47,7 +52,7 @@
             android:layout_below="@+id/name"
             android:ellipsize="end"
             android:text='@{payment.event}'
-            android:textColor="@color/gray600"
+            android:textColor="@color/grey600"
             android:textSize="13sp"
             tools:text="イベント: 詳細"/>
 
@@ -58,7 +63,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:text='@{payment.date}'
-            android:textColor="@color/gray600"
+            android:textColor="@color/grey600"
             android:textSize="13sp"
             tools:text="2015-01-01"/>
     </RelativeLayout>

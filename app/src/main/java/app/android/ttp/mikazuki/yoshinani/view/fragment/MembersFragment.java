@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -20,10 +22,9 @@ import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.MemberListAdapter;
-import app.android.ttp.mikazuki.yoshinani.viewModel.GroupViewModel;
+import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 public class MembersFragment extends Fragment {
 
@@ -33,7 +34,7 @@ public class MembersFragment extends Fragment {
     ListView mListView;
 
     private List<UserModel> mUserModels;
-    private GroupViewModel mGroupViewModel;
+    private GroupService mGroupService;
     private GroupModel mGroupModel;
 
     public MembersFragment() {
@@ -52,11 +53,11 @@ public class MembersFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mGroupModel = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
-        mGroupViewModel = new GroupViewModel(getActivity().getApplicationContext());
-        mGroupViewModel.get(mGroupModel.getId());
+        mGroupService = new GroupService(getActivity().getApplicationContext());
+        mGroupService.get(mGroupModel.getId());
 
         mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
-        mSwipeRefresh.setOnRefreshListener(() -> mGroupViewModel.get(mGroupModel.getId()));
+        mSwipeRefresh.setOnRefreshListener(() -> mGroupService.get(mGroupModel.getId()));
         ViewCompat.setNestedScrollingEnabled(mListView, true);
 
         return view;
@@ -85,6 +86,7 @@ public class MembersFragment extends Fragment {
      * onEvent methods
      */
     /* ------------------------------------------------------------------------------------------ */
+    @Subscribe
     public void onEvent(FetchDataEvent<GroupModel> event) {
         if (!event.isType(GroupModel.class)) {
             return;

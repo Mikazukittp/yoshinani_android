@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Set the dispatch period in seconds.-->
+    <!--<int name="ga_dispatchPeriod">0</int>-->
     <!-- How long a session exists before giving up -->
     <integer name="ga_sessionTimeout">300</integer>
     <!-- Enable automatic Activity measurement -->
     <bool name="ga_autoActivityTracking">true</bool>
     <!-- The screen names that will appear in reports -->
-    <screenName name="app.android.ttp.mikazuki.yoshinani.view.activity.LoginActivity">
-        ログイン
+    <screenName name="app.android.ttp.mikazuki.yoshinani.view.activity.LoginActivity">ログイン画面
     </screenName>
-    <screenName name="app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity">
-        メイン画面
+    <screenName name="app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity">メイン画面
+    </screenName>
+    <screenName name="app.android.ttp.mikazuki.yoshinani.view.activity.GroupActivity">グループ個別画面
     </screenName>
     <string name="ga_trackingId">UA-64303218-3</string>
 </resources>

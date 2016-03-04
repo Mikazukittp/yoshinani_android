@@ -11,10 +11,10 @@
 
 
     <!-- Grayscales -->
-    <color name="gray200">#EEEEEE</color>
-    <color name="gray400">#BDBDBD</color>
-    <color name="gray600">#757575</color>
-    <color name="gray800">#424242</color>
+    <color name="grey200">#EEEEEE</color>
+    <color name="grey400">#BDBDBD</color>
+    <color name="grey600">#757575</color>
+    <color name="grey800">#424242</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 

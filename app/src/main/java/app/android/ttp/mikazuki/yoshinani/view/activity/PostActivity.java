@@ -28,7 +28,7 @@ public class PostActivity extends BaseActivity {
         setContentView(R.layout.activity_post);
         ButterKnife.bind(this);
 
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.gray400));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.grey400));
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -40,7 +40,7 @@ public class PostActivity extends BaseActivity {
     }
 
     private void initTabLayout() {
-        tabLayout.setBackgroundColor(getResources().getColor(R.color.gray400));
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.grey400));
         PagerAdapter pagerAdapter = new PostPagerAdapter(PostActivity.this, mViewPager, getIntent().getExtras());
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(mViewPager);

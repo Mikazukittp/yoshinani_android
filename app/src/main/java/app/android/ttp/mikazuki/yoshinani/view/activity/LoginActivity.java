@@ -5,12 +5,14 @@ import android.support.design.widget.Snackbar;
 
 import com.crashlytics.android.Crashlytics;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.ShowSnackbarEvent;
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.SignInFragment;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 
 public class LoginActivity extends BaseActivity {
@@ -24,6 +26,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(getApplicationContext(), new Crashlytics());
+
         // ログイン済みならメイン画面へ遷移
         if (PreferenceUtil.isUserDataStored(this)) {
             goTo(MainActivity.class, false);
@@ -31,21 +34,19 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+
         SignInFragment fragment = new SignInFragment();
         replaceFragment(fragment, R.id.fragment_container, false);
-
-//        ((BaseApplication) getApplication()).getDefaultTracker();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        GoogleAnalytics.getInstance(this).reportActivityStart(this);
     }
 
     @Override
     protected void onStop() {
-//        GoogleAnalytics.getInstance(this).reportActivityStop(this);
         super.onStop();
     }
 
@@ -53,10 +54,12 @@ public class LoginActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
+//        AppEventsLogger.activateApp(this);
     }
 
     @Override
     protected void onPause() {
+//        AppEventsLogger.deactivateApp(this);
         EventBus.getDefault().unregister(this);
         super.onPause();
     }
@@ -71,6 +74,7 @@ public class LoginActivity extends BaseActivity {
      * onEvent methods
      */
     /* ------------------------------------------------------------------------------------------ */
+    @Subscribe
     public void onEvent(ShowSnackbarEvent event) {
         Snackbar.make(findViewById(R.id.fragment_container), event.getmMessage(), Snackbar.LENGTH_SHORT).show();
     }

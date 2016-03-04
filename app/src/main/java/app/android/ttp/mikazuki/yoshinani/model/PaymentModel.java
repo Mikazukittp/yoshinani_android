@@ -181,4 +181,17 @@ public class PaymentModel extends BaseObservable {
     public void setIsRepayment(boolean isRepayment) {
         this.isRepayment.set(isRepayment);
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final PaymentModel that = (PaymentModel) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

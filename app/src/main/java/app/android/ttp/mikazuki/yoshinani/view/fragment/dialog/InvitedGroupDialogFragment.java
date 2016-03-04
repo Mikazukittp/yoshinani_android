@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 import com.google.common.collect.Lists;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -24,7 +26,6 @@ import app.android.ttp.mikazuki.yoshinani.model.GroupUserModel;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.InvitedGroupListAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import rx.Observable;
 
 /**
@@ -85,6 +86,7 @@ public class InvitedGroupDialogFragment extends DialogFragment {
      * onEvent methods
      */
     /* ------------------------------------------------------------------------------------------ */
+    @Subscribe
     public void onEvent(FetchDataEvent<GroupUserModel> event) {
         EventBus.getDefault().post(new RefreshEvent());
         dismiss();

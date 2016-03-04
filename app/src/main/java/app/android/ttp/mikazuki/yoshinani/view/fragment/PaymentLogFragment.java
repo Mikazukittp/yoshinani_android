@@ -4,42 +4,50 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import java.util.List;
+import java.util.Objects;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.FetchListDataEvent;
+import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.event.ShowDialogEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.PaymentListAdapter;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.PaymentDetailDialogFragment;
-import app.android.ttp.mikazuki.yoshinani.viewModel.PaymentViewModel;
+import app.android.ttp.mikazuki.yoshinani.services.PaymentService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class PaymentLogFragment extends Fragment {
 
+    private static final int VISIBLE_THRESHOLD = 20;
+
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
-    @Bind(R.id.list_view)
-    ListView mListView;
-    private PaymentViewModel mPaymentViewModel;
+    @Bind(R.id.recycler_view)
+    RecyclerView mRecyclerView;
+
+    private PaymentService mPaymentService;
     private GroupModel mGroupModel;
     private List<PaymentModel> mPayments;
+    private PaymentListAdapter mRecyclerViewAdapter;
 
     public PaymentLogFragment() {
     }
@@ -52,22 +60,13 @@ public class PaymentLogFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mGroupModel = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
-        mPaymentViewModel = new PaymentViewModel(getActivity().getApplicationContext());
-        mPaymentViewModel.getAll(mGroupModel.getId());
+        mPaymentService = new PaymentService(getActivity().getApplicationContext());
 
         mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
-        mSwipeRefresh.setOnRefreshListener(() -> mPaymentViewModel.getAll(mGroupModel.getId()));
-        ViewCompat.setNestedScrollingEnabled(mListView, true);
-        mListView.setOnItemLongClickListener((parent, v, position, id) -> {
-            PaymentModel payment = (PaymentModel) parent.getAdapter().getItem(position);
-            ShowDialogEvent event = new ShowDialogEvent();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("payment", Parcels.wrap(payment));
-            event.setBundle(bundle);
-            EventBus.getDefault().post(event);
-            return true;
-        });
+        mSwipeRefresh.setOnRefreshListener(() -> refresh());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
+        refresh();
         return view;
     }
 
@@ -89,29 +88,54 @@ public class PaymentLogFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    public void refresh() {
+        mSwipeRefresh.setRefreshing(true);
+        mPaymentService.getAll(mGroupModel.getId());
+    }
+
     /* ------------------------------------------------------------------------------------------ */
     /*
      * onEvent methods
      */
     /* ------------------------------------------------------------------------------------------ */
+    @Subscribe
     public void onEvent(FetchListDataEvent<PaymentModel> event) {
-        if (!event.isType(PaymentModel.class)) {
-            return;
-        }
-        if (event.getListData() != null) {
+        if (Objects.equals(event.getTag(), "first")) {
             mPayments = event.getListData();
-            mListView.setAdapter(new PaymentListAdapter(getActivity().getApplicationContext(), mPayments));
+            mRecyclerViewAdapter = new PaymentListAdapter(mRecyclerView, mPayments,
+                    (v, position) -> {
+                        ShowDialogEvent dialogEvent = new ShowDialogEvent();
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("payment", Parcels.wrap(mPayments.get(position)));
+                        dialogEvent.setBundle(bundle);
+                        EventBus.getDefault().post(dialogEvent);
+                        return true;
+                    },
+                    () -> mPaymentService.getNext(mGroupModel.getId(), mPayments.get(mPayments.size() - 2).getId())
+            );
+            mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        } else if (Objects.equals(event.getTag(), "next")) {
+            Log.d("!!!!!", "next API is called");
+            mRecyclerViewAdapter.addItems(event.getListData());
+            mRecyclerViewAdapter.removeItem(null);
         }
+//        }
         if (mSwipeRefresh.isRefreshing()) {
             mSwipeRefresh.setRefreshing(false);
         }
     }
 
+    @Subscribe
     public void onEvent(ShowDialogEvent event) {
         FragmentManager manager = getFragmentManager();
         PaymentDetailDialogFragment dialog = new PaymentDetailDialogFragment();
-        dialog.setBundle(event.getBundle());
+        dialog.setArguments(event.getBundle());
         dialog.show(manager, "dialog");
+    }
+
+    @Subscribe
+    public void onEvent(RefreshEvent event) {
+        refresh();
     }
 
 }

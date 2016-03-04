@@ -8,11 +8,12 @@ import android.support.v7.app.AlertDialog;
 
 import com.google.common.collect.Lists;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.UserMultiSelectEvent;
-import de.greenrobot.event.EventBus;
 
 public class UserMultiSelectDialogFragment extends DialogFragment {
 
@@ -41,7 +42,7 @@ public class UserMultiSelectDialogFragment extends DialogFragment {
                     if (isChecked) {
                         mSelected.add(which);
                     } else {
-                        mSelected.remove(which);
+                        mSelected.remove(Integer.valueOf(which));
                     }
                 })
                 .setPositiveButton(R.string.ok, (DialogInterface dialog, int id) -> {

@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import org.greenrobot.eventbus.EventBus;
+
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.UserSelectEvent;
-import de.greenrobot.event.EventBus;
 
 public class UserSelectDialogFragment extends DialogFragment {
 

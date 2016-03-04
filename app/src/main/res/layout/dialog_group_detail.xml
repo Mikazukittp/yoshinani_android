@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/group_name"
                 android:inputType="text"
-                android:textColor="@color/gray800"
+                android:textColor="@color/grey800"
                 app:binding='@{group.name}'/>
         </android.support.design.widget.TextInputLayout>
 
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/group_description"
                 android:inputType="text"
-                android:textColor="@color/gray800"
+                android:textColor="@color/grey800"
                 app:binding='@{group.description}'/>
         </android.support.design.widget.TextInputLayout>
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.TotalModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
+import app.android.ttp.mikazuki.yoshinani.utils.TextUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
@@ -21,7 +23,7 @@ import rx.Observable;
  * @author haijimakazuki
  */
 public class MemberListAdapter extends ArrayAdapter<UserModel> {
-    private static final String TAG = "MemberListAdapter";
+    private static final String TAG = MemberListAdapter.class.getSimpleName();
     private final GroupModel mGroupModel;
     private LayoutInflater layoutInflater;
     private Context mContext;
@@ -46,19 +48,22 @@ public class MemberListAdapter extends ArrayAdapter<UserModel> {
         }
 
         UserModel user = getItem(position);
+        holder.icon.setImageDrawable(user.getIcon());
         holder.userName.setText(user.getUsername());
         int amount = Observable.from(user.getTotals())
                 .filter(total -> total.getGroupId() == mGroupModel.getId())
                 .map(TotalModel::getResult)
                 .defaultIfEmpty(0)
                 .toBlocking().single();
-        holder.userAmount.setText(String.format("¥%,d", amount));
+        holder.userAmount.setText(TextUtils.wrapCurrency(amount));
         holder.userAmount.setTextColor(mContext.getResources().getColor(amount >= 0 ? R.color.theme600 : R.color.red800));
 
         return convertView;
     }
 
     static class ViewHolder {
+        @Bind(R.id.icon)
+        ImageView icon;
         @Bind(R.id.userName)
         TextView userName;
         @Bind(R.id.userAmount)

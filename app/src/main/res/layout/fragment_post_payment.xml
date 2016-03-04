@@ -53,7 +53,7 @@
                     android:hint="@string/event"
                     android:paddingLeft="12dp"
                     android:singleLine="true"
-                    android:textColor="@color/gray800"
+                    android:textColor="@color/grey800"
                     android:textSize="14sp"
                     app:binding='@{payment.event}' />
             </android.support.design.widget.TextInputLayout>
@@ -79,7 +79,7 @@
                     android:hint="@string/description"
                     android:paddingLeft="12dp"
                     android:singleLine="true"
-                    android:textColor="@color/gray800"
+                    android:textColor="@color/grey800"
                     android:textSize="14sp"
                     app:binding='@{payment.description}' />
             </android.support.design.widget.TextInputLayout>
@@ -99,7 +99,7 @@
                 style="@style/table_input_column.button"
                 android:gravity="bottom|left"
                 android:text='@{payment.date}'
-                android:textColor="@color/gray800"
+                android:textColor="@color/grey800"
                 android:textSize="14sp" />
             <!--style="@style/table_input_column"-->
         </LinearLayout>
@@ -118,7 +118,7 @@
                 style="@style/table_input_column.button"
                 android:gravity="bottom|left"
                 android:text="参加者選択"
-                android:textColor="@color/gray800" />
+                android:textColor="@color/grey800" />
         </LinearLayout>
 
         <Button

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                        xmlns:ads="http://schemas.android.com/apk/res-auto"
                                         xmlns:app="http://schemas.android.com/apk/res-auto"
                                         xmlns:tools="http://schemas.android.com/tools"
                                         android:id="@+id/drawer_layout"
@@ -29,54 +28,10 @@
 
         </android.support.design.widget.AppBarLayout>
 
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="?attr/actionBarSize">
-
-            <TextView
-                android:id="@+id/total_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:padding="16dp"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                tools:text="¥12,345"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:text="グループ"/>
-
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ListView
-                    android:id="@+id/list_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingTop="4dp"
-                    android:scrollingCache="false"/>
-            </android.support.v4.widget.SwipeRefreshLayout>
-
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/banner_ad_unit_id"
-                >
-            </com.google.android.gms.ads.AdView>
-        </LinearLayout>
+            android:layout_height="match_parent"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

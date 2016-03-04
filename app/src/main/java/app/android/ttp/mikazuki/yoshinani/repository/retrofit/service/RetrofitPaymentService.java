@@ -9,6 +9,7 @@ import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.Payment;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -27,12 +28,18 @@ public interface RetrofitPaymentService {
     @GET(PATH_PAYMENTS)
     public Observable<Response<List<Payment>>> getPayments(@Query("group_id") int goupId);
 
+    @GET(PATH_PAYMENTS)
+    public Observable<Response<List<Payment>>> getNextPayments(@Query("group_id") int goupId, @Query("last_id") int last_id);
+
     @FormUrlEncoded
     @GET(PATH_PAYMENT_WITH_ID)
-    public Observable<Response<Payment>> getPaymentById(@Path("id") String payment_id);
+    public Observable<Response<Payment>> getPaymentById(@Path("id") int payment_id);
 
     @POST(PATH_PAYMENTS)
     public Observable<Response<Payment>> createNewPayment(@Body RequestWrapper data);
+
+    @DELETE(PATH_PAYMENT_WITH_ID)
+    public Observable<Response<Payment>> deletePayment(@Path("id") int payment_id);
 
     public class RequestWrapper {
         public PostData payment;

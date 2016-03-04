@@ -1,20 +1,30 @@
 package app.android.ttp.mikazuki.yoshinani.view.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
+
+import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.EventBus;
+
+import app.android.ttp.mikazuki.yoshinani.BuildConfig;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.FragmentTransitionEvent;
-import app.android.ttp.mikazuki.yoshinani.viewModel.AuthViewModel;
+import app.android.ttp.mikazuki.yoshinani.services.AuthService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
+import rx.Observable;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author haijimakazuki
@@ -22,11 +32,15 @@ import de.greenrobot.event.EventBus;
 public class SignInFragment extends Fragment {
 
     @Bind(R.id.account)
-    EditText account;
+    EditText mAccount;
     @Bind(R.id.password)
-    EditText password;
+    EditText mPassword;
+    @Bind(R.id.login_btn)
+    Button mLogin;
 
-    private AuthViewModel mAuthViewModel;
+    private AuthService mAuthService;
+
+    private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -34,8 +48,14 @@ public class SignInFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
         ButterKnife.bind(this, view);
+        mAuthService = new AuthService(getActivity().getApplicationContext());
 
-        mAuthViewModel = new AuthViewModel(getActivity().getApplicationContext());
+        // バリデーション
+        Observable<Boolean> isAccountCompleted = RxTextView.textChanges(mAccount).map(StringUtils::isNotEmpty);
+        Observable<Boolean> isPasswordCompleted = RxTextView.textChanges(mPassword).map(StringUtils::isNotEmpty);
+        Observable<Boolean> isValidAll = Observable.combineLatest(isAccountCompleted, isPasswordCompleted, (a, p) -> a && p);
+        compositeSubscription.add(isValidAll.subscribe(isValid -> mLogin.setEnabled(isValid)));
+
         return view;
     }
 
@@ -55,6 +75,7 @@ public class SignInFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        compositeSubscription.unsubscribe();
     }
 
     /* ------------------------------------------------------------------------------------------ */
@@ -64,10 +85,14 @@ public class SignInFragment extends Fragment {
     /* ------------------------------------------------------------------------------------------ */
     @OnClick(R.id.login_btn)
     public void onClickButton(View view) {
-        if (account.getText() != null && account.getText().length() > 0)
-            mAuthViewModel.signIn(account.getText().toString(), password.getText().toString());
-        else
-            mAuthViewModel.signIn("haijima", "password1!");
+        if (BuildConfig.DEBUG && (mAccount.getText() == null || mAccount.getText().length() <= 0)) {
+            // デバッグ用
+            mAuthService.signIn("haijima", "password1!");
+        } else {
+            mAuthService.signIn(mAccount.getText().toString(), mPassword.getText().toString());
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(null, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     @OnClick(R.id.go_to_sign_up)

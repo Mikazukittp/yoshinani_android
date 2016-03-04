@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent;
 import app.android.ttp.mikazuki.yoshinani.event.FragmentTransitionEvent;
@@ -95,18 +97,22 @@ public class BaseActivity extends AppCompatActivity {
     public void refresh(boolean refreshForcibly) {
     }
 
+    @Subscribe
     public void onEvent(ActivityTransitionEvent event) {
         goTo(event.getDestinationActivity(), event.doesAddToBackStack(), event.getBundle());
     }
 
+    @Subscribe
     public void onEvent(FragmentTransitionEvent event) {
         replaceFragment(event.getDestinationFragment(), R.id.fragment_container, event.doesAddToBackStack(), event.getBundle());
     }
 
+    @Subscribe
     public void onEvent(UnauthorizedEvent event) {
         goTo(LoginActivity.class, false);
     }
 
+    @Subscribe
     public void onEvent(RefreshEvent event) {
         refresh(true);
     }

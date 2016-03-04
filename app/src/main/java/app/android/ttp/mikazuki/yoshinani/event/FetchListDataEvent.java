@@ -11,10 +11,12 @@ public class FetchListDataEvent<T> extends BaseEvent {
 
     private List<T> mData;
 
+
     public FetchListDataEvent(@NonNull final List<T> data) {
         this.mData = data;
     }
 
+    @NonNull
     public List<T> getListData() {
         return mData;
     }

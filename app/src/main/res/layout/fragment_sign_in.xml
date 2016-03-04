@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -23,11 +24,10 @@
         android:id="@+id/account_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="false"
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
-        android:textColorHint="@color/white">
+        app:hintTextAppearance="@style/whiteEditTextHint">
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/account"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/account"
             android:inputType="textEmailAddress"
-            android:textColor="@color/white"/>
+            app:theme="@style/whiteEditText"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -45,7 +45,7 @@
         android:layout_below="@+id/account_input_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
-        android:textColorHint="@color/white">
+        app:hintTextAppearance="@style/whiteEditTextHint">
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/password"
@@ -53,18 +53,36 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColor="@color/white"/>
+            app:theme="@style/whiteEditText"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/login_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/password_input_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
-        android:background="@color/theme800"
         android:text="@string/login"/>
+
+    <!--<com.facebook.login.widget.LoginButton-->
+    <!--android:id="@+id/fb_btn"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/login_btn"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginBottom="30dp"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:paddingBottom="16dp"-->
+    <!--android:paddingLeft="16dp"-->
+    <!--android:paddingTop="16dp"/>-->
+
+    <!--<com.google.android.gms.common.SignInButton-->
+    <!--android:id="@+id/google_signin_btn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/login_btn"/>-->
 
     <TextView
         android:id="@+id/go_to_sign_up"

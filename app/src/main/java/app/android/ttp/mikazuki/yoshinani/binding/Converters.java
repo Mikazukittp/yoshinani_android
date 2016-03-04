@@ -2,11 +2,13 @@ package app.android.ttp.mikazuki.yoshinani.binding;
 
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
+import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -15,6 +17,7 @@ import java.util.Calendar;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.model.TextWatcherAdapter;
 import app.android.ttp.mikazuki.yoshinani.utils.ModelUtils;
+import app.android.ttp.mikazuki.yoshinani.utils.TextUtils;
 
 /**
  * @author haijimakazuki
@@ -25,6 +28,7 @@ public class Converters {
         return bindableString.get();
     }
 
+    @NonNull
     @BindingConversion
     public static String convertBindableToString(BindableInt bindableInt) {
         return String.valueOf(bindableInt.get());
@@ -40,6 +44,7 @@ public class Converters {
         return ModelUtils.formatDate(date);
     }
 
+    @SuppressWarnings({"unchecked", "deprecation"})
     @BindingAdapter({"app:binding"})
     public static void bindEditText(EditText view, final BindableString bindableString) {
         Pair<BindableString, TextWatcherAdapter> pair = (Pair) view.getTag(R.id.bound_observable);
@@ -101,7 +106,7 @@ public class Converters {
         ((RadioButton) view.getChildAt(newValue ? 1 : 0)).setChecked(true);
     }
 
-    @BindingAdapter({"app:onClick"})
+    @BindingAdapter("app:binding")
     public static void bindOnClick(View view, final Runnable runnable) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,5 +114,11 @@ public class Converters {
                 runnable.run();
             }
         });
+    }
+
+    @SuppressWarnings({"unchecked", "deprecation"})
+    @BindingAdapter("app:currency")
+    public static void bindCurrency(TextView view, final double amount) {
+        view.setText(TextUtils.wrapCurrency(amount));
     }
 }

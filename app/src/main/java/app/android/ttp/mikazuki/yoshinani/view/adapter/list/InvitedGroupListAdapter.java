@@ -12,7 +12,7 @@ import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
-import app.android.ttp.mikazuki.yoshinani.viewModel.GroupViewModel;
+import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -22,13 +22,13 @@ import butterknife.ButterKnife;
 public class InvitedGroupListAdapter extends ArrayAdapter<GroupModel> {
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
-    private GroupViewModel mGroupViewModel;
+    private GroupService mGroupService;
 
     public InvitedGroupListAdapter(Context context, List<GroupModel> invitedGroups) {
         super(context, 0, invitedGroups);
         mContext = context;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mGroupViewModel = new GroupViewModel(mContext);
+        mGroupService = new GroupService(mContext);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class InvitedGroupListAdapter extends ArrayAdapter<GroupModel> {
         GroupModel group = getItem(position);
         holder.name.setText(group.getName().get());
         holder.description.setText(group.getDescription().get());
-        holder.accept.setOnClickListener(v -> mGroupViewModel.accept(group.getId()));
+        holder.accept.setOnClickListener(v -> mGroupService.accept(group.getId()));
         return convertView;
     }
 

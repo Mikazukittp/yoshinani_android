@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import com.google.common.collect.Lists;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -24,17 +26,16 @@ import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
+import app.android.ttp.mikazuki.yoshinani.services.PaymentService;
+import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.utils.ModelUtils;
 import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.DatePickerDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserSelectDialogFragment;
-import app.android.ttp.mikazuki.yoshinani.viewModel.PaymentViewModel;
-import app.android.ttp.mikazuki.yoshinani.viewModel.UserViewModel;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 public class PostRepaymentFragment extends PostFragment {
 
@@ -45,8 +46,8 @@ public class PostRepaymentFragment extends PostFragment {
     Button mParticipantsButton;
 
     FragmentPostRepaymentBinding binding;
-    private UserViewModel mUserViewModel;
-    private PaymentViewModel mPaymentViewModel;
+    private UserService mUserService;
+    private PaymentService mPaymentService;
 
     private PaymentModel mPaymentModel;
     private GroupModel mGroupModel;
@@ -54,11 +55,6 @@ public class PostRepaymentFragment extends PostFragment {
     private int mParticipantId;
 
     public PostRepaymentFragment() {
-    }
-
-    public static PostRepaymentFragment newInstance() {
-        PostRepaymentFragment fragment = new PostRepaymentFragment();
-        return fragment;
     }
 
     @Nullable
@@ -71,13 +67,13 @@ public class PostRepaymentFragment extends PostFragment {
 
         mGroupModel = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
 
-        mUserViewModel = new UserViewModel(getActivity().getApplicationContext());
-        mPaymentViewModel = new PaymentViewModel(getActivity().getApplicationContext());
+        mUserService = new UserService(getActivity().getApplicationContext());
+        mPaymentService = new PaymentService(getActivity().getApplicationContext());
 
         // TextInputLayoutのhintアニメーションを削除
         ViewUtils.disableTextInputLayoutHint(view, R.id.amount_input_layout);
 
-        mUserViewModel.getAll(mGroupModel.getId());
+        mUserService.getAll(mGroupModel.getId());
         return view;
     }
 
@@ -149,15 +145,17 @@ public class PostRepaymentFragment extends PostFragment {
         mPaymentModel.setId(-1);
         mPaymentModel.setPaidUser(me);
         mPaymentModel.setParticipants(participants);
-        mPaymentViewModel.create(mPaymentModel);
+        mPaymentService.create(mPaymentModel);
     }
 
     /* ------------------------------------------------------------------------------------------ */
     /* ------------------------------------------------------------------------------------------ */
+    @Subscribe
     public void onEvent(DateSetEvent event) {
         mPaymentModel.setDate(event.getDate());
     }
 
+    @Subscribe
     public void onEvent(UserSelectEvent event) {
         mParticipantId = event.getValue();
         if (mParticipantId >= 0) {
@@ -167,11 +165,13 @@ public class PostRepaymentFragment extends PostFragment {
         }
     }
 
+    @Subscribe
     public void onEvent(FetchListDataEvent<UserModel> event) {
         mAllUserModels = event.getListData();
         mParticipantsButton.setEnabled(true);
     }
 
+    @Subscribe
     public void onEvent(FetchDataEvent<PaymentModel> event) {
         // 初期化
         mPaymentModel.reset();

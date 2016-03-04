@@ -2,11 +2,12 @@ package app.android.ttp.mikazuki.yoshinani.repository.retrofit.interceptor;
 
 import android.content.Context;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 
 import app.android.ttp.mikazuki.yoshinani.event.UnauthorizedEvent;
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
-import de.greenrobot.event.EventBus;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;

@@ -1,6 +1,10 @@
 package app.android.ttp.mikazuki.yoshinani.model;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import org.parceler.Parcel;
 
@@ -139,5 +143,18 @@ public class UserModel {
 
     public void setInvitedGroups(final List<GroupModel> invitedGroups) {
         this.invitedGroups = invitedGroups;
+    }
+
+    public Drawable getIcon() {
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .bold()
+                .toUpperCase()
+                .endConfig()
+                .buildRound(
+                        String.valueOf(getAccount().charAt(0)),
+                        ColorGenerator.MATERIAL.getColor(getAccount())
+                );
+        return drawable;
     }
 }

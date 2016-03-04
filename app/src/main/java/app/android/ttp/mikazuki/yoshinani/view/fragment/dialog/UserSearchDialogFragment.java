@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
 import app.android.ttp.mikazuki.yoshinani.R;
@@ -18,12 +20,11 @@ import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
-import app.android.ttp.mikazuki.yoshinani.viewModel.GroupViewModel;
-import app.android.ttp.mikazuki.yoshinani.viewModel.UserViewModel;
+import app.android.ttp.mikazuki.yoshinani.services.GroupService;
+import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * @author haijimakazuki
@@ -43,8 +44,8 @@ public class UserSearchDialogFragment extends DialogFragment {
 
     private GroupModel mGroup;
     private UserModel mUser;
-    private UserViewModel mUserViewModel;
-    private GroupViewModel mGroupViewModel;
+    private UserService mUserService;
+    private GroupService mGroupService;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -53,14 +54,14 @@ public class UserSearchDialogFragment extends DialogFragment {
 
         mGroup = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
 
-        mUserViewModel = new UserViewModel(getActivity().getApplicationContext());
-        mGroupViewModel = new GroupViewModel(getActivity().getApplicationContext());
+        mUserService = new UserService(getActivity().getApplicationContext());
+        mGroupService = new GroupService(getActivity().getApplicationContext());
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle("")
                 .setView(view)
                 .setPositiveButton("招待", (dialog, which) -> {
                     if (mUser != null) {
-                        mGroupViewModel.invite(mGroup.getId(), mUser.getId());
+                        mGroupService.invite(mGroup.getId(), mUser.getId());
                     }
                 })
                 .setNegativeButton("キャンセル", (dialog, which) -> dismiss());
@@ -82,7 +83,7 @@ public class UserSearchDialogFragment extends DialogFragment {
     @OnClick(R.id.search_btn)
     public void searchUser(View view) {
         if (mAccount.getText().length() > 0) {
-            mUserViewModel.search(mAccount.getText().toString());
+            mUserService.search(mAccount.getText().toString());
         }
     }
 
@@ -91,6 +92,7 @@ public class UserSearchDialogFragment extends DialogFragment {
      * onEvent methods
      */
     /* ------------------------------------------------------------------------------------------ */
+    @Subscribe
     public void onEvent(@NonNull final FetchDataEvent<UserModel> event) {
         mUser = event.getData();
         if (mSearchResult.getVisibility() == View.GONE) {
