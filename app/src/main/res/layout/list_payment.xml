@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="payment"
+            type="app.android.ttp.mikazuki.yoshinani.model.PaymentModel"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src='@{payment.paidUser.icon}'/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/icon"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/icon"
+            android:text='@{payment.paidUser.displayName}'
+            android:textColor="@color/grey600"
+            android:textSize="14sp"
+            tools:text="name"/>
+
+        <TextView
+            android:id="@+id/event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/icon"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:text='@{payment.event}'
+            android:textColor="@color/grey600"
+            android:textSize="13sp"
+            tools:text="イベント"/>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event"
+            android:ellipsize="end"
+            android:text='@{payment.description}'
+            android:textColor="@color/grey600"
+            android:textSize="13sp"
+            tools:text="詳細"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text='@{payment.date}'
+            android:textColor="@color/grey600"
+            android:textSize="13sp"
+            tools:text="2015-01-01"/>
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/date"
+            android:layout_gravity="right"
+            android:textColor="@color/theme600"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:currency='@{payment.amount.get()}'
+            tools:text="¥9,999"/>
+    </RelativeLayout>
+</layout>

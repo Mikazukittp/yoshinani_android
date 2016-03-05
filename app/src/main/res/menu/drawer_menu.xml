@@ -2,15 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_log"
-            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:checked="true"
-            android:title="@string/log" />
+            android:id="@+id/menu_top"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/menu_top"/>
 
-        <item
-            android:id="@+id/menu_overview"
-            android:icon="@drawable/ic_people_black_24dp"
-            android:title="@string/overview" />
 
         <!-- Sub Headerを作成 -->
         <item
@@ -18,9 +13,13 @@
             android:title="@string/menu_setting">
             <menu>
                 <item
-                    android:id="@+id/about"
-                    android:icon="@drawable/ic_info_black_48dp"
-                    android:title="@string/menu_about" />
+                    android:id="@+id/menu_account"
+                    android:icon="@drawable/ic_person_black_24dp"
+                    android:title="@string/menu_account"/>
+                <item
+                    android:id="@+id/menu_about"
+                    android:icon="@drawable/ic_info_black_24dp"
+                    android:title="@string/menu_about"/>
             </menu>
         </item>
     </group>

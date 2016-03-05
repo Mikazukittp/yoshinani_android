@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:divider="@drawable/divider"
+              android:dividerPadding="8dp"
+              android:orientation="vertical"
+              android:paddingTop="?attr/actionBarSize"
+              android:showDividers="middle">
+
+    <TextView
+        android:id="@+id/terms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="16dp"
+        android:text="利用規約"
+        android:textColor="@color/grey800"/>
+
+    <TextView
+        android:id="@+id/license"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="16dp"
+        android:text="ライセンス"
+        android:textColor="@color/grey800"/>
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/version"
+        android:textColor="@color/grey800"/>
+</LinearLayout>

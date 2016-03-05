@@ -1,57 +1,84 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!-- TODO: 金額、日付、誰にのeditTextと決定ボタンを配置 -->
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/amount_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/theme600">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/amount"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="app.android.ttp.mikazuki.yoshinani.viewModel.PostRepaymentViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/amount_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/amount"
-            android:inputType="text|number"
-            android:textColor="@color/gray800" />
-    </android.support.design.widget.TextInputLayout>
+            android:textColorHint="@color/theme600">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/date_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/theme600">
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:hint="0"
+                android:inputType="numberDecimal"
+                android:maxLength="9"
+                android:singleLine="true"
+                android:text='@{viewModel.amount}'
+                android:textColor="@color/theme600"
+                android:textSize="42sp"
+                android:textStyle="bold"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/date"
-            android:inputType="text|number"
-            android:textColor="@color/gray800" />
-    </android.support.design.widget.TextInputLayout>
+            android:orientation="horizontal">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/Opponent_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/theme600">
+            <TextView
+                style="@style/table_header_column"
+                android:text="日付"/>
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/opponent"
+            <Button
+                android:id="@+id/date"
+                style="@style/table_input_column.button"
+                android:gravity="bottom|left"
+                android:text='@{viewModel.date}'
+                android:textColor="@color/grey800"
+                android:textSize="14sp"/>
+            <!--style="@style/table_input_column"-->
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/opponent"
-            android:inputType="text"
-            android:textColor="@color/gray800" />
-    </android.support.design.widget.TextInputLayout>
+            android:orientation="horizontal">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/theme600"
-        android:text="決定" />
+            <TextView
+                style="@style/table_header_column"
+                android:text="返済相手"/>
 
-</LinearLayout>
+            <Button
+                android:id="@+id/participants"
+                style="@style/table_input_column.button"
+                android:enabled='@{viewModel.isParticipantsEnabled}'
+                android:gravity="bottom|left"
+                android:text='@{viewModel.participants}'
+                android:textColor="@color/grey800"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/post"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/post"/>
+
+
+    </LinearLayout>
+</layout>

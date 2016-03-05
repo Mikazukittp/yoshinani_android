@@ -20,7 +20,7 @@
 
     <string name="title_activity_post">送信</string>
     <string name="payment">立替</string>
-    <string name="repayment">精算</string>
+    <string name="repayment">返済</string>
     <string name="amount">金額</string>
     <string name="event">イベント名</string>
     <string name="description">詳細</string>
@@ -33,9 +33,46 @@
 
 
     <string name="log">ログ</string>
-    <string name="overview">グループ</string>
+    <string name="members">メンバー</string>
+    <string name="membersWithNum">メンバー (%1$d)</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_groups">Groups</string>
+    <string name="detail">詳細</string>
+    <string name="groupUsers">グループ一覧</string>
+    <string name="group_detail">グループ詳細</string>
+    <string name="setting">設定</string>
+    <string name="paid">支払い</string>
+    <string name="participants">参加者</string>
+    <string name="add_member">メンバー追加</string>
+    <string name="edit_group">グループ編集</string>
+    <string name="notification">お知らせ</string>
+    <string name="go_to_sign_up_who_dont_have_account">アカウントをお持ちでない方はこちら</string>
+    <string name="register">登録</string>
+    <string name="username_hint">ユーザ名(表示名)</string>
+    <string name="account_hint">ID(英数字)</string>
+    <string name="passwod_confirm">パスワード(確認用)</string>
+    <string name="go_to_sign_in_who_have_account">すでにアカウントをお持ちの方はこちら</string>
+    <string name="sign_out">ログアウト</string>
+    <string name="search">検索</string>
+    <string name="add_group">グループ追加</string>
+    <string name="edit_profile">プロフィール編集</string>
+    <string name="accept">承認</string>
+    <string name="decline">拒否</string>
+    <string name="group_name">グループ名</string>
+    <string name="group_description">グループの説明</string>
+    <string name="account">ID</string>
+
+
+    <string name="banner_ad_unit_id">ca-app-pub-8668651775161815/7720270684</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-8668651775161815/5685134282</string>
+    <string name="test_device_id">417B222F70913CAC12ECE9B9DD3EABE8</string>
+
+    <string name="facebook_app_id">654520651355162</string>
+    <string name="menu_account">アカウント設定</string>
+    <string name="version">バージョン %1$s</string>
+    <string name="menu_top">TOP画面</string>
 
 </resources>
