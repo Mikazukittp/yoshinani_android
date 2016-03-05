@@ -49,7 +49,7 @@ public class MemberListAdapter extends ArrayAdapter<UserModel> {
 
         UserModel user = getItem(position);
         holder.icon.setImageDrawable(user.getIcon());
-        holder.userName.setText(user.getUsername());
+        holder.userName.setText(user.getDisplayName());
         int amount = Observable.from(user.getTotals())
                 .filter(total -> total.getGroupId() == mGroupModel.getId())
                 .map(TotalModel::getResult)

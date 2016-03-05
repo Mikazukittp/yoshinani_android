@@ -21,11 +21,11 @@ import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent;
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
+import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.pager.GroupPagerAdapter;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.GroupDetailDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserSearchDialogFragment;
-import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -144,6 +144,7 @@ public class GroupActivity extends BaseActivity {
         setTitle(mGroupModel.getName().get());
         mToolbar.setSubtitle(mGroupModel.getDescription().get());
         mPagerAdapter.setGroup(mGroupModel);
+        mTabLayout.setTabsFromPagerAdapter(mPagerAdapter);
     }
 
     @Subscribe

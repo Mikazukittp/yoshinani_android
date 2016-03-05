@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
-import com.google.common.collect.Lists;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
@@ -29,30 +31,38 @@ import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
 import app.android.ttp.mikazuki.yoshinani.services.PaymentService;
 import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
-import app.android.ttp.mikazuki.yoshinani.utils.ModelUtils;
 import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.DatePickerDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserSelectDialogFragment;
+import app.android.ttp.mikazuki.yoshinani.viewModel.PostRepaymentViewModel;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.subscriptions.CompositeSubscription;
 
 public class PostRepaymentFragment extends PostFragment {
 
     private static final int USER_SELECT = 111;
     private static final int DATE_DIALOG_ID = 999;
     private final String TAG = PostPaymentFragment.class.getSimpleName();
+    @Bind(R.id.amount)
+    EditText mAmount;
     @Bind(R.id.participants)
-    Button mParticipantsButton;
+    Button mParticipantsBtn;
+    @Bind(R.id.post)
+    Button mPost;
 
     FragmentPostRepaymentBinding binding;
     private UserService mUserService;
     private PaymentService mPaymentService;
 
-    private PaymentModel mPaymentModel;
+    private PostRepaymentViewModel mViewModel;
     private GroupModel mGroupModel;
     private List<UserModel> mAllUserModels;
     private int mParticipantId;
+
+    private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
     public PostRepaymentFragment() {
     }
@@ -74,6 +84,13 @@ public class PostRepaymentFragment extends PostFragment {
         ViewUtils.disableTextInputLayoutHint(view, R.id.amount_input_layout);
 
         mUserService.getAll(mGroupModel.getId());
+
+        // バリデーション
+        Observable<Boolean> isAmountCompleted = RxTextView.textChanges(mAmount).map(StringUtils::isNotEmpty);
+        Observable<Boolean> isParticipantsSelected = RxTextView.textChanges(mParticipantsBtn).map(str -> !"返済相手選択".equals(str.toString()));
+        Observable<Boolean> isValidAll = Observable.combineLatest(isAmountCompleted, isParticipantsSelected, (a, p) -> a && p);
+        compositeSubscription.add(isValidAll.subscribe(isValid -> mPost.setEnabled(isValid)));
+
         return view;
     }
 
@@ -83,11 +100,8 @@ public class PostRepaymentFragment extends PostFragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentPostRepaymentBinding.bind(view);
 
-        mPaymentModel = new PaymentModel();
-        mPaymentModel.setDate(ModelUtils.getToday());
-        mPaymentModel.setGroupId(mGroupModel.getId());
-        mPaymentModel.setIsRepayment(true);
-        binding.setPayment(mPaymentModel);
+        mViewModel = new PostRepaymentViewModel(getActivity().getApplicationContext(), mGroupModel.getId());
+        binding.setViewModel(mViewModel);
     }
 
     @Override
@@ -115,7 +129,7 @@ public class PostRepaymentFragment extends PostFragment {
         DialogFragment dialogFragment = new DatePickerDialogFragment();
         dialogFragment.setTargetFragment(PostRepaymentFragment.this, DATE_DIALOG_ID);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("date", mPaymentModel.getDate());
+        bundle.putSerializable("date", mViewModel.getDate());
         dialogFragment.setArguments(bundle);
         dialogFragment.show(getFragmentManager(), "datePicker");
     }
@@ -126,10 +140,10 @@ public class PostRepaymentFragment extends PostFragment {
         Bundle bundle = new Bundle();
         CharSequence[] users = new CharSequence[mAllUserModels.size()];
         for (int i = 0; i < users.length; i++) {
-            users[i] = mAllUserModels.get(i).getUsername();
+            users[i] = mAllUserModels.get(i).getDisplayName();
         }
         bundle.putCharSequenceArray("users", users);
-        bundle.putInt("selected", mParticipantId);
+        bundle.putInt("selected", mViewModel.getParticipantsId());
         dialogFragment.setArguments(bundle);
         dialogFragment.setTargetFragment(PostRepaymentFragment.this, USER_SELECT);
         dialogFragment.show(getFragmentManager(), "userSelect");
@@ -140,41 +154,31 @@ public class PostRepaymentFragment extends PostFragment {
         int uid = Integer.parseInt(PreferenceUtil.getUid(getActivity().getApplicationContext()));
         UserModel me = new UserModel();
         me.setId(uid);
-        List<UserModel> participants = Lists.newArrayList();
-        participants.add(mAllUserModels.get(mParticipantId));
-        mPaymentModel.setId(-1);
-        mPaymentModel.setPaidUser(me);
-        mPaymentModel.setParticipants(participants);
-        mPaymentService.create(mPaymentModel);
+        mPaymentService.create(mViewModel.getModel());
     }
 
     /* ------------------------------------------------------------------------------------------ */
     /* ------------------------------------------------------------------------------------------ */
     @Subscribe
     public void onEvent(DateSetEvent event) {
-        mPaymentModel.setDate(event.getDate());
+        mViewModel.setDate(event.getDate());
     }
 
     @Subscribe
     public void onEvent(UserSelectEvent event) {
-        mParticipantId = event.getValue();
-        if (mParticipantId >= 0) {
-            mParticipantsButton.setText(mAllUserModels.get(mParticipantId).getUsername());
-        } else {
-            mParticipantsButton.setText("");
-        }
+        mViewModel.setParticipants(event.getValue());
     }
 
     @Subscribe
     public void onEvent(FetchListDataEvent<UserModel> event) {
         mAllUserModels = event.getListData();
-        mParticipantsButton.setEnabled(true);
+        mViewModel.setAllUsers(mAllUserModels);
     }
 
     @Subscribe
     public void onEvent(FetchDataEvent<PaymentModel> event) {
         // 初期化
-        mPaymentModel.reset();
+        mViewModel.reset();
         getActivity().onBackPressed();
     }
 

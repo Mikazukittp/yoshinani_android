@@ -25,10 +25,11 @@ import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.event.ShowDialogEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel;
+import app.android.ttp.mikazuki.yoshinani.services.PaymentService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
+import app.android.ttp.mikazuki.yoshinani.view.DividerItemDecoration;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.PaymentListAdapter;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.PaymentDetailDialogFragment;
-import app.android.ttp.mikazuki.yoshinani.services.PaymentService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -65,6 +66,7 @@ public class PaymentLogFragment extends Fragment {
         mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
         mSwipeRefresh.setOnRefreshListener(() -> refresh());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getApplicationContext()));
 
         refresh();
         return view;

@@ -1,11 +1,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <data>
 
         <variable
-            name="payment"
-            type="app.android.ttp.mikazuki.yoshinani.model.PaymentModel" />
+            name="viewModel"
+            type="app.android.ttp.mikazuki.yoshinani.viewModel.PostRepaymentViewModel"/>
     </data>
 
     <LinearLayout
@@ -28,10 +28,10 @@
                 android:inputType="numberDecimal"
                 android:maxLength="9"
                 android:singleLine="true"
+                android:text='@{viewModel.amount}'
                 android:textColor="@color/theme600"
                 android:textSize="42sp"
-                android:textStyle="bold"
-                app:binding='@{payment.amount}' />
+                android:textStyle="bold"/>
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -41,15 +41,15 @@
 
             <TextView
                 style="@style/table_header_column"
-                android:text="日付" />
+                android:text="日付"/>
 
             <Button
                 android:id="@+id/date"
                 style="@style/table_input_column.button"
                 android:gravity="bottom|left"
-                android:text='@{payment.date}'
+                android:text='@{viewModel.date}'
                 android:textColor="@color/grey800"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
             <!--style="@style/table_input_column"-->
         </LinearLayout>
 
@@ -60,14 +60,15 @@
 
             <TextView
                 style="@style/table_header_column"
-                android:text="返済相手" />
+                android:text="返済相手"/>
 
             <Button
                 android:id="@+id/participants"
                 style="@style/table_input_column.button"
+                android:enabled='@{viewModel.isParticipantsEnabled}'
                 android:gravity="bottom|left"
-                android:text="返済相手選択"
-                android:textColor="@color/grey800" />
+                android:text='@{viewModel.participants}'
+                android:textColor="@color/grey800"/>
         </LinearLayout>
 
         <Button
@@ -76,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/post" />
+            android:text="@string/post"/>
 
 
     </LinearLayout>

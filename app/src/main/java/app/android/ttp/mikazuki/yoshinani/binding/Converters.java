@@ -44,8 +44,7 @@ public class Converters {
         return ModelUtils.formatDate(date);
     }
 
-    @SuppressWarnings({"unchecked", "deprecation"})
-    @BindingAdapter({"app:binding"})
+    @BindingAdapter({"android:text"})
     public static void bindEditText(EditText view, final BindableString bindableString) {
         Pair<BindableString, TextWatcherAdapter> pair = (Pair) view.getTag(R.id.bound_observable);
         if (pair == null || pair.first != bindableString) {
@@ -67,7 +66,7 @@ public class Converters {
         }
     }
 
-    @BindingAdapter({"app:binding"})
+    @BindingAdapter({"android:text"})
     public static void bindEditText(EditText view, final BindableInt bindableInt) {
         Pair<BindableInt, TextWatcherAdapter> pair = (Pair) view.getTag(R.id.bound_observable);
         if (pair == null || pair.first != bindableInt) {
@@ -91,22 +90,17 @@ public class Converters {
         }
     }
 
-    @BindingAdapter({"app:binding"})
+    @BindingAdapter({"android:text"})
     public static void bindRadioGroup(RadioGroup view, final BindableBoolean bindableBoolean) {
         if (view.getTag(R.id.bound_observable) != bindableBoolean) {
             view.setTag(R.id.bound_observable, bindableBoolean);
-            view.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    bindableBoolean.set(checkedId == group.getChildAt(1).getId());
-                }
-            });
+            view.setOnCheckedChangeListener((group, checkedId) -> bindableBoolean.set(checkedId == group.getChildAt(1).getId()));
         }
         Boolean newValue = bindableBoolean.get();
         ((RadioButton) view.getChildAt(newValue ? 1 : 0)).setChecked(true);
     }
 
-    @BindingAdapter("app:binding")
+    @BindingAdapter({"android:text"})
     public static void bindOnClick(View view, final Runnable runnable) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +110,6 @@ public class Converters {
         });
     }
 
-    @SuppressWarnings({"unchecked", "deprecation"})
     @BindingAdapter("app:currency")
     public static void bindCurrency(TextView view, final double amount) {
         view.setText(TextUtils.wrapCurrency(amount));

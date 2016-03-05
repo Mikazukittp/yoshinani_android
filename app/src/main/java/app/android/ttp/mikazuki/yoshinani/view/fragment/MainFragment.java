@@ -30,13 +30,13 @@ import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.TotalModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
+import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.utils.TextUtils;
 import app.android.ttp.mikazuki.yoshinani.view.activity.GroupActivity;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.GroupListAdapter;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.AcceptDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.GroupDetailDialogFragment;
-import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
@@ -101,7 +101,7 @@ public class MainFragment extends Fragment {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice(getString(R.string.test_device_id))
                 .build();
-        mAdView.loadAd(adRequest);
+//        mAdView.loadAd(adRequest);
         return view;
     }
 

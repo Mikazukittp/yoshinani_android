@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <data>
 
@@ -30,8 +30,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/group_name"
                 android:inputType="text"
-                android:textColor="@color/grey800"
-                app:binding='@{group.name}'/>
+                android:text='@{group.name}'
+                android:textColor="@color/grey800"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -47,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/group_description"
                 android:inputType="text"
-                android:textColor="@color/grey800"
-                app:binding='@{group.description}'/>
+                android:text='@{group.description}'
+                android:textColor="@color/grey800"/>
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>

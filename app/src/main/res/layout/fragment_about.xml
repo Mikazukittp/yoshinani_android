@@ -9,12 +9,12 @@
               android:showDividers="middle">
 
     <TextView
-        android:id="@+id/privacy"
+        android:id="@+id/terms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:padding="16dp"
-        android:text="プライバシーポリシー"
+        android:text="利用規約"
         android:textColor="@color/grey800"/>
 
     <TextView

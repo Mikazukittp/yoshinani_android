@@ -54,7 +54,7 @@ public class PaymentDetailDialogFragment extends DialogFragment {
         final LinearLayout ll = (LinearLayout) view.findViewById(R.id.participants_list);
         for (UserModel participant : payment.getParticipants()) {
             final TextView textView = new TextView(getActivity().getApplicationContext());
-            textView.setText(participant.getUsername());
+            textView.setText(participant.getDisplayName());
             textView.setTextColor(getResources().getColor(R.color.grey600));
             textView.setTypeface(Typeface.DEFAULT_BOLD);
             textView.setTextSize(16);

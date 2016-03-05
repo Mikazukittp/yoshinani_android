@@ -23,7 +23,7 @@ import butterknife.OnClick;
 public class AboutFragment extends Fragment {
 
     private static final String LICENSE_URL = "file:///android_asset/license.html";
-    private static final String PRIVACY_URL = "file:///android_asset/privacyPolicy.html";
+    private static final String TERMS_URL = "file:///android_asset/terms.html";
 
     @Bind(R.id.version)
     TextView mVersion;
@@ -53,9 +53,9 @@ public class AboutFragment extends Fragment {
 
     /* ------------------------------------------------------------------------------------------ */
     /* ------------------------------------------------------------------------------------------ */
-    @OnClick(R.id.privacy)
+    @OnClick(R.id.terms)
     public void showPrivacyPolicy(View v) {
-        startWebViewActivity("プライバシーポリシー", PRIVACY_URL);
+        startWebViewActivity("利用規約", TERMS_URL);
     }
 
     @OnClick(R.id.license)

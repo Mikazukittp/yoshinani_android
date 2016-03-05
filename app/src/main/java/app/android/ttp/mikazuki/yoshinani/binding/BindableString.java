@@ -8,7 +8,7 @@ import org.parceler.Parcel;
 import java.util.Objects;
 
 /**
- * Created by haijimakazuki on 16/01/26.
+ * @author haijimakazuki
  */
 @Parcel
 public class BindableString extends BaseObservable {
@@ -24,6 +24,10 @@ public class BindableString extends BaseObservable {
             mValue = value;
             notifyChange();
         }
+    }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
     }
 
     public boolean isEmpty() {

@@ -12,7 +12,6 @@ import android.widget.EditText;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.common.collect.Lists;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,20 +25,18 @@ import java.util.List;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.databinding.FragmentPostPaymentBinding;
 import app.android.ttp.mikazuki.yoshinani.event.DateSetEvent;
-import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.event.FetchListDataEvent;
+import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.event.UserMultiSelectEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
-import app.android.ttp.mikazuki.yoshinani.model.PaymentModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
-import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
 import app.android.ttp.mikazuki.yoshinani.services.PaymentService;
 import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
-import app.android.ttp.mikazuki.yoshinani.utils.ModelUtils;
 import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.DatePickerDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserMultiSelectDialogFragment;
+import app.android.ttp.mikazuki.yoshinani.viewModel.PostPaymentViewModel;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,7 +64,7 @@ public class PostPaymentFragment extends PostFragment {
     InterstitialAd mInterstitialAd;
     private UserService mUserService;
     private PaymentService mPaymentService;
-    private PaymentModel mPaymentModel;
+    private PostPaymentViewModel mViewModel;
     private GroupModel mGroupModel;
     private List<UserModel> mAllUserModels;
 
@@ -98,15 +95,16 @@ public class PostPaymentFragment extends PostFragment {
 
         mUserService.getAll(mGroupModel.getId());
 
+        // 全画面広告の準備
+        requestNewInterstitial();
+
         // バリデーション
         Observable<Boolean> isAmountCompleted = RxTextView.textChanges(mAmount).map(StringUtils::isNotEmpty);
         Observable<Boolean> isEventCompleted = RxTextView.textChanges(mEvent).map(StringUtils::isNotEmpty);
         Observable<Boolean> isDescriptionCompleted = RxTextView.textChanges(mDescription).map(StringUtils::isNotEmpty);
-        Observable<Boolean> isValidAll = Observable.combineLatest(isAmountCompleted, isEventCompleted, isDescriptionCompleted, (a, e, d) -> a && e && d);
+        Observable<Boolean> isParticipantsSelected = RxTextView.textChanges(mParticipantsBtn).map(str -> !"参加者選択".equals(str.toString()));
+        Observable<Boolean> isValidAll = Observable.combineLatest(isAmountCompleted, isEventCompleted, isDescriptionCompleted, isParticipantsSelected, (a, e, d, p) -> a && e && d && p);
         compositeSubscription.add(isValidAll.subscribe(isValid -> mPost.setEnabled(isValid)));
-
-        // 全画面広告の準備
-        requestNewInterstitial();
 
         return view;
     }
@@ -117,11 +115,8 @@ public class PostPaymentFragment extends PostFragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentPostPaymentBinding.bind(view);
 
-        mPaymentModel = new PaymentModel();
-        mPaymentModel.setDate(ModelUtils.getToday());
-        mPaymentModel.setGroupId(mGroupModel.getId());
-        mPaymentModel.setIsRepayment(false);
-        binding.setPayment(mPaymentModel);
+        mViewModel = new PostPaymentViewModel(getActivity().getApplicationContext(), mGroupModel.getId());
+        binding.setViewModel(mViewModel);
     }
 
     @Override
@@ -153,7 +148,7 @@ public class PostPaymentFragment extends PostFragment {
                 @Override
                 public void onAdClosed() {
                     requestNewInterstitial();
-                    getActivity().onBackPressed();
+//                    getActivity().onBackPressed();
                 }
             });
         }
@@ -171,7 +166,7 @@ public class PostPaymentFragment extends PostFragment {
         DialogFragment dialogFragment = new DatePickerDialogFragment();
         dialogFragment.setTargetFragment(PostPaymentFragment.this, DATE_DIALOG_ID);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("date", mPaymentModel.getDate());
+        bundle.putSerializable("date", mViewModel.getDate());
         dialogFragment.setArguments(bundle);
         dialogFragment.show(getFragmentManager(), "datePicker");
     }
@@ -182,10 +177,10 @@ public class PostPaymentFragment extends PostFragment {
         Bundle bundle = new Bundle();
         CharSequence[] users = new CharSequence[mAllUserModels.size()];
         for (int i = 0; i < users.length; i++) {
-            users[i] = mAllUserModels.get(i).getUsername();
+            users[i] = mAllUserModels.get(i).getDisplayName();
         }
         bundle.putCharSequenceArray("users", users);
-        bundle.putIntegerArrayList("selected", mParticipantsIds);
+        bundle.putIntegerArrayList("selected", mViewModel.getParticipantsIdArray());
         dialogFragment.setArguments(bundle);
         dialogFragment.setTargetFragment(PostPaymentFragment.this, USER_SELECT);
         dialogFragment.show(getFragmentManager(), "userSelect");
@@ -193,49 +188,30 @@ public class PostPaymentFragment extends PostFragment {
 
     @OnClick(R.id.post)
     public void onPostPayment(View v) {
-        int uid = Integer.parseInt(PreferenceUtil.getUid(getActivity().getApplicationContext()));
-        UserModel me = new UserModel();
-        me.setId(uid);
-        List<UserModel> participants = Lists.newArrayList();
-        for (int i = 0; i < mParticipantsIds.size(); i++) {
-            participants.add(mAllUserModels.get(mParticipantsIds.get(i)));
-        }
-        mPaymentModel.setId(-1);
-        mPaymentModel.setPaidUser(me);
-        mPaymentModel.setParticipants(participants);
-        mPaymentService.create(mPaymentModel);
+        mPaymentService.create(mViewModel.getModel());
     }
 
     /* ------------------------------------------------------------------------------------------ */
     /* ------------------------------------------------------------------------------------------ */
     @Subscribe
     public void onEvent(DateSetEvent event) {
-        mPaymentModel.setDate(event.getDate());
+        mViewModel.setDate(event.getDate());
     }
 
     @Subscribe
     public void onEvent(UserMultiSelectEvent event) {
-        mParticipantsIds = event.getValue();
-        String names = (String) Observable.from(mParticipantsIds)
-                .limit(3)
-                .map(id -> mAllUserModels.get(id).getUsername())
-                .reduce(null, (ns, n) -> ns == null ? n : ns + "," + n)
-                .toBlocking().firstOrDefault("");
-        if (mParticipantsIds.size() > 3) {
-            names += " 他" + (mParticipantsIds.size() - 3) + "名";
-        }
-        mParticipantsBtn.setText(names);
+        mViewModel.setParticipants(event.getValue());
     }
 
     @Subscribe
     public void onEvent(FetchListDataEvent<UserModel> event) {
         mAllUserModels = event.getListData();
-        mParticipantsBtn.setEnabled(true);
+        mViewModel.setAllUsers(mAllUserModels);
     }
 
     @Subscribe
-    public void onEvent(FetchDataEvent<PaymentModel> event) {
-        mPaymentModel.reset();
+    public void onEvent(RefreshEvent event) {
+        mViewModel.reset();
         if (mInterstitialAd.isLoaded() && Math.random() < 0.2) {
             mInterstitialAd.show();
         } else {

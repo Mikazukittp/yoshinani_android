@@ -157,4 +157,8 @@ public class UserModel {
                 );
         return drawable;
     }
+
+    public String getDisplayName() {
+        return getUsername() != null ? getUsername() : getAccount();
+    }
 }

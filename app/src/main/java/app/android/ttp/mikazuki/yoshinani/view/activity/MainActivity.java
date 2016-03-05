@@ -24,10 +24,10 @@ import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
+import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.AboutFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.AccountSettingFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.MainFragment;
-import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
