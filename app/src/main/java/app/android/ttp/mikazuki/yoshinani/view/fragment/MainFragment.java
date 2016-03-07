@@ -71,7 +71,6 @@ public class MainFragment extends Fragment {
         // ListViewの設定
         mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
         mSwipeRefresh.setOnRefreshListener(() -> EventBus.getDefault().post(new RefreshEvent(true)));
-
         ViewCompat.setNestedScrollingEnabled(mListView, true);
         final View footer = getActivity().getLayoutInflater().inflate(R.layout.list_footer_group, null, false);
         footer.setOnClickListener(v -> new GroupDetailDialogFragment().show(getActivity().getSupportFragmentManager(), "createGroup"));
@@ -101,7 +100,7 @@ public class MainFragment extends Fragment {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice(getString(R.string.test_device_id))
                 .build();
-//        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);
         return view;
     }
 
@@ -130,6 +129,7 @@ public class MainFragment extends Fragment {
     }
 
     private void refresh() {
+        mSwipeRefresh.setRefreshing(true);
         mUserService.getMe();
     }
 

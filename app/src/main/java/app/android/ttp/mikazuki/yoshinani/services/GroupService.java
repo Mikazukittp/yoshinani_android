@@ -7,6 +7,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.event.FetchListDataEvent;
+import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.GroupUserModel;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil;
@@ -52,7 +53,7 @@ public class GroupService implements Subscription {
         mAPI.create(new RetrofitGroupService.RequestDataOnCreate(group))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> eventbus.post(new FetchDataEvent<>(GroupModel.from(response.body())))
+                .subscribe(response -> eventbus.post(new RefreshEvent())
                         , throwable -> eventbus.post(new FetchDataEvent<>(null)));
     }
 

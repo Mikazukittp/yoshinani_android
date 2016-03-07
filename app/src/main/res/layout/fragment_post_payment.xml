@@ -24,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
+                android:hint="0"
                 android:inputType="numberDecimal"
                 android:maxLength="9"
                 android:singleLine="true"
