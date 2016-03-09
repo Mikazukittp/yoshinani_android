@@ -44,7 +44,7 @@
         android:layout_marginRight="@dimen/activity_vertical_margin"
         android:src="@drawable/ic_add_white_24dp"
         app:fabSize="normal"
-        app:layout_anchor="@id/coordinator_layout"
+        app:layout_anchor="@id/view_pager"
         app:layout_anchorGravity="bottom|right"/>
 
 

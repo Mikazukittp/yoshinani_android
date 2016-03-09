@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -13,10 +14,13 @@ import org.greenrobot.eventbus.Subscribe;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent;
 import app.android.ttp.mikazuki.yoshinani.event.FragmentTransitionEvent;
+import app.android.ttp.mikazuki.yoshinani.event.MaintenanceEvent;
 import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.event.UnauthorizedEvent;
 
 public class BaseActivity extends AppCompatActivity {
+
+    public AlertDialog mMaintenanceDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,5 +119,31 @@ public class BaseActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(RefreshEvent event) {
         refresh(true);
+    }
+
+    @Subscribe
+    public void onEvent(MaintenanceEvent event) {
+
+        final boolean alreadyDialogShown = mMaintenanceDialog != null && mMaintenanceDialog.isShowing();
+
+        if (event.isActive()) {
+            if (alreadyDialogShown) {
+                mMaintenanceDialog.setTitle(event.getTitle());
+                mMaintenanceDialog.setMessage(event.getMessage());
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(event.getTitle())
+                        .setMessage(event.getMessage());
+//                        .setCancelable(false);
+                mMaintenanceDialog = builder.create();
+                mMaintenanceDialog.setCanceledOnTouchOutside(false);
+                mMaintenanceDialog.setOnCancelListener(dialog -> finish());
+                mMaintenanceDialog.show();
+            }
+        } else {
+            if (alreadyDialogShown) {
+                mMaintenanceDialog.dismiss();
+            }
+        }
     }
 }

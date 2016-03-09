@@ -3,8 +3,17 @@ package app.android.ttp.mikazuki.yoshinani;
 import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+
+import org.greenrobot.eventbus.EventBus;
+
+import app.android.ttp.mikazuki.yoshinani.event.MaintenanceEvent;
+import app.android.ttp.mikazuki.yoshinani.model.Status;
 
 /**
  * This is a subclass of {@link Application} used to provide shared objects for this app, such as
@@ -29,6 +38,19 @@ public class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         createTracker();
+        Firebase.setAndroidContext(this);
+        Firebase statusRef = new Firebase(getString(R.string.firebase_status_url));
+        statusRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Status status = dataSnapshot.getValue(Status.class);
+                EventBus.getDefault().post(new MaintenanceEvent(status));
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
     }
 
     private void createTracker() {
