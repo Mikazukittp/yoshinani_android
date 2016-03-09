@@ -1,9 +1,11 @@
 package app.android.ttp.mikazuki.yoshinani.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.UnauthorizedEvent;
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
+import app.android.ttp.mikazuki.yoshinani.view.activity.EditProfileActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -34,7 +37,7 @@ public class AccountSettingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(getString(R.string.menu_account));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.menu_account));
     }
 
     @Override
@@ -45,6 +48,13 @@ public class AccountSettingFragment extends Fragment {
 
     /* ------------------------------------------------------------------------------------------ */
     /* ------------------------------------------------------------------------------------------ */
+    @OnClick(R.id.edit_profile)
+    public void editProfile(View v) {
+        Intent i = new Intent(getActivity(), EditProfileActivity.class);
+        i.putExtras(getArguments());
+        startActivity(i);
+    }
+
     @OnClick(R.id.logout)
     public void logout(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

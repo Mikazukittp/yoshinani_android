@@ -36,14 +36,17 @@
             android:label="@string/title_activity_post"
             android:parentActivityName=".view.activity.BaseActivity"/>
         <activity
-            android:name=".view.activity.WebViewActivity"
+            android:name=".view.activity.EditProfileActivity"
             android:parentActivityName=".view.activity.BaseActivity"/>
         <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:name=".view.activity.WebViewActivity"
+            android:parentActivityName=".view.activity.BaseActivity"/>
+        <!--<activity-->
+        <!--android:name="com.facebook.FacebookActivity"-->
+        <!--android:configChanges=-->
+        <!--"keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
+        <!--android:label="@string/app_name"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"/>-->
         <!--Include the AdActivity configChanges and theme. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

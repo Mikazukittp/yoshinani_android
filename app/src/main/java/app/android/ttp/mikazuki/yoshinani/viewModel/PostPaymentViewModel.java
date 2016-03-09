@@ -24,6 +24,7 @@ import rx.subscriptions.CompositeSubscription;
  * @author haijimakazuki
  */
 public class PostPaymentViewModel extends BaseObservable implements Subscription {
+
     private final Context mContext;
     private final int mGroupId;
     private List<UserModel> mAllUserModels = Lists.newArrayList();
