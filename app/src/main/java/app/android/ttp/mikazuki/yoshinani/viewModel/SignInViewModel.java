@@ -21,7 +21,6 @@ public class SignInViewModel extends BaseObservable implements Subscription {
 
     @Bindable
     public boolean getButtonEnabled() {
-
         return true;
     }
 

@@ -1,18 +1,24 @@
 package app.android.ttp.mikazuki.yoshinani.repository.retrofit;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+
+import java.io.IOException;
 
 import app.android.ttp.mikazuki.yoshinani.BuildConfig;
+import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.APIError;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.interceptor.AuthRequestInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Converter;
 import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.RxJavaCallAdapterFactory;
 
@@ -57,5 +63,23 @@ public class ApiUtil {
                 .addConverterFactory(ApiUtil.getGsonConverterFactory())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
+    }
+
+    /**
+     * @param response
+     * @return
+     */
+    public static APIError getApiError(Response response) {
+        try {
+            if (response.errorBody() != null) {
+                TypeAdapter<APIError> adapter = new Gson().getAdapter(APIError.class);
+                String body = response.errorBody().string();
+                return adapter.fromJson(body);
+            }
+            return new APIError("", null);
+        } catch (IOException e) {
+            Log.e(ApiUtil.class.getName(), e.getMessage());
+            return new APIError("", null);
+        }
     }
 }

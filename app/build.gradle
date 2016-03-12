@@ -43,6 +43,7 @@ android {
     }
     dexOptions {
         javaMaxHeapSize "4g"
+        incremental true
     }
 }
 
@@ -74,7 +75,6 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-analytics:8.1.0'
     compile 'com.google.android.gms:play-services-ads:8.1.0'
-//    compile 'com.google.android.gms:play-services-auth:8.1.0'
 
     apt 'com.android.databinding:compiler:1.1'
     compile 'com.android.support:multidex:1.0.1'
@@ -103,10 +103,4 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-//    compile 'com.facebook.android:facebook-android-sdk:4.10.0'
-//    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
-//    compile 'se.emilsjolander:stickylistheaders:2.7.0'
-//    compile 'joda-time:joda-time:2.8.2'
-//    compile 'com.google.dagger:dagger:2.0.1'
-//    apt "com.google.dagger:dagger-compiler:2.0.1"
 }

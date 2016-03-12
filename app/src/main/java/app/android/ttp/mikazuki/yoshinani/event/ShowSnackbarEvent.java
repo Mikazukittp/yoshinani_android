@@ -3,7 +3,7 @@ package app.android.ttp.mikazuki.yoshinani.event;
 import android.support.annotation.NonNull;
 
 /**
- * Created by haijimakazuki on 16/01/02.
+ * @author haijimakazuki
  */
 public class ShowSnackbarEvent extends BaseEvent {
 
@@ -14,7 +14,7 @@ public class ShowSnackbarEvent extends BaseEvent {
         this.mMessage = message;
     }
 
-    public String getmMessage() {
+    public String getMessage() {
         return mMessage;
     }
 

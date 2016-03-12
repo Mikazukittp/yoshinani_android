@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity {
     /* ------------------------------------------------------------------------------------------ */
     @Subscribe
     public void onEvent(ShowSnackbarEvent event) {
-        Snackbar.make(findViewById(R.id.fragment_container), event.getmMessage(), Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(findViewById(R.id.fragment_container), event.getMessage(), Snackbar.LENGTH_SHORT).show();
     }
 }
 

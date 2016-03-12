@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class MainFragment extends Fragment {
         mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
         mSwipeRefresh.setOnRefreshListener(() -> EventBus.getDefault().post(new RefreshEvent(true)));
         ViewCompat.setNestedScrollingEnabled(mListView, true);
-        final View footer = getActivity().getLayoutInflater().inflate(R.layout.list_footer_group, null, false);
+        final View footer = getActivity().getLayoutInflater().inflate(R.layout.list_footer_group, null);
         footer.setOnClickListener(v -> new GroupDetailDialogFragment().show(getActivity().getSupportFragmentManager(), "createGroup"));
         mListView.addFooterView(footer);
         mListView.setOnItemClickListener((parent, v, position, id) -> {
@@ -119,7 +120,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(getString(R.string.app_name));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.app_name));
     }
 
     @Override

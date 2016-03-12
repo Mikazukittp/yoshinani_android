@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="payment"
-            type="app.android.ttp.mikazuki.yoshinani.model.PaymentModel"/>
+            type="app.android.ttp.mikazuki.yoshinani.model.PaymentModel" />
     </data>
 
     <RelativeLayout
@@ -26,7 +25,7 @@
             android:id="@+id/icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src='@{payment.paidUser.icon}'/>
+            android:src='@{payment.paidUser.icon}' />
 
         <TextView
             android:id="@+id/name"
@@ -39,7 +38,7 @@
             android:text='@{payment.paidUser.displayName}'
             android:textColor="@color/grey600"
             android:textSize="14sp"
-            tools:text="name"/>
+            tools:text="name" />
 
         <TextView
             android:id="@+id/event"
@@ -51,7 +50,7 @@
             android:text='@{payment.event}'
             android:textColor="@color/grey600"
             android:textSize="13sp"
-            tools:text="イベント"/>
+            tools:text="イベント" />
 
         <TextView
             android:id="@+id/description"
@@ -62,7 +61,7 @@
             android:text='@{payment.description}'
             android:textColor="@color/grey600"
             android:textSize="13sp"
-            tools:text="詳細"/>
+            tools:text="詳細" />
 
         <TextView
             android:id="@+id/date"
@@ -73,7 +72,7 @@
             android:text='@{payment.date}'
             android:textColor="@color/grey600"
             android:textSize="13sp"
-            tools:text="2015-01-01"/>
+            tools:text="2015-01-01" />
 
         <TextView
             android:id="@+id/price"
@@ -82,10 +81,10 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/date"
             android:layout_gravity="right"
+            android:currency='@{payment.amount.get()}'
             android:textColor="@color/theme600"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:currency='@{payment.amount.get()}'
-            tools:text="¥9,999"/>
+            tools:text="¥9,999" />
     </RelativeLayout>
 </layout>

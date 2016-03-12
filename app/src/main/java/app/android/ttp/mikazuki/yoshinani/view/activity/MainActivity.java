@@ -124,9 +124,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void refresh(final boolean refreshForcibly) {
-        if (refreshForcibly || me == null) {
-            mUserService.getMe();
-        }
+//        if (refreshForcibly || me == null) {
+        mUserService.getMe();
+//        }
     }
 
     /* ------------------------------------------------------------------------------------------ */

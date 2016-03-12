@@ -1,13 +1,12 @@
 package app.android.ttp.mikazuki.yoshinani.view.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -18,8 +17,15 @@ import org.greenrobot.eventbus.EventBus;
 
 import app.android.ttp.mikazuki.yoshinani.BuildConfig;
 import app.android.ttp.mikazuki.yoshinani.R;
+import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent;
+import app.android.ttp.mikazuki.yoshinani.event.ErrorEvent;
 import app.android.ttp.mikazuki.yoshinani.event.FragmentTransitionEvent;
+import app.android.ttp.mikazuki.yoshinani.event.ShowSnackbarEvent;
+import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
+import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil;
 import app.android.ttp.mikazuki.yoshinani.services.AuthService;
+import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils;
+import app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -90,14 +96,52 @@ public class SignInFragment extends Fragment {
             mAuthService.signIn("haijima", "password1!");
         } else {
             mAuthService.signIn(mAccount.getText().toString(), mPassword.getText().toString());
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(null, InputMethodManager.HIDE_NOT_ALWAYS);
+            ViewUtils.hideKeyboard(getActivity());
         }
     }
 
     @OnClick(R.id.go_to_sign_up)
     public void goToSignUp(View view) {
         EventBus.getDefault().post(new FragmentTransitionEvent(new SignUpFragment()));
+    }
+
+    @OnClick(R.id.forget)
+    public void forgetAccoutnOrPassword(View view) {
+        final View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_forget_account_or_password, null);
+        new AlertDialog.Builder(getActivity())
+                .setTitle("アカウント再設定")
+                .setView(dialogView)
+                .setPositiveButton("送信", (dialog, id) ->
+                        mAuthService
+                                .resetPassword(
+                                        ((EditText) dialogView.findViewById(R.id.token)).getText().toString(),
+                                        ((EditText) dialogView.findViewById(R.id.new_password)).getText().toString(),
+                                        ((EditText) dialogView.findViewById(R.id.new_password_confirm)).getText().toString())
+                                .subscribe(response -> {
+                                    if (response.isSuccess()) {
+                                        PreferenceUtil.putUserData(getActivity().getApplicationContext(), response.body());
+                                        EventBus.getDefault().post(new ActivityTransitionEvent(MainActivity.class, false));
+                                    } else {
+                                        EventBus.getDefault().post(new ErrorEvent("アカウント再設定失敗", ApiUtil.getApiError(response).getMessage()));
+                                    }
+                                }))
+                .setNeutralButton("認証キー発行", (dialog1, which) -> {
+                    final View nextDialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_generate_reset_token, null);
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("認証キー発行")
+                            .setView(nextDialogView)
+                            .setPositiveButton("送信", (dialog, id) ->
+                                    mAuthService
+                                            .forgetPassword(((EditText) nextDialogView.findViewById(R.id.email)).getText().toString())
+                                            .subscribe(response -> {
+                                                if (response.isSuccess()) {
+                                                    EventBus.getDefault().post(new ShowSnackbarEvent(response.body().getMessage()));
+                                                } else {
+                                                    EventBus.getDefault().post(new ErrorEvent("確認用メール送信失敗", ApiUtil.getApiError(response).getMessage()));
+                                                }
+                                            })
+                            ).create().show();
+                }).create().show();
     }
 
 }

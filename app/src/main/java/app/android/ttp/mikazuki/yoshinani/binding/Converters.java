@@ -110,7 +110,7 @@ public class Converters {
         });
     }
 
-    @BindingAdapter("app:currency")
+    @BindingAdapter("android:currency")
     public static void bindCurrency(TextView view, final double amount) {
         view.setText(TextUtils.wrapCurrency(amount));
     }
