@@ -1,14 +1,16 @@
 package app.android.ttp.mikazuki.yoshinani.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 /**
- * Created by haijimakazuki on 16/02/05.
+ * @author haijimakazuki
  */
 public class ViewUtils {
 
@@ -30,5 +32,10 @@ public class ViewUtils {
         if (editText != null) {
             editText.setHint(hint);
         }
+    }
+
+    public static void hideKeyboard(Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(null, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

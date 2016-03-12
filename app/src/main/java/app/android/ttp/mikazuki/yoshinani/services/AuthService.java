@@ -10,8 +10,12 @@ import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent;
 import app.android.ttp.mikazuki.yoshinani.event.ShowSnackbarEvent;
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil;
+import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.ResponseMessage;
+import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.service.RetrofitUserService;
 import app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity;
+import retrofit2.Response;
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -61,6 +65,20 @@ public class AuthService implements Subscription {
                     Log.e(tag, t.getMessage());
                     EventBus.getDefault().post(new ShowSnackbarEvent("ログイン失敗"));
                 });
+    }
+
+    public Observable<Response<ResponseMessage>> forgetPassword(final String email) {
+        return mAPI.forgetPassword(new RetrofitUserService.ForgetRequestWrapper(email))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Response<User>> resetPassword(final String token,
+                                                    final String newPassword,
+                                                    final String newPasswordConfirmation) {
+        return mAPI.resetPassword(new RetrofitUserService.ResetPasswordRequestWrapper(token, newPassword, newPasswordConfirmation))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override

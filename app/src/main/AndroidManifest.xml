@@ -39,6 +39,9 @@
             android:name=".view.activity.EditProfileActivity"
             android:parentActivityName=".view.activity.BaseActivity"/>
         <activity
+            android:name=".view.activity.ChangePasswordActivity"
+            android:parentActivityName=".view.activity.BaseActivity"/>
+        <activity
             android:name=".view.activity.WebViewActivity"
             android:parentActivityName=".view.activity.BaseActivity"/>
         <!--<activity-->

@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent;
+import app.android.ttp.mikazuki.yoshinani.event.ErrorEvent;
 import app.android.ttp.mikazuki.yoshinani.event.FragmentTransitionEvent;
 import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.event.UnauthorizedEvent;
@@ -116,4 +118,15 @@ public class BaseActivity extends AppCompatActivity {
     public void onEvent(RefreshEvent event) {
         refresh(true);
     }
+
+    @Subscribe
+    public void onEvent(ErrorEvent event) {
+        new AlertDialog.Builder(this).setTitle(event.getTitle())
+                .setMessage(event.getMessage())
+                .setPositiveButton("閉じる", null)
+                .create()
+                .show();
+    }
+
+
 }

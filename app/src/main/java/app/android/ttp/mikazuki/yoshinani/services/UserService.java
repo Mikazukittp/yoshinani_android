@@ -9,7 +9,10 @@ import app.android.ttp.mikazuki.yoshinani.event.FetchListDataEvent;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil;
+import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.service.RetrofitUserService;
+import retrofit2.Response;
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -47,6 +50,12 @@ public class UserService implements Subscription {
                         , throwable -> eventbus.post(new FetchDataEvent<>(null)));
     }
 
+    public Observable<Response<User>> update(final int userId, final String username, final String email) {
+        return mAPI.updateUser(userId, new RetrofitUserService.UpdateRequestWrapper(username, email))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public void search(String account) {
         mAPI.search(account)
                 .subscribeOn(Schedulers.newThread())
@@ -55,14 +64,12 @@ public class UserService implements Subscription {
                         , throwable -> eventbus.post(new FetchDataEvent<>(null)));
     }
 
-    public void changePassword(final String oldPassword,
-                               final String newPassword,
-                               final String newPasswordConfirmation) {
-        mAPI.changePassword(oldPassword, newPassword, newPasswordConfirmation)
+    public Observable<Response<User>> changePassword(final String password,
+                                                     final String newPassword,
+                                                     final String newPasswordConfirmation) {
+        return mAPI.changePassword(new RetrofitUserService.ChangePasswordRequestWrapper(password, newPassword, newPasswordConfirmation))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> eventbus.post(new FetchDataEvent<>(UserModel.from(response.body())))
-                        , throwable -> eventbus.post(new FetchDataEvent<>(null)));
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override

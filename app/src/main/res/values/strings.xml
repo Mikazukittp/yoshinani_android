@@ -49,12 +49,12 @@
     <string name="add_member">メンバー追加</string>
     <string name="edit_group">グループ編集</string>
     <string name="notification">お知らせ</string>
-    <string name="go_to_sign_up_who_dont_have_account">アカウントをお持ちでない方はこちら</string>
+    <string name="go_to_sign_up_who_dont_have_account">アカウントをお持ちでない方は<u>こちら</u></string>
     <string name="register">登録</string>
     <string name="username_hint">ユーザ名(表示名)</string>
     <string name="account_hint">ID(英数字)</string>
     <string name="passwod_confirm">パスワード(確認用)</string>
-    <string name="go_to_sign_in_who_have_account">すでにアカウントをお持ちの方はこちら</string>
+    <string name="go_to_sign_in_who_have_account">すでにアカウントをお持ちの方は<u>こちら</u></string>
     <string name="sign_out">ログアウト</string>
     <string name="search">検索</string>
     <string name="add_group">グループ追加</string>
@@ -74,5 +74,7 @@
     <string name="menu_account">アカウント設定</string>
     <string name="version">バージョン %1$s</string>
     <string name="menu_top">TOP画面</string>
+    <string name="forget_accoount_or_password">アカウントまたはパスワードをお忘れの方は<u>こちら</u></string>
+    <string name="reset_account">アカウント再設定用認証キーを受け取った方は<u>こちら</u></string>
 
 </resources>

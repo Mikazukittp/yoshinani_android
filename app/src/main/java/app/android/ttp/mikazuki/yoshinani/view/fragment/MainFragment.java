@@ -73,7 +73,7 @@ public class MainFragment extends Fragment {
         mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
         mSwipeRefresh.setOnRefreshListener(() -> EventBus.getDefault().post(new RefreshEvent(true)));
         ViewCompat.setNestedScrollingEnabled(mListView, true);
-        final View footer = getActivity().getLayoutInflater().inflate(R.layout.list_footer_group, null, false);
+        final View footer = getActivity().getLayoutInflater().inflate(R.layout.list_footer_group, null);
         footer.setOnClickListener(v -> new GroupDetailDialogFragment().show(getActivity().getSupportFragmentManager(), "createGroup"));
         mListView.addFooterView(footer);
         mListView.setOnItemClickListener((parent, v, position, id) -> {

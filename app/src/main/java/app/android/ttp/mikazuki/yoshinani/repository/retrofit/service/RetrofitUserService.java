@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.ResponseMessage;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -26,6 +27,8 @@ public interface RetrofitUserService {
     static final String PATH_LOGIN = "users/sign_in";
     static final String PATH_USER_SEARCH = "users/search";
     static final String PATH_PASSWORDS = "passwords";
+    static final String PATH_PASSWORDS_INIT = "passwords/init";
+    static final String PATH_PASSWORDS_RESET = "passwords/reset";
 
     @POST(PATH_USERS)
     public Observable<Response<User>> createUser(@Body RequestWrapper user);
@@ -36,6 +39,9 @@ public interface RetrofitUserService {
     @GET(PATH_USER)
     public Observable<Response<User>> getMe(@Path("id") String userId);
 
+    @PATCH(PATH_USER)
+    public Observable<Response<User>> updateUser(@Path("id") int userId, @Body UpdateRequestWrapper user);
+
     @FormUrlEncoded
     @POST(PATH_LOGIN)
     public Observable<Response<User>> getAuthToken(@Field("account") String account, @Field("password") String password);
@@ -44,9 +50,13 @@ public interface RetrofitUserService {
     public Observable<Response<User>> search(@Query("account") String account);
 
     @PATCH(PATH_PASSWORDS)
-    public Observable<Response<User>> changePassword(@Field("password") String oldPassword,
-                                                     @Field("new_password") String newPassword,
-                                                     @Field("new_password_confirmation") String newPasswordConfirm);
+    public Observable<Response<User>> changePassword(@Body ChangePasswordRequestWrapper user);
+
+    @POST(PATH_PASSWORDS_INIT)
+    public Observable<Response<ResponseMessage>> forgetPassword(@Body ForgetRequestWrapper user);
+
+    @PATCH(PATH_PASSWORDS_RESET)
+    public Observable<Response<User>> resetPassword(@Body ResetPasswordRequestWrapper user);
 
     public class RequestWrapper {
         public PostData user;
@@ -68,6 +78,90 @@ public interface RetrofitUserService {
                 this.account = account;
                 this.email = email;
                 this.password = password;
+            }
+        }
+    }
+
+    public class UpdateRequestWrapper {
+        public PatchData user;
+
+        public UpdateRequestWrapper(@NonNull final String username,
+                                    @NonNull final String email) {
+            this.user = new PatchData(username, email);
+        }
+
+        class PatchData {
+            public String username;
+            public String email;
+
+            public PatchData(@NonNull final String username,
+                             @NonNull final String email) {
+                this.username = username;
+                this.email = email;
+            }
+        }
+    }
+
+    public class ChangePasswordRequestWrapper {
+        public PatchData user;
+
+        public ChangePasswordRequestWrapper(@NonNull final String password,
+                                            @NonNull final String newPassword,
+                                            @NonNull final String newPasswordConfirmation) {
+            this.user = new PatchData(password, newPassword, newPasswordConfirmation);
+        }
+
+        class PatchData {
+            public String password;
+            public String newPassword;
+            public String newPasswordConfirmation;
+
+            public PatchData(@NonNull final String password,
+                             @NonNull final String newPassword,
+                             @NonNull final String newPasswordConfirmation) {
+                this.password = password;
+                this.newPassword = newPassword;
+                this.newPasswordConfirmation = newPasswordConfirmation;
+            }
+        }
+    }
+
+    public class ForgetRequestWrapper {
+        public PostData user;
+
+        public ForgetRequestWrapper(@NonNull final CharSequence email) {
+            this.user = new PostData(email);
+        }
+
+        class PostData {
+            public CharSequence email;
+
+            public PostData(@NonNull final CharSequence email) {
+                this.email = email;
+            }
+        }
+    }
+
+    public class ResetPasswordRequestWrapper {
+        public PatchData user;
+
+        public ResetPasswordRequestWrapper(@NonNull final CharSequence resetPasswordToken,
+                                           @NonNull final CharSequence newPassword,
+                                           @NonNull final CharSequence newPasswordConfirmation) {
+            this.user = new PatchData(resetPasswordToken, newPassword, newPasswordConfirmation);
+        }
+
+        class PatchData {
+            public CharSequence resetPasswordToken;
+            public CharSequence newPassword;
+            public CharSequence newPasswordConfirmation;
+
+            public PatchData(@NonNull final CharSequence resetPasswordToken,
+                             @NonNull final CharSequence newPassword,
+                             @NonNull final CharSequence newPasswordConfirmation) {
+                this.resetPasswordToken = resetPasswordToken;
+                this.newPassword = newPassword;
+                this.newPasswordConfirmation = newPasswordConfirmation;
             }
         }
     }

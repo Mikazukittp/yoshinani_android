@@ -19,60 +19,56 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * @author haijimakazuki
  */
-public class EditProfileViewModel extends BaseObservable implements Subscription {
+public class ChangePasswordViewModel extends BaseObservable implements Subscription {
 
-    private static final String TAG = EditProfileViewModel.class.getName();
-
-    private final int mId;
-    private final String mAccount;
+    private static final String TAG = ChangePasswordViewModel.class.getName();
     private final Context mContext;
-    private BindableString mUsername = new BindableString();
-    private BindableString mEmail = new BindableString();
+    private CompositeSubscription compositeSubscription = new CompositeSubscription();
+
+    private BindableString mPassword = new BindableString();
+    private BindableString mNewPassword = new BindableString();
+    private BindableString mNewPasswordConfirm = new BindableString();
 
     private UserService mUserService;
 
-    private CompositeSubscription compositeSubscription = new CompositeSubscription();
-
-    public EditProfileViewModel(Context context,
-                                UserModel user) {
+    public ChangePasswordViewModel(Context context) {
         mContext = context;
-        mId = user.getId();
-        mAccount = user.getAccount();
-        mUsername.set(user.getUsername());
-        mEmail.set(user.getEmail());
-
         mUserService = new UserService(context);
     }
 
-    public String getAccount() {
-        return mAccount;
+    public BindableString getPassword() {
+        return mPassword;
     }
 
-    public BindableString getUsername() {
-        return mUsername;
+    public void setPassword(final String password) {
+        this.mPassword.set(password);
     }
 
-    public void setUsername(final BindableString username) {
-        this.mUsername = username;
+    public BindableString getNewPassword() {
+        return mNewPassword;
     }
 
-    public BindableString getEmail() {
-        return mEmail;
+    public void setNewPassword(final String newPassword) {
+        this.mNewPassword.set(newPassword);
     }
 
-    public void setEmail(final BindableString email) {
-        this.mEmail = email;
+    public BindableString getNewPasswordConfirm() {
+        return mNewPasswordConfirm;
+    }
+
+    public void setNewPasswordConfirm(final String newPasswordConfirm) {
+        this.mNewPasswordConfirm.set(newPasswordConfirm);
     }
 
     public View.OnClickListener getOnClick() {
         return v -> {
             mUserService
-                    .update(mId, mUsername.get(), mEmail.get())
+                    .changePassword(mPassword.get(), mNewPassword.get(), mNewPasswordConfirm.get())
                     .subscribe(response -> {
                         if (response.isSuccess()) {
                             EventBus.getDefault().post(new FetchDataEvent<>(UserModel.from(response.body())));
                         } else {
-                            EventBus.getDefault().post(new ErrorEvent("プロフィール編集失敗", ApiUtil.getApiError(response).getMessage()));
+                            EventBus.getDefault().post(new ErrorEvent("パスワード変更失敗", ApiUtil.getApiError(response).getMessage()));
                         }
                     });
             ViewUtils.hideKeyboard(mContext);
