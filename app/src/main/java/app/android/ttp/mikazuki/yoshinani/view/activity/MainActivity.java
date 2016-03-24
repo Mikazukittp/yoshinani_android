@@ -1,16 +1,10 @@
 package app.android.ttp.mikazuki.yoshinani.view.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -63,8 +57,8 @@ public class MainActivity extends BaseActivity {
     private List<GroupModel> mInvitedGroups;
 //    private Tracker mTracker;
 
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private boolean isReceiverRegistered;
+//    private BroadcastReceiver mRegistrationBroadcastReceiver;
+//    private boolean isReceiverRegistered;
 
     /* ------------------------------------------------------------------------------------------ */
     /*
@@ -95,21 +89,20 @@ public class MainActivity extends BaseActivity {
         replaceFragment(fragment, R.id.fragment_container, false);
         refresh(true);
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(context);
-            }
-        };
-        if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                    new IntentFilter("REGISTRATION_COMPLETE"));
-            isReceiverRegistered = true;
-        }
+        // GCMの設定
+//        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+//                boolean sentToken = sharedPreferences.getBoolean("SENT_TOKEN_TO_SERVER", false);
+//            }
+//        };
+//        if (!isReceiverRegistered) {
+//            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver, new IntentFilter("REGISTRATION_COMPLETE"));
+//            isReceiverRegistered = true;
+//        }
         if (checkPlayServices()) {
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
+            startService(new Intent(this, RegistrationIntentService.class));
         }
     }
 
@@ -134,8 +127,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         EventBus.getDefault().unregister(this);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        isReceiverRegistered = false;
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+//        isReceiverRegistered = false;
         super.onPause();
     }
 
