@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
@@ -17,6 +19,7 @@ import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.utils.TextUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import rx.Observable;
 
 /**
@@ -48,7 +51,16 @@ public class MemberListAdapter extends ArrayAdapter<UserModel> {
         }
 
         UserModel user = getItem(position);
-        holder.icon.setImageDrawable(user.getIcon());
+//        holder.icon.setImageDrawable(user.getIcon());
+        Glide.with(mContext)
+                .load(user.getIconUrl())
+                .override(160, 160)
+                .centerCrop()
+                .bitmapTransform(new CropCircleTransformation(mContext))
+                .thumbnail(0.5f)
+                .placeholder(user.getIcon())
+                .error(user.getIcon())
+                .into(holder.icon);
         holder.userName.setText(user.getDisplayName());
         int amount = Observable.from(user.getTotals())
                 .filter(total -> total.getGroupId() == mGroupModel.getId())

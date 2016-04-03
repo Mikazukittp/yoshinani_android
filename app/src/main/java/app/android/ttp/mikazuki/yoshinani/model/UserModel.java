@@ -158,6 +158,10 @@ public class UserModel {
         return drawable;
     }
 
+    public String getIconUrl() {
+        return String.format("https://s3-ap-northeast-1.amazonaws.com/yoshinani/user_icon/%d.jpg", getId());
+    }
+
     public String getDisplayName() {
         return getUsername() != null ? getUsername() : getAccount();
     }
