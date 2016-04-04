@@ -1,5 +1,6 @@
 package app.android.ttp.mikazuki.yoshinani.view.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,10 +10,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,6 +27,7 @@ import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
+import app.android.ttp.mikazuki.yoshinani.gcm.RegistrationIntentService;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.services.UserService;
@@ -36,6 +42,7 @@ import butterknife.ButterKnife;
  */
 public class MainActivity extends BaseActivity {
 
+    private static final String TAG = MainActivity.class.getName();
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
     @Bind(R.id.navigation)
@@ -49,6 +56,9 @@ public class MainActivity extends BaseActivity {
     private UserModel me;
     private List<GroupModel> mInvitedGroups;
 //    private Tracker mTracker;
+
+//    private BroadcastReceiver mRegistrationBroadcastReceiver;
+//    private boolean isReceiverRegistered;
 
     /* ------------------------------------------------------------------------------------------ */
     /*
@@ -78,6 +88,22 @@ public class MainActivity extends BaseActivity {
         MainFragment fragment = new MainFragment();
         replaceFragment(fragment, R.id.fragment_container, false);
         refresh(true);
+
+        // GCMの設定
+//        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+//                boolean sentToken = sharedPreferences.getBoolean("SENT_TOKEN_TO_SERVER", false);
+//            }
+//        };
+//        if (!isReceiverRegistered) {
+//            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver, new IntentFilter("REGISTRATION_COMPLETE"));
+//            isReceiverRegistered = true;
+//        }
+        if (checkPlayServices()) {
+            startService(new Intent(this, RegistrationIntentService.class));
+        }
     }
 
     @Override
@@ -101,6 +127,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         EventBus.getDefault().unregister(this);
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+//        isReceiverRegistered = false;
         super.onPause();
     }
 
@@ -127,6 +155,27 @@ public class MainActivity extends BaseActivity {
 //        if (refreshForcibly || me == null) {
         mUserService.getMe();
 //        }
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, 9000)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
     /* ------------------------------------------------------------------------------------------ */

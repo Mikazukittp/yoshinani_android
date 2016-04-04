@@ -1,6 +1,8 @@
 package app.android.ttp.mikazuki.yoshinani.services;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -68,6 +70,25 @@ public class UserService implements Subscription {
                                                      final String newPassword,
                                                      final String newPasswordConfirmation) {
         return mAPI.changePassword(new RetrofitUserService.ChangePasswordRequestWrapper(password, newPassword, newPasswordConfirmation))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Response<User>> registerToken(@NonNull final String token) {
+        return mAPI.registerToken(new RetrofitUserService.NotificationRequestWrapper(token, null))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Response<User>> updateToken(@NonNull final String token,
+                                                  @Nullable final String oldToken) {
+        return mAPI.updateToken(new RetrofitUserService.NotificationRequestWrapper(token, oldToken))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Response<User>> deleteToken(@NonNull final String token) {
+        return mAPI.deleteToken(new RetrofitUserService.NotificationRequestWrapper(token, null))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }

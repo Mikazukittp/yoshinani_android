@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
- * Created by haijimakazuki on 16/02/05.
+ * @author haijimakazuki
  */
 public class ModelUtils {
 
@@ -24,7 +24,6 @@ public class ModelUtils {
         cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         return cal;
     }
-
 
     public static Calendar parseDate(String pattern) {
         return parseDate(pattern, DATE_FORMAT);
