@@ -31,7 +31,7 @@ public interface RetrofitUserService {
     static final String PATH_PASSWORDS = "passwords";
     static final String PATH_PASSWORDS_INIT = "passwords/init";
     static final String PATH_PASSWORDS_RESET = "passwords/reset";
-    static final String PATH_NOTIFICATION_TOKENS = "nortification_tokens";
+    static final String PATH_NOTIFICATION_TOKENS = "notification_tokens";
 
     @POST(PATH_USERS)
     public Observable<Response<User>> createUser(@Body RequestWrapper user);
@@ -179,11 +179,11 @@ public interface RetrofitUserService {
     }
 
     public class NotificationRequestWrapper {
-        public Data nortificationToken;
+        public Data notificationToken;
 
         public NotificationRequestWrapper(@NonNull final String deviceToken,
                                           @Nullable final String authDeviceToken) {
-            this.nortificationToken = new Data(deviceToken, authDeviceToken);
+            this.notificationToken = new Data(deviceToken, authDeviceToken);
         }
 
         class Data {

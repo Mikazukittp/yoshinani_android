@@ -4,11 +4,9 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import app.android.ttp.mikazuki.yoshinani.R;
@@ -30,7 +28,6 @@ public class RegistrationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
             InstanceID instanceID = InstanceID.getInstance(this);
             String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
@@ -38,20 +35,12 @@ public class RegistrationIntentService extends IntentService {
             Log.i(TAG, "GCM Registration Token: " + token);
 
             sendRegistrationToServer(token);
-            subscribeTopics(token);
-
-//            sharedPreferences.edit().putBoolean("SENT_TOKEN_TO_SERVER", true).apply();
+//            subscribeTopics(token);
         } catch (Exception e) {
             Log.e(TAG, "Failed to complete token refresh", e);
-//            sharedPreferences.edit().putBoolean("SENT_TOKEN_TO_SERVER", false).apply();
         }
-//        Intent registrationComplete = new Intent("REGISTRATION_COMPLETE");
-//        LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
-    /**
-     * @param token The new token.
-     */
     private void sendRegistrationToServer(String token) {
         final String oldToken = PreferenceUtil.getNotificationToken(this);
         mUserService = new UserService(this);
@@ -67,17 +56,11 @@ public class RegistrationIntentService extends IntentService {
                 });
     }
 
-    /**
-     * Subscribe to any GCM topics of interest, as defined by the TOPICS constant.
-     *
-     * @param token GCM token
-     * @throws IOException if unable to reach the GCM PubSub service
-     */
-    private void subscribeTopics(String token) throws IOException {
-        GcmPubSub pubSub = GcmPubSub.getInstance(this);
-        for (String topic : TOPICS) {
-            pubSub.subscribe(token, "/topics/" + topic, null);
-        }
-    }
+//    private void subscribeTopics(String token) throws IOException {
+//        GcmPubSub pubSub = GcmPubSub.getInstance(this);
+//        for (String topic : TOPICS) {
+//            pubSub.subscribe(token, "/topics/" + topic, null);
+//        }
+//    }
 
 }
