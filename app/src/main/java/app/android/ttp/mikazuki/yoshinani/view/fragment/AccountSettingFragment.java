@@ -15,6 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.UnauthorizedEvent;
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
+import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.view.activity.EditProfileActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,6 +25,8 @@ import butterknife.OnClick;
  */
 public class AccountSettingFragment extends Fragment {
 
+    UserService mUserService;
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater,
@@ -31,6 +34,7 @@ public class AccountSettingFragment extends Fragment {
                              @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_setting, container, false);
         ButterKnife.bind(this, view);
+        mUserService = new UserService(getActivity().getApplicationContext());
         return view;
     }
 
@@ -60,6 +64,7 @@ public class AccountSettingFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("本当にログアウトしますか？")
                 .setPositiveButton("はい", (dialog, id) -> {
+//                    mUserService.deleteToken(PreferenceUtil.getNotificationToken(getActivity().getApplicationContext()));
                     PreferenceUtil.clearUserData(getActivity().getApplicationContext());
                     EventBus.getDefault().post(new UnauthorizedEvent());
                 })

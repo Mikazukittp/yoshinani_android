@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +116,6 @@ public class PaymentLogFragment extends Fragment {
             );
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
         } else if (Objects.equals(event.getTag(), "next")) {
-            Log.d("!!!!!", "next API is called");
             mRecyclerViewAdapter.addItems(event.getListData());
             mRecyclerViewAdapter.removeItem(null);
         }

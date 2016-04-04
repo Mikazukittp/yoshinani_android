@@ -1,6 +1,7 @@
 package app.android.ttp.mikazuki.yoshinani.repository.retrofit.service;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.ResponseMes
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -29,6 +31,7 @@ public interface RetrofitUserService {
     static final String PATH_PASSWORDS = "passwords";
     static final String PATH_PASSWORDS_INIT = "passwords/init";
     static final String PATH_PASSWORDS_RESET = "passwords/reset";
+    static final String PATH_NOTIFICATION_TOKENS = "notification_tokens";
 
     @POST(PATH_USERS)
     public Observable<Response<User>> createUser(@Body RequestWrapper user);
@@ -57,6 +60,15 @@ public interface RetrofitUserService {
 
     @PATCH(PATH_PASSWORDS_RESET)
     public Observable<Response<User>> resetPassword(@Body ResetPasswordRequestWrapper user);
+
+    @POST(PATH_NOTIFICATION_TOKENS)
+    public Observable<Response<User>> registerToken(@Body NotificationRequestWrapper notification);
+
+    @PATCH(PATH_NOTIFICATION_TOKENS)
+    public Observable<Response<User>> updateToken(@Body NotificationRequestWrapper notification);
+
+    @DELETE(PATH_NOTIFICATION_TOKENS)
+    public Observable<Response<User>> deleteToken(@Body NotificationRequestWrapper notification);
 
     public class RequestWrapper {
         public PostData user;
@@ -162,6 +174,27 @@ public interface RetrofitUserService {
                 this.resetPasswordToken = resetPasswordToken;
                 this.newPassword = newPassword;
                 this.newPasswordConfirmation = newPasswordConfirmation;
+            }
+        }
+    }
+
+    public class NotificationRequestWrapper {
+        public Data notificationToken;
+
+        public NotificationRequestWrapper(@NonNull final String deviceToken,
+                                          @Nullable final String authDeviceToken) {
+            this.notificationToken = new Data(deviceToken, authDeviceToken);
+        }
+
+        class Data {
+            public final String deviceType = "android";
+            public String deviceToken;
+            public String authDeviceToken;
+
+            public Data(@NonNull final String deviceToken,
+                        @Nullable final String authDeviceToken) {
+                this.deviceToken = deviceToken;
+                this.authDeviceToken = authDeviceToken;
             }
         }
     }
