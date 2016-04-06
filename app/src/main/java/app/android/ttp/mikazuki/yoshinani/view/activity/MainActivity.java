@@ -36,6 +36,7 @@ import app.android.ttp.mikazuki.yoshinani.view.fragment.AccountSettingFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.MainFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hotchemi.android.rate.AppRate;
 
 /**
  * @author haijimakazuki
@@ -104,6 +105,15 @@ public class MainActivity extends BaseActivity {
         if (checkPlayServices()) {
             startService(new Intent(this, RegistrationIntentService.class));
         }
+
+        AppRate.with(this)
+                .setInstallDays(10) // default 10, 0 means install day.
+                .setLaunchTimes(10) // default 10 times.
+                .setRemindInterval(2) // default 1 day.
+//                .setDebug(true) // default false.
+                .setOnClickButtonListener(v -> Log.d(MainActivity.class.getName(), Integer.toString(v)))
+                .monitor();
+        AppRate.showRateDialogIfMeetsConditions(this);
     }
 
     @Override
@@ -215,7 +225,7 @@ public class MainActivity extends BaseActivity {
 //            item.setChecked(true);
             mDrawerLayout.closeDrawer(GravityCompat.START);
 
-            Fragment fragment;
+            Fragment fragment = null;
             Bundle bundle = new Bundle();
             switch (item.getItemId()) {
                 case R.id.menu_top:
@@ -227,13 +237,17 @@ public class MainActivity extends BaseActivity {
                 case R.id.menu_about:
                     fragment = new AboutFragment();
                     break;
+                case R.id.menu_rate:
+                    AppRate.with(MainActivity.this).showRateDialog(MainActivity.this);
+                    break;
                 default:
                     return false;
             }
             bundle.putParcelable("me", Parcels.wrap(me));
-            fragment.setArguments(bundle);
-            replaceFragment(fragment, R.id.fragment_container);
-
+            if (fragment != null) {
+                fragment.setArguments(bundle);
+                replaceFragment(fragment, R.id.fragment_container);
+            }
             return true;
         }
     }

@@ -20,6 +20,10 @@
                     android:id="@+id/menu_about"
                     android:icon="@drawable/ic_info_black_24dp"
                     android:title="@string/menu_about"/>
+                <item
+                    android:id="@+id/menu_rate"
+                    android:icon="@drawable/ic_star_black_24dp"
+                    android:title="@string/menu_rate"/>
             </menu>
         </item>
     </group>
