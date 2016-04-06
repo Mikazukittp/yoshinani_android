@@ -1,80 +1,98 @@
 <resources>
-    <string name="app_name">よしなに</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name" translatable="false">よしなに</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="action_settings" translatable="false">Settings</string>
 
-    <string name="btn_label">クリック!!</string>
+    <string name="btn_label" translatable="false">クリック!!</string>
 
-    <string name="sub_fragment_title">This is SubView!!</string>
-    <string name="btn_clicked">Button Clicked!!</string>
-    <string name="goToMain">メイン画面へ遷移</string>
+    <string name="sub_fragment_title" translatable="false">This is SubView!!</string>
+    <string name="btn_clicked" translatable="false">Button Clicked!!</string>
+    <string name="goToMain" translatable="false">メイン画面へ遷移</string>
 
-    <string name="menu_main">メイン</string>
-    <string name="menu_sub">サブ</string>
-    <string name="menu_setting">設定</string>
-    <string name="menu_about">このアプリについて</string>
+    <string name="menu_main" translatable="false">メイン</string>
+    <string name="menu_sub" translatable="false">サブ</string>
+    <string name="menu_setting" translatable="false">設定</string>
+    <string name="menu_about" translatable="false">このアプリについて</string>
 
-    <string name="email">メールアドレス</string>
-    <string name="password">パスワード</string>
-    <string name="login">ログイン</string>
+    <string name="email" translatable="false">メールアドレス</string>
+    <string name="password" translatable="false">パスワード</string>
+    <string name="login" translatable="false">ログイン</string>
 
-    <string name="title_activity_post">送信</string>
-    <string name="payment">立替</string>
-    <string name="repayment">返済</string>
-    <string name="amount">金額</string>
-    <string name="event">イベント名</string>
-    <string name="description">詳細</string>
-    <string name="date">日付</string>
-    <string name="post">作成</string>
-    <string name="opponent">誰に</string>
+    <string name="title_activity_post" translatable="false">送信</string>
+    <string name="payment" translatable="false">立替</string>
+    <string name="repayment" translatable="false">返済</string>
+    <string name="amount" translatable="false">金額</string>
+    <string name="event" translatable="false">イベント名</string>
+    <string name="description" translatable="false">詳細</string>
+    <string name="date" translatable="false">日付</string>
+    <string name="post" translatable="false">作成</string>
+    <string name="opponent" translatable="false">誰に</string>
 
-    <string name="dialog_participants_title">参加者</string>
-    <string name="all_check">全選択</string>
-
-
-    <string name="log">ログ</string>
-    <string name="members">メンバー</string>
-    <string name="membersWithNum">メンバー (%1$d)</string>
-
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
-    <string name="title_activity_base">BaseActivity</string>
-    <string name="title_activity_groups">Groups</string>
-    <string name="detail">詳細</string>
-    <string name="groupUsers">グループ一覧</string>
-    <string name="group_detail">グループ詳細</string>
-    <string name="setting">設定</string>
-    <string name="paid">支払い</string>
-    <string name="participants">参加者</string>
-    <string name="add_member">メンバー追加</string>
-    <string name="edit_group">グループ編集</string>
-    <string name="notification">お知らせ</string>
-    <string name="go_to_sign_up_who_dont_have_account">アカウントをお持ちでない方は<u>こちら</u></string>
-    <string name="register">登録</string>
-    <string name="username_hint">ユーザ名(表示名)</string>
-    <string name="account_hint">ID(英数字)</string>
-    <string name="passwod_confirm">パスワード(確認用)</string>
-    <string name="go_to_sign_in_who_have_account">すでにアカウントをお持ちの方は<u>こちら</u></string>
-    <string name="sign_out">ログアウト</string>
-    <string name="search">検索</string>
-    <string name="add_group">グループ追加</string>
-    <string name="edit_profile">プロフィール編集</string>
-    <string name="accept">承認</string>
-    <string name="decline">拒否</string>
-    <string name="group_name">グループ名</string>
-    <string name="group_description">グループの説明</string>
-    <string name="account">ID</string>
+    <string name="dialog_participants_title" translatable="false">参加者</string>
+    <string name="all_check" translatable="false">全選択</string>
 
 
-    <string name="banner_ad_unit_id">ca-app-pub-8668651775161815/7720270684</string>
-    <string name="interstitial_ad_unit_id">ca-app-pub-8668651775161815/5685134282</string>
-    <string name="test_device_id">417B222F70913CAC12ECE9B9DD3EABE8</string>
+    <string name="log" translatable="false">ログ</string>
+    <string name="members" translatable="false">メンバー</string>
+    <string name="membersWithNum" translatable="false">メンバー (%1$d)</string>
 
-    <string name="facebook_app_id">654520651355162</string>
-    <string name="menu_account">アカウント設定</string>
-    <string name="version">バージョン %1$s</string>
-    <string name="menu_top">TOP画面</string>
-    <string name="forget_accoount_or_password">アカウントまたはパスワードをお忘れの方は<u>こちら</u></string>
-    <string name="reset_account">アカウント再設定用認証キーを受け取った方は<u>こちら</u></string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="title_activity_base" translatable="false">BaseActivity</string>
+    <string name="title_activity_groups" translatable="false">Groups</string>
+    <string name="detail" translatable="false">詳細</string>
+    <string name="groupUsers" translatable="false">グループ一覧</string>
+    <string name="group_detail" translatable="false">グループ詳細</string>
+    <string name="setting" translatable="false">設定</string>
+    <string name="paid" translatable="false">支払い</string>
+    <string name="participants" translatable="false">参加者</string>
+    <string name="add_member" translatable="false">メンバー追加</string>
+    <string name="edit_group" translatable="false">グループ編集</string>
+    <string name="notification" translatable="false">お知らせ</string>
+    <string name="go_to_sign_up_who_dont_have_account" translatable="false">アカウントをお持ちでない方は
+        <u>こちら</u>
+    </string>
+    <string name="register" translatable="false">登録</string>
+    <string name="username_hint" translatable="false">ユーザ名(表示名)</string>
+    <string name="account_hint" translatable="false">ID(英数字)</string>
+    <string name="passwod_confirm" translatable="false">パスワード(確認用)</string>
+    <string name="go_to_sign_in_who_have_account" translatable="false">すでにアカウントをお持ちの方は
+        <u>こちら</u>
+    </string>
+    <string name="sign_out" translatable="false">ログアウト</string>
+    <string name="search" translatable="false">検索</string>
+    <string name="add_group" translatable="false">グループ追加</string>
+    <string name="edit_profile" translatable="false">プロフィール編集</string>
+    <string name="accept" translatable="false">承認</string>
+    <string name="decline" translatable="false">拒否</string>
+    <string name="group_name" translatable="false">グループ名</string>
+    <string name="group_description" translatable="false">グループの説明</string>
+    <string name="account" translatable="false">ID</string>
+
+
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-8668651775161815/7720270684
+    </string>
+    <string name="interstitial_ad_unit_id" translatable="false">
+        ca-app-pub-8668651775161815/5685134282
+    </string>
+    <string name="test_device_id" translatable="false">417B222F70913CAC12ECE9B9DD3EABE8</string>
+
+    <string name="facebook_app_id" translatable="false">654520651355162</string>
+    <string name="menu_account" translatable="false">アカウント設定</string>
+    <string name="version" translatable="false">バージョン %1$s</string>
+    <string name="menu_top" translatable="false">TOP画面</string>
+    <string name="forget_accoount_or_password" translatable="false">アカウントまたはパスワードをお忘れの方は
+        <u>こちら</u>
+    </string>
+    <string name="reset_account" translatable="false">アカウント再設定用認証キーを受け取った方は
+        <u>こちら</u>
+    </string>
+
+    <!--<string name="rate_dialog_title">Rate this app</string>-->
+    <!--<string name="rate_dialog_message">If you enjoy playing this app, would you mind taking a moment to rate it? It won\'t take more than a minute. Thanks for your support!</string>-->
+    <string name="rate_dialog_ok">今すぐ評価</string>
+    <!--<string name="rate_dialog_cancel">Remind Me Later</string>-->
+    <string name="rate_dialog_no">評価しない</string>
+    <string name="menu_rate" translatable="false">このアプリを評価</string>
 
 </resources>
