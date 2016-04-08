@@ -3,8 +3,10 @@ package app.android.ttp.mikazuki.yoshinani;
 import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.stetho.Stetho;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * This is a subclass of {@link Application} used to provide shared objects for this app, such as
@@ -28,7 +30,15 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
+
         createTracker();
+
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build());
     }
 
     private void createTracker() {
