@@ -20,5 +20,6 @@
 
     <!-- Others -->
     <color name="red800">#c62828</color>
-
+    <!--<color name="line">#5ae628</color>-->
+    <color name="line">#00c300</color>
 </resources>

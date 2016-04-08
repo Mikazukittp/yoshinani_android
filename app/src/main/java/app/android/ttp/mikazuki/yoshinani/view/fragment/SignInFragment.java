@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,13 @@ import app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.line.android.sdk.LineSdkContext;
+import jp.line.android.sdk.LineSdkContextManager;
+import jp.line.android.sdk.exception.LineSdkLoginError;
+import jp.line.android.sdk.exception.LineSdkLoginException;
+import jp.line.android.sdk.login.LineAuthManager;
+import jp.line.android.sdk.login.LineLoginFuture;
+import jp.line.android.sdk.model.Profile;
 import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
@@ -98,6 +106,85 @@ public class SignInFragment extends Fragment {
             mAuthService.signIn(mAccount.getText().toString(), mPassword.getText().toString());
             ViewUtils.hideKeyboard(getActivity());
         }
+    }
+
+    @OnClick(R.id.line_login_btn)
+    public void lineLogin(View view) {
+        LineSdkContext sdkContext = LineSdkContextManager.getSdkContext();
+        LineAuthManager authManager = sdkContext.getAuthManager();
+        LineLoginFuture loginFuture = authManager.login(getActivity());
+        loginFuture.addFutureListener(future -> {
+            Log.d("!!!", "Line API Callback");
+            Log.d("!!!", future.getProgress().toString());
+            switch (future.getProgress()) {
+                case SUCCESS:
+                    Log.d("!!!", "mid: " + future.getAccessToken().mid);
+                    Log.d("!!!", "accessToken: " + future.getAccessToken().accessToken);
+                    Log.d("!!!", "refreshToken: " + future.getAccessToken().refreshToken);
+                    Log.d("!!!", "expire: " + future.getAccessToken().expire);
+
+                    sdkContext.getApiClient().getMyProfile(profileFuture -> {
+                        switch (profileFuture.getStatus()) {
+                            case SUCCESS:
+                                Profile profile = profileFuture.getResponseObject();
+                                String mid = profile.mid;
+                                String displayName = profile.displayName;
+                                String pictureUrl = profile.pictureUrl;
+                                String statusMessage = profile.statusMessage;
+
+                                Log.d("!!!", "mid: " + profile.mid);
+                                Log.d("!!!", "displayName: " + profile.displayName);
+                                Log.d("!!!", "pictureUrl: " + profile.pictureUrl);
+                                Log.d("!!!", "statusMessage: " + profile.statusMessage);
+
+                                break;
+                            case FAILED:
+                            default:
+                                Throwable cause = profileFuture.getCause();
+                                break;
+                        }
+                    });
+
+                    break;
+                case FAILED:
+                    Log.e("!!!", "FAILED");
+                    Throwable failedCause = future.getCause();
+                    if (failedCause instanceof LineSdkLoginException) {
+                        LineSdkLoginException loginException = (LineSdkLoginException) failedCause;
+                        LineSdkLoginError error = loginException.error;
+                        switch (error) {
+                            case FAILED_START_LOGIN_ACTIVITY:
+                                Log.e("!!!", "FAILED_START_LOGIN_ACTIVITY");
+                                // Failed launching LINE application or WebLoginActivity (Activity may be null)
+                                break;
+                            case FAILED_A2A_LOGIN:
+                                Log.e("!!!", "FAILED_A2A_LOGIN");
+                                Log.e("!!!", loginException.errorCode + "");
+                                Log.e("!!!", loginException.getMessage());
+                                Log.e("!!!", error.name());
+                                Log.e("!!!", error.toString());
+                                // Failed LINE login
+                                break;
+                            case FAILED_WEB_LOGIN:
+                                Log.e("!!!", "FAILED_WEB_LOGIN");
+                                // Failed Web login
+                                break;
+                            case UNKNOWN:
+                                Log.e("!!!", "UNKNOWN");
+                                // Un expected error occurred
+                                break;
+                        }
+                    } else {
+                        // Check other exceptions
+                        Log.e("!!!", "other exception");
+                    }
+                    break;
+                case CANCELED:
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     @OnClick(R.id.go_to_sign_up)
