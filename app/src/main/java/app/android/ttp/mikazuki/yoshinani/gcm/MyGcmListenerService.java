@@ -9,12 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.parceler.Parcels;
 
@@ -38,16 +34,10 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         final String message = data.getString("message");
-        for (String key : data.keySet()) {
-            Log.d(TAG, key + ": " + data.get(key));
-        }
-
         final String type = data.getString("type");
         if (Objects.equals(type, "new_payment")) {
-            String payment = (String) data.get("payment");
-            Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
             Intent intent = new Intent(this, GroupActivity.class);
-            intent.putExtra(Constants.BUNDLE_GROUP_KEY, Parcels.wrap(new GroupModel(gson.fromJson(payment, Payment.class).groupId, null, null, null, null)));
+            intent.putExtra(Constants.BUNDLE_GROUP_KEY, Parcels.wrap(new GroupModel(Integer.parseInt(data.getString("group_id")), null, null, null, null)));
             sendNotification("新しい精算の投稿", message, intent);
         } else if (Objects.equals(type, "invitation")) {
             Intent intent = new Intent(this, MainActivity.class);
