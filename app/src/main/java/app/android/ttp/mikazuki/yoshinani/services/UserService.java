@@ -58,6 +58,12 @@ public class UserService implements Subscription {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<Response<User>> setAccountToOAuthUser(final int userId, final String account) {
+        return mAPI.registerAccount(userId, new RetrofitUserService.UpdateAccountRequestWrapper(account))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public void search(String account) {
         mAPI.search(account)
                 .subscribeOn(Schedulers.newThread())
