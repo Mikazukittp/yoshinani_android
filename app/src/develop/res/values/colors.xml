@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="theme200">#B0BEC5</color>-->
-    <!--<color name="theme400">#78909C</color>-->
-    <!--<color name="theme600">#546E7A</color>-->
-    <!--<color name="theme800">#37474F</color>-->
-    <!--<color name="accent500">#009688</color>-->
+    <color name="theme200">#FFCC80</color>
+    <color name="theme400">#FFA726</color>
+    <color name="theme600">#FB8C00</color>
+    <color name="theme800">#EF6C00</color>
+    <color name="accent600">#00897B</color>
+    <color name="accent800">#00695C</color>
 </resources>

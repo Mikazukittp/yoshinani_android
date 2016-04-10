@@ -14,12 +14,12 @@
                     android:left="16dp"
                     android:right="16dp"
                     android:top="16dp"/>
-                <solid android:color="@color/accent800"/>
+                <solid android:color="@color/lineDark"/>
             </shape>
         </inset>
     </item>
 
-    <item android:drawable="@drawable/shape_btn_accent"
+    <item android:drawable="@drawable/shape_btn_line"
           android:state_enabled="true"
           android:state_pressed="false"/>
 

@@ -81,6 +81,14 @@ public class AuthService implements Subscription {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<Response<User>> signInWithOAuth(@NonNull final String id,
+                                                      @NonNull final int whichSNS,
+                                                      @NonNull final String hashedId) {
+        return mAPI.signInWithOAuth(new RetrofitUserService.OAuthRequestWrapper(id, whichSNS, hashedId))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     @Override
     public void unsubscribe() {
 //        messenger.unsubscribe();
