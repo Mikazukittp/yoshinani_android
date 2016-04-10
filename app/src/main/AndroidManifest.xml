@@ -60,6 +60,31 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent"/>
 
+
+        <!-- LINE SDK -->
+        <activity android:name="jp.line.android.sdk.activity.LineAuthCompleteActivity"
+                  android:configChanges="keyboard|orientation"
+                  android:exported="true"
+                  android:screenOrientation="sensor">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="line.1461975038"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="jp.line.android.sdk.activity.WebLoginActivity"
+                  android:configChanges="keyboard|orientation"
+                  android:exported="false"
+                  android:screenOrientation="sensor">
+        </activity>
+        <meta-data
+            android:name="jp.line.sdk.ChannelId"
+            android:value="1461975038"/>
+        <meta-data
+            android:name="jp.line.sdk.AuthScheme"
+            android:value="line.1461975038"/>
+
         <!-- for GCM -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"

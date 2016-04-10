@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:background="@color/theme600"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/theme600"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="32dp"
         android:text="YOSHINANI"
         android:textColor="@color/white"
-        android:textSize="32sp" />
+        android:textSize="32sp" android:paddingTop="16dp" android:paddingBottom="16dp"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/account_input_layout"
@@ -35,7 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/account"
             android:inputType="textEmailAddress"
-            app:theme="@style/whiteEditText" />
+            app:theme="@style/whiteEditText"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -53,7 +52,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:inputType="textPassword"
-            app:theme="@style/whiteEditText" />
+            app:theme="@style/whiteEditText"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -63,8 +62,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/password_input_layout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:text="@string/login" />
+        android:layout_marginBottom="32dp"
+        android:text="@string/login" android:background="@drawable/btn_bg"/>
+    <Button
+        android:id="@+id/line_login_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_line_bg"
+        android:text="LINEでログイン"
+        android:textColor="@color/white"/>
 
     <!--<com.facebook.login.widget.LoginButton-->
     <!--android:id="@+id/fb_btn"-->
@@ -88,13 +98,13 @@
         android:id="@+id/go_to_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_btn"
+        android:layout_below="@+id/line_login_btn"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
         android:text="@string/go_to_sign_up_who_dont_have_account"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/forget"
@@ -106,6 +116,6 @@
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
         android:text="@string/forget_accoount_or_password"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"/>
 
 </RelativeLayout>

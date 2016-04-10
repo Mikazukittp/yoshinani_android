@@ -70,7 +70,7 @@ public class MainFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         // ListViewの設定
-        mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
+        mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent600);
         mSwipeRefresh.setOnRefreshListener(() -> EventBus.getDefault().post(new RefreshEvent(true)));
         ViewCompat.setNestedScrollingEnabled(mListView, true);
         final View footer = getActivity().getLayoutInflater().inflate(R.layout.list_footer_group, null);

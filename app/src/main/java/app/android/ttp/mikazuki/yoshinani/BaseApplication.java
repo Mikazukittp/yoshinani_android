@@ -8,6 +8,8 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.leakcanary.LeakCanary;
 
+import jp.line.android.sdk.LineSdkContextManager;
+
 /**
  * This is a subclass of {@link Application} used to provide shared objects for this app, such as
  * the {@link Tracker}.
@@ -39,6 +41,8 @@ public class BaseApplication extends MultiDexApplication {
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                         .build());
+
+        LineSdkContextManager.initialize(this);
     }
 
     private void createTracker() {

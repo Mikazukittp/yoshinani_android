@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.ResponseMessage;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User;
 import retrofit2.Response;
@@ -32,6 +34,7 @@ public interface RetrofitUserService {
     static final String PATH_PASSWORDS_INIT = "passwords/init";
     static final String PATH_PASSWORDS_RESET = "passwords/reset";
     static final String PATH_NOTIFICATION_TOKENS = "notification_tokens";
+    static final String PATH_OAUTH = "oauth_registrations";
 
     @POST(PATH_USERS)
     public Observable<Response<User>> createUser(@Body RequestWrapper user);
@@ -44,6 +47,9 @@ public interface RetrofitUserService {
 
     @PATCH(PATH_USER)
     public Observable<Response<User>> updateUser(@Path("id") int userId, @Body UpdateRequestWrapper user);
+
+    @PATCH(PATH_USER)
+    public Observable<Response<User>> registerAccount(@Path("id") int userId, @Body UpdateAccountRequestWrapper user);
 
     @FormUrlEncoded
     @POST(PATH_LOGIN)
@@ -69,6 +75,9 @@ public interface RetrofitUserService {
 
     @DELETE(PATH_NOTIFICATION_TOKENS)
     public Observable<Response<User>> deleteToken(@Body NotificationRequestWrapper notification);
+
+    @POST(PATH_OAUTH)
+    public Observable<Response<User>> signInWithOAuth(@Body OAuthRequestWrapper oauthRegistration);
 
     public class RequestWrapper {
         public PostData user;
@@ -110,6 +119,22 @@ public interface RetrofitUserService {
                              @NonNull final String email) {
                 this.username = username;
                 this.email = email;
+            }
+        }
+    }
+
+    public class UpdateAccountRequestWrapper {
+        public PatchData user;
+
+        public UpdateAccountRequestWrapper(@NonNull final String account) {
+            this.user = new PatchData(account);
+        }
+
+        class PatchData {
+            public String account;
+
+            public PatchData(@NonNull final String account) {
+                this.account = account;
             }
         }
     }
@@ -197,5 +222,30 @@ public interface RetrofitUserService {
                 this.authDeviceToken = authDeviceToken;
             }
         }
+    }
+
+    public class OAuthRequestWrapper {
+        public Data oauthRegistration;
+
+        public OAuthRequestWrapper(@Nonnull final String thirdPartyId,
+                                   @Nonnull final int oauthId,
+                                   @Nonnull final String snsHashId) {
+            this.oauthRegistration = new Data(thirdPartyId, oauthId, snsHashId);
+        }
+
+        class Data {
+            public String thirdPartyId;
+            public int oauthId;
+            public String snsHashId;
+
+            public Data(@Nonnull final String thirdPartyId,
+                        @Nonnull final int oauthId,
+                        @Nonnull final String snsHashId) {
+                this.thirdPartyId = thirdPartyId;
+                this.oauthId = oauthId;
+                this.snsHashId = snsHashId;
+            }
+        }
+
     }
 }

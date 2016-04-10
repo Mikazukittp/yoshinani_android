@@ -62,7 +62,7 @@ public class PaymentLogFragment extends Fragment {
         mGroupModel = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
         mPaymentService = new PaymentService(getActivity().getApplicationContext());
 
-        mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
+        mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent600);
         mSwipeRefresh.setOnRefreshListener(() -> refresh());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getApplicationContext()));

@@ -91,17 +91,6 @@ public class MainActivity extends BaseActivity {
         refresh(true);
 
         // GCMの設定
-//        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-//                boolean sentToken = sharedPreferences.getBoolean("SENT_TOKEN_TO_SERVER", false);
-//            }
-//        };
-//        if (!isReceiverRegistered) {
-//            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver, new IntentFilter("REGISTRATION_COMPLETE"));
-//            isReceiverRegistered = true;
-//        }
         if (checkPlayServices()) {
             startService(new Intent(this, RegistrationIntentService.class));
         }
