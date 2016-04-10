@@ -3,6 +3,7 @@ package app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity;
 import com.google.common.collect.Maps;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author haijimakazuki
@@ -10,11 +11,27 @@ import java.util.HashMap;
 public class APIError {
 
     private String message;
-    private HashMap<String, String> errors = Maps.newHashMap();
+    private HashMap<String, List<String>> errors = Maps.newHashMap();
 
-    public APIError(String message, HashMap<String, String> errors) {
+    public APIError(String message, HashMap<String, List<String>> errors) {
         this.message = message;
         this.errors = errors;
+    }
+
+    public boolean hasErrors() {
+        return !errors.isEmpty();
+    }
+
+    public String getDetailedMessage() {
+        String result = this.message;
+        if (hasErrors()) {
+            for (List<String> attrErrors : errors.values()) {
+                for (String error : attrErrors) {
+                    result += "\n" + error;
+                }
+            }
+        }
+        return result;
     }
 
     public String getMessage() {
@@ -25,11 +42,11 @@ public class APIError {
         this.message = message;
     }
 
-    public HashMap<String, String> getErrors() {
+    public HashMap<String, List<String>> getErrors() {
         return errors;
     }
 
-    public void setErrors(HashMap<String, String> errors) {
+    public void setErrors(HashMap<String, List<String>> errors) {
         this.errors = errors;
     }
 }

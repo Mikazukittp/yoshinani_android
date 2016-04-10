@@ -156,8 +156,8 @@ public class SignInFragment extends Fragment {
                                                             if (res.isSuccess()) {
                                                                 EventBus.getDefault().post(new ActivityTransitionEvent(MainActivity.class, false));
                                                             } else {
-                                                                Log.e("!!!", ApiUtil.getApiError(res).getMessage());
-                                                                EventBus.getDefault().post(new ShowSnackbarEvent(ApiUtil.getApiError(res).getMessage()));
+                                                                PreferenceUtil.clearUserData(getActivity().getApplicationContext());
+                                                                EventBus.getDefault().post(new ShowSnackbarEvent(ApiUtil.getApiError(res).getDetailedMessage()));
                                                             }
                                                         });
                                             }).setCancelable(false)
