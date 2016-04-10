@@ -15,10 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="32dp"
         android:text="YOSHINANI"
         android:textColor="@color/white"
-        android:textSize="32sp"/>
+        android:textSize="32sp" android:paddingTop="16dp" android:paddingBottom="16dp"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/account_input_layout"
@@ -63,8 +62,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/password_input_layout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:text="@string/login"/>
+        android:layout_marginBottom="32dp"
+        android:text="@string/login" android:background="@drawable/btn_bg"/>
     <Button
         android:id="@+id/line_login_btn"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -72,8 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:background="@color/line"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_line_bg"
         android:text="LINEでログイン"
         android:textColor="@color/white"/>
 
@@ -99,7 +98,7 @@
         android:id="@+id/go_to_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_btn"
+        android:layout_below="@+id/line_login_btn"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:paddingBottom="4dp"

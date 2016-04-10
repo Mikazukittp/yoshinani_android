@@ -20,9 +20,9 @@ import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
+import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.MemberListAdapter;
-import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -56,7 +56,7 @@ public class MembersFragment extends Fragment {
         mGroupService = new GroupService(getActivity().getApplicationContext());
         mGroupService.get(mGroupModel.getId());
 
-        mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent500);
+        mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent600);
         mSwipeRefresh.setOnRefreshListener(() -> mGroupService.get(mGroupModel.getId()));
         ViewCompat.setNestedScrollingEnabled(mListView, true);
 
