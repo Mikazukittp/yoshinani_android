@@ -11,14 +11,18 @@
                 <item>
                     <shape android:shape="rectangle">
                         <padding
+                            android:bottom="16dp"
                             android:left="80dp"
-                            android:right="32dp"/>
+                            android:right="32dp"
+                            android:top="16dp"/>
                         <corners android:radius="8dp"/>
                         <solid android:color="@color/lineDark"/>
                     </shape>
                 </item>
                 <item android:width="1dp"
-                      android:left="-32dp">
+                      android:bottom="-16dp"
+                      android:left="-32dp"
+                      android:top="-16dp">
                     <shape android:shape="rectangle">
                         <solid android:width="1dp"
                                android:color="#009800"/>
@@ -26,7 +30,9 @@
                 </item>
                 <!-- to draw dark vertical line mask dark rectangle (pre 23) -->
                 <item android:width="1dp"
-                      android:left="-31dp">
+                      android:bottom="-16dp"
+                      android:left="-31dp"
+                      android:top="-16dp">
                     <shape android:shape="rectangle">
                         <solid android:width="1dp"
                                android:color="@color/lineDark"/>
@@ -35,9 +41,9 @@
                 <item
                     android:width="32dp"
                     android:height="32dp"
-                    android:bottom="8dp"
+                    android:bottom="-8dp"
                     android:left="-72dp"
-                    android:top="8dp">
+                    android:top="-8dp">
                     <bitmap android:gravity="left"
                             android:src="@drawable/line_32dp"/>
                 </item>
@@ -60,14 +66,18 @@
                 <item>
                     <shape android:shape="rectangle">
                         <padding
+                            android:bottom="16dp"
                             android:left="80dp"
-                            android:right="32dp"/>
+                            android:right="32dp"
+                            android:top="16dp"/>
                         <corners android:radius="8dp"/>
                         <solid android:color="#c6c6c6"/>
                     </shape>
                 </item>
                 <item android:width="1dp"
-                      android:left="-32dp">
+                      android:bottom="-16dp"
+                      android:left="-32dp"
+                      android:top="-16dp">
                     <shape android:shape="rectangle">
                         <solid android:width="1dp"
                                android:color="#b5b5b5"/>
@@ -75,7 +85,9 @@
                 </item>
                 <!-- to draw dark vertical line mask dark rectangle (pre 23) -->
                 <item android:width="1dp"
-                      android:left="-31dp">
+                      android:bottom="-16dp"
+                      android:left="-31dp"
+                      android:top="-16dp">
                     <shape android:shape="rectangle">
                         <solid android:width="1dp"
                                android:color="#c6c6c6"/>
@@ -84,9 +96,9 @@
                 <item
                     android:width="32dp"
                     android:height="32dp"
-                    android:bottom="8dp"
+                    android:bottom="-8dp"
                     android:left="-72dp"
-                    android:top="8dp">
+                    android:top="-8dp">
                     <bitmap android:gravity="left"
                             android:src="@drawable/line_32dp"/>
                 </item>

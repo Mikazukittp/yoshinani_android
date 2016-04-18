@@ -78,7 +78,8 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/btn_line_bg"
         android:text="LINEでログイン"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="16dp"/>
 
     <!--<com.facebook.login.widget.LoginButton-->
     <!--android:id="@+id/fb_btn"-->
