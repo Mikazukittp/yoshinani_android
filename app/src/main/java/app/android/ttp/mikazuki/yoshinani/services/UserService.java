@@ -1,8 +1,11 @@
 package app.android.ttp.mikazuki.yoshinani.services;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
 
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.event.FetchListDataEvent;
@@ -11,6 +14,8 @@ import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.service.RetrofitUserService;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Subscription;
@@ -68,6 +73,14 @@ public class UserService implements Subscription {
                                                      final String newPassword,
                                                      final String newPasswordConfirmation) {
         return mAPI.changePassword(new RetrofitUserService.ChangePasswordRequestWrapper(password, newPassword, newPasswordConfirmation))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Response<User>> uploadProfileIcon(@NonNull final File image) {
+        final String extension = image.getName().split("\\.")[image.getName().split("\\.").length - 1];
+        final MediaType MEDIA_TYPE = MediaType.parse("image/" + extension.toLowerCase());
+        return mAPI.uploadImage(RequestBody.create(MEDIA_TYPE, image))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -6,13 +6,16 @@ import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.ResponseMessage;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -29,6 +32,7 @@ public interface RetrofitUserService {
     static final String PATH_PASSWORDS = "passwords";
     static final String PATH_PASSWORDS_INIT = "passwords/init";
     static final String PATH_PASSWORDS_RESET = "passwords/reset";
+    static final String PATH_IMAGE_UPLOAD = "image_upload";
 
     @POST(PATH_USERS)
     public Observable<Response<User>> createUser(@Body RequestWrapper user);
@@ -57,6 +61,10 @@ public interface RetrofitUserService {
 
     @PATCH(PATH_PASSWORDS_RESET)
     public Observable<Response<User>> resetPassword(@Body ResetPasswordRequestWrapper user);
+
+    @Multipart
+    @POST(PATH_IMAGE_UPLOAD)
+    public Observable<Response<User>> uploadImage(@Part("image") RequestBody imageFile);
 
     public class RequestWrapper {
         public PostData user;

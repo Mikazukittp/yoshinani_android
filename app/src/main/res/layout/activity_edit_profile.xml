@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
-            type="app.android.ttp.mikazuki.yoshinani.viewModel.EditProfileViewModel" />
+            type="app.android.ttp.mikazuki.yoshinani.viewModel.EditProfileViewModel"/>
     </data>
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:theme="@style/AppTheme.NoActionBar.AppBarOverlay"
-            app:title="@string/app_name" />
+            app:title="@string/app_name"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,6 +31,10 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
+            <ImageView android:id="@+id/image"
+                       android:layout_width="60dp"
+                       android:layout_height="60dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,7 +42,7 @@
 
                 <TextView
                     style="@style/table_header_column"
-                    android:text="ID" />
+                    android:text="ID"/>
 
                 <TextView
                     style="@style/table_input_column"
@@ -46,7 +50,7 @@
                     android:paddingLeft="12dp"
                     android:paddingTop="16dp"
                     android:text='@{viewModel.account}'
-                    android:textColor="@color/grey800" />
+                    android:textColor="@color/grey800"/>
             </LinearLayout>
 
             <LinearLayout
@@ -56,7 +60,7 @@
 
                 <TextView
                     style="@style/table_header_column"
-                    android:text="表示名" />
+                    android:text="表示名"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/username_input_layout"
@@ -65,7 +69,7 @@
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/username"
                         style="@style/table_input_column.app_compat_edit_text"
-                        android:text='@{viewModel.username}' />
+                        android:text='@{viewModel.username}'/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -76,7 +80,7 @@
 
                 <TextView
                     style="@style/table_header_column"
-                    android:text="メールアドレス" />
+                    android:text="メールアドレス"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/email_input_layout"
@@ -85,7 +89,7 @@
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/mEmail"
                         style="@style/table_input_column.app_compat_edit_text"
-                        android:text='@{viewModel.email}' />
+                        android:text='@{viewModel.email}'/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -96,7 +100,7 @@
 
                 <TextView
                     style="@style/table_header_column"
-                    android:text="パスワード" />
+                    android:text="パスワード"/>
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/change_password"
@@ -105,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:text="変更"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
             </LinearLayout>
 
 
@@ -116,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:text="適用"
-                app:onClickListener='@{viewModel.onClick}' />
+                app:onClickListener='@{viewModel.onClick}'/>
         </LinearLayout>
     </LinearLayout>
 </layout>
