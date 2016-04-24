@@ -36,6 +36,8 @@ import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.databinding.ActivityEditProfileBinding;
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
+import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil;
+import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.viewModel.EditProfileViewModel;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,6 +71,7 @@ public class EditProfileActivity extends BaseActivity {
     private Uri mUri;
     private ActivityEditProfileBinding mBinding;
     private EditProfileViewModel mViewModel;
+    private UserService mUserService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,7 @@ public class EditProfileActivity extends BaseActivity {
 
         UserModel me = Parcels.unwrap(getIntent().getParcelableExtra("me"));
         mViewModel = new EditProfileViewModel(getApplicationContext(), me);
+        mUserService = new UserService(getApplicationContext());
 
         Glide.with(getApplicationContext())
                 .load(me.getIconUrl())
@@ -184,34 +188,46 @@ public class EditProfileActivity extends BaseActivity {
                             matrix = getRotatedMatrix(file, matrix);
                             Bitmap image = getCalculatedSquareBitmap(file, matrix);
                             mImage.setImageBitmap(image);
+
+                            mUserService.uploadProfileIcon(file)
+                                    .subscribe(response -> {
+                                        if (response.isSuccess()) {
+                                            Log.d("!!!", "Success to upload!!!");
+//                                    EventBus.getDefault().post(new FetchDataEvent<>(UserModel.from(response.body())));
+                                        } else {
+                                            Log.e("!!!", "Fail to upload");
+                                            Log.e("!!!", ApiUtil.getApiError(response).getMessage());
+//                                    EventBus.getDefault().post(new ErrorEvent("パスワード変更失敗", ApiUtil.getApiError(response).getMessage()));
+                                        }
+                                    });
                             Log.e("!!!", "2");
                             return;
                         }
                     }
                 }
 
-                //
-                Log.d("!!!", "path: " + resultUri.getPath());
-                for (String seg : resultUri.getPathSegments()) {
-                    Log.d("!!!", "seg: " + seg);
-                }
-                try (Cursor cursor = getContentResolver().query(resultUri, null, null, null, null, null)) {
-                    if (cursor != null && cursor.moveToFirst()) {
-//                        int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-//                        int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-                        for (String columnName : cursor.getColumnNames()) {
-                            Log.d("!!!", columnName + ": " + cursor.getString(cursor.getColumnIndex(columnName)));
-                        }
-                        Bundle extras = cursor.getExtras();
-                        if (extras != null) {
-                            for (String key : extras.keySet()) {
-                                Log.d("!!!", "cursor.getExtra()[" + key + "]: " + extras.get(key));
-                            }
-                        } else {
-                            Log.e("!!!", "cursor.getExtra(): null");
-                        }
-                    }
-                }
+//                //
+//                Log.d("!!!", "path: " + resultUri.getPath());
+//                for (String seg : resultUri.getPathSegments()) {
+//                    Log.d("!!!", "seg: " + seg);
+//                }
+//                try (Cursor cursor = getContentResolver().query(resultUri, null, null, null, null, null)) {
+//                    if (cursor != null && cursor.moveToFirst()) {
+////                        int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+////                        int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+//                        for (String columnName : cursor.getColumnNames()) {
+//                            Log.d("!!!", columnName + ": " + cursor.getString(cursor.getColumnIndex(columnName)));
+//                        }
+//                        Bundle extras = cursor.getExtras();
+//                        if (extras != null) {
+//                            for (String key : extras.keySet()) {
+//                                Log.d("!!!", "cursor.getExtra()[" + key + "]: " + extras.get(key));
+//                            }
+//                        } else {
+//                            Log.e("!!!", "cursor.getExtra(): null");
+//                        }
+//                    }
+//                }
 //                        File createdImage = bitmapToFile(image, "yoshinani.jpg");
 //                        if (createdImage != null) {
 //                            Log.d("!!!!!", "stored: " + createdImage.getPath());
@@ -222,6 +238,19 @@ public class EditProfileActivity extends BaseActivity {
                 try {
                     Bitmap image = getBitmapFromUri(resultUri);
                     mImage.setImageBitmap(image);
+
+                    mUserService.uploadProfileIcon(new File(resultUri.getPath()))
+                            .subscribe(response -> {
+                                if (response.isSuccess()) {
+                                    Log.d("!!!", "Success to upload!!!");
+//                                    EventBus.getDefault().post(new FetchDataEvent<>(UserModel.from(response.body())));
+                                } else {
+                                    Log.e("!!!", "Fail to upload");
+                                    Log.e("!!!", ApiUtil.getApiError(response).getMessage());
+//                                    EventBus.getDefault().post(new ErrorEvent("パスワード変更失敗", ApiUtil.getApiError(response).getMessage()));
+                                }
+                            });
+
                     Log.e("!!!", "3");
                 } catch (IOException e) {
                     e.printStackTrace();

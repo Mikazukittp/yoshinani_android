@@ -32,7 +32,7 @@ public interface RetrofitUserService {
     static final String PATH_PASSWORDS = "passwords";
     static final String PATH_PASSWORDS_INIT = "passwords/init";
     static final String PATH_PASSWORDS_RESET = "passwords/reset";
-    static final String PATH_IMAGE_UPLOAD = "image_upload";
+    static final String PATH_IMAGE_UPLOAD = "users/{id}/icon_imgs";
 
     @POST(PATH_USERS)
     public Observable<Response<User>> createUser(@Body RequestWrapper user);
@@ -64,7 +64,7 @@ public interface RetrofitUserService {
 
     @Multipart
     @POST(PATH_IMAGE_UPLOAD)
-    public Observable<Response<User>> uploadImage(@Part("image") RequestBody imageFile);
+    public Observable<Response<User>> uploadImage(@Path("id") int userId, @Part("image") RequestBody imageFile);
 
     public class RequestWrapper {
         public PostData user;

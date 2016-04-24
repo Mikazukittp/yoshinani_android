@@ -80,7 +80,7 @@ public class UserService implements Subscription {
     public Observable<Response<User>> uploadProfileIcon(@NonNull final File image) {
         final String extension = image.getName().split("\\.")[image.getName().split("\\.").length - 1];
         final MediaType MEDIA_TYPE = MediaType.parse("image/" + extension.toLowerCase());
-        return mAPI.uploadImage(RequestBody.create(MEDIA_TYPE, image))
+        return mAPI.uploadImage(Integer.parseInt(PreferenceUtil.getUid(mContext)), RequestBody.create(MEDIA_TYPE, image))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
