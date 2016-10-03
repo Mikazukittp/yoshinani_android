@@ -3,11 +3,30 @@ package app.android.ttp.mikazuki.yoshinani.utils;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.util.Log;
+
+import java.io.File;
+import java.io.IOException;
+
+import static android.media.ExifInterface.ORIENTATION_FLIP_HORIZONTAL;
+import static android.media.ExifInterface.ORIENTATION_FLIP_VERTICAL;
+import static android.media.ExifInterface.ORIENTATION_NORMAL;
+import static android.media.ExifInterface.ORIENTATION_ROTATE_180;
+import static android.media.ExifInterface.ORIENTATION_ROTATE_270;
+import static android.media.ExifInterface.ORIENTATION_ROTATE_90;
+import static android.media.ExifInterface.ORIENTATION_TRANSPOSE;
+import static android.media.ExifInterface.ORIENTATION_TRANSVERSE;
+import static android.media.ExifInterface.ORIENTATION_UNDEFINED;
+import static android.media.ExifInterface.TAG_ORIENTATION;
 
 /**
  * @author haijimakazuki
@@ -129,5 +148,79 @@ public class ImageUtils {
      */
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    public static Matrix getResizedMatrix(File file, int maxPixel, Matrix matrix) {
+        // リサイズチェック用にメタデータ読み込み
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file.getPath(), options);
+        int height = options.outHeight;
+        int width = options.outWidth;
+        float scale = Math.max((float) maxPixel / width, (float) maxPixel / height);
+        // 縮小のみのため、scaleは1.0未満の場合のみマトリクス設定
+        if (scale < 1.0) {
+            matrix.postScale(scale, scale);
+        }
+        return matrix;
+    }
+
+    public static Matrix getRotatedMatrix(File file, Matrix matrix) {
+        ExifInterface exifInterface;
+        try {
+            exifInterface = new ExifInterface(file.getPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return matrix;
+        }
+
+        // 画像を回転させる処理をマトリクスに追加
+        switch (exifInterface.getAttributeInt(TAG_ORIENTATION, ORIENTATION_UNDEFINED)) {
+            case ORIENTATION_UNDEFINED:
+            case ORIENTATION_NORMAL:
+                break;
+            case ORIENTATION_FLIP_HORIZONTAL:
+                matrix.postScale(-1f, 1f);
+                break;
+            case ORIENTATION_ROTATE_180:
+                matrix.postRotate(180f);
+                break;
+            case ORIENTATION_FLIP_VERTICAL:
+                matrix.postScale(1f, -1f);
+                break;
+            case ORIENTATION_ROTATE_90:
+                matrix.postRotate(90f);
+                break;
+            case ORIENTATION_TRANSVERSE:
+                matrix.postRotate(-90f);
+                matrix.postScale(1f, -1f);
+                break;
+            case ORIENTATION_TRANSPOSE:
+                matrix.postRotate(90f);
+                matrix.postScale(1f, -1f);
+                break;
+            case ORIENTATION_ROTATE_270:
+                matrix.postRotate(-90f);
+                break;
+        }
+        return matrix;
+    }
+
+    public static Bitmap getBitmapFrom(@NonNull final File file,
+                                       @NonNull final Matrix matrix,
+                                       final boolean square) {
+        // 元画像の取得
+        final Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+        final int height = bitmap.getHeight();
+        final int width = bitmap.getWidth();
+
+        Bitmap resizedPicture;
+        if (square) {
+            int size = Math.min(width, height);
+            resizedPicture = Bitmap.createBitmap(bitmap, (width - size) / 2, (height - size) / 2, size, size, matrix, true);
+        } else {
+            resizedPicture = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+        }
+        return resizedPicture;
     }
 }

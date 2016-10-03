@@ -64,7 +64,7 @@ public interface RetrofitUserService {
 
     @Multipart
     @POST(PATH_IMAGE_UPLOAD)
-    public Observable<Response<User>> uploadImage(@Path("id") int userId, @Part("image") RequestBody imageFile);
+    public Observable<Response<User>> uploadImage(@Path("id") int userId, @Part("icon_img") RequestBody imageFile);
 
     public class RequestWrapper {
         public PostData user;

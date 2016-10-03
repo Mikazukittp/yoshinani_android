@@ -8,7 +8,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ import org.parceler.Parcels;
 
 import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import app.android.ttp.mikazuki.yoshinani.R;
@@ -38,22 +36,12 @@ import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil;
 import app.android.ttp.mikazuki.yoshinani.services.UserService;
+import app.android.ttp.mikazuki.yoshinani.utils.ImageUtils;
 import app.android.ttp.mikazuki.yoshinani.viewModel.EditProfileViewModel;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-
-import static android.media.ExifInterface.ORIENTATION_FLIP_HORIZONTAL;
-import static android.media.ExifInterface.ORIENTATION_FLIP_VERTICAL;
-import static android.media.ExifInterface.ORIENTATION_NORMAL;
-import static android.media.ExifInterface.ORIENTATION_ROTATE_180;
-import static android.media.ExifInterface.ORIENTATION_ROTATE_270;
-import static android.media.ExifInterface.ORIENTATION_ROTATE_90;
-import static android.media.ExifInterface.ORIENTATION_TRANSPOSE;
-import static android.media.ExifInterface.ORIENTATION_TRANSVERSE;
-import static android.media.ExifInterface.ORIENTATION_UNDEFINED;
-import static android.media.ExifInterface.TAG_ORIENTATION;
 
 /**
  * @author haijimakazuki
@@ -184,9 +172,9 @@ public class EditProfileActivity extends BaseActivity {
                         if (path != null) {
                             File file = new File(path);
                             Matrix matrix = new Matrix();
-                            matrix = getResizedMatrix(file, 512, matrix);
-                            matrix = getRotatedMatrix(file, matrix);
-                            Bitmap image = getCalculatedSquareBitmap(file, matrix);
+                            matrix = ImageUtils.getResizedMatrix(file, 512, matrix);
+                            matrix = ImageUtils.getRotatedMatrix(file, matrix);
+                            Bitmap image = ImageUtils.getBitmapFrom(file, matrix, true);
                             mImage.setImageBitmap(image);
 
                             mUserService.uploadProfileIcon(file)
@@ -283,7 +271,6 @@ public class EditProfileActivity extends BaseActivity {
                 Log.d("!!!", "extras: null");
             }
             Log.d("!!!", "orientation: " + orientation);
-            Log.d("!!!", "orientation: " + orientation);
 
             DocumentsContract.getDocumentThumbnail(getContentResolver(), uri, null, null);
             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
@@ -292,85 +279,17 @@ public class EditProfileActivity extends BaseActivity {
         }
     }
 
-    private Matrix getResizedMatrix(File file, int maxPixel, Matrix matrix) {
-        // リサイズチェック用にメタデータ読み込み
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(file.getPath(), options);
-        int height = options.outHeight;
-        int width = options.outWidth;
-        float scale = Math.max((float) maxPixel / width, (float) maxPixel / height);
-        // 縮小のみのため、scaleは1.0未満の場合のみマトリクス設定
-        if (scale < 1.0) {
-            matrix.postScale(scale, scale);
-        }
-        return matrix;
-    }
-
-    private Matrix getRotatedMatrix(File file, Matrix matrix) {
-        ExifInterface exifInterface;
-        try {
-            exifInterface = new ExifInterface(file.getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return matrix;
-        }
-
-        // 画像を回転させる処理をマトリクスに追加
-        switch (exifInterface.getAttributeInt(TAG_ORIENTATION, ORIENTATION_UNDEFINED)) {
-            case ORIENTATION_UNDEFINED:
-            case ORIENTATION_NORMAL:
-                break;
-            case ORIENTATION_FLIP_HORIZONTAL:
-                matrix.postScale(-1f, 1f);
-                break;
-            case ORIENTATION_ROTATE_180:
-                matrix.postRotate(180f);
-                break;
-            case ORIENTATION_FLIP_VERTICAL:
-                matrix.postScale(1f, -1f);
-                break;
-            case ORIENTATION_ROTATE_90:
-                matrix.postRotate(90f);
-                break;
-            case ORIENTATION_TRANSVERSE:
-                matrix.postRotate(-90f);
-                matrix.postScale(1f, -1f);
-                break;
-            case ORIENTATION_TRANSPOSE:
-                matrix.postRotate(90f);
-                matrix.postScale(1f, -1f);
-                break;
-            case ORIENTATION_ROTATE_270:
-                matrix.postRotate(-90f);
-                break;
-        }
-        return matrix;
-    }
-
-    private Bitmap getCalculatedSquareBitmap(File file, Matrix matrix) {
-        // 元画像の取得
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-        // 元画像の取得
-        int height = bitmap.getHeight();
-        int width = bitmap.getWidth();
-        int size = Math.min(width, height);
-
-        // マトリクスをつけることで縮小、向きを反映した画像を生成
-        Bitmap resizedPicture = Bitmap.createBitmap(bitmap, (width - size) / 2, (height - size) / 2, size, size, matrix, true);
-        return resizedPicture;
-    }
-
-    private File bitmapToFile(Bitmap bitmap, String filename) {
-        File file = new File(filename);
-        try (FileOutputStream outputStream = new FileOutputStream(file)) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-            outputStream.flush();
-            return file;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//
+//    private File bitmapToFile(Bitmap bitmap, String filename) {
+//        File file = new File(filename);
+//        try (FileOutputStream outputStream = new FileOutputStream(file)) {
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+//            outputStream.flush();
+//            return file;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 }
 
