@@ -26,7 +26,7 @@ import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.pager.GroupPagerAdapter;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.GroupDetailDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserSearchDialogFragment;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -35,13 +35,13 @@ import butterknife.OnClick;
  */
 public class GroupActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager mViewPager;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton mFab;
 
     private GroupService mGroupService;

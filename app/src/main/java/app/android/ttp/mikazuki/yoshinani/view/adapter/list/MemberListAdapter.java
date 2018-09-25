@@ -15,7 +15,7 @@ import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.TotalModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.utils.TextUtils;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
@@ -62,11 +62,11 @@ public class MemberListAdapter extends ArrayAdapter<UserModel> {
     }
 
     static class ViewHolder {
-        @Bind(R.id.icon)
+        @BindView(R.id.icon)
         ImageView icon;
-        @Bind(R.id.userName)
+        @BindView(R.id.userName)
         TextView userName;
-        @Bind(R.id.userAmount)
+        @BindView(R.id.userAmount)
         TextView userAmount;
 
         public ViewHolder(View view) {

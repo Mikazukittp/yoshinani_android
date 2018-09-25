@@ -23,16 +23,17 @@ import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.MemberListAdapter;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MembersFragment extends Fragment {
 
-    @Bind(R.id.swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
-    @Bind(R.id.list_view)
+    @BindView(R.id.list_view)
     ListView mListView;
-
+    private Unbinder mUnbinder;
     private List<UserModel> mUserModels;
     private GroupService mGroupService;
     private GroupModel mGroupModel;
@@ -50,7 +51,7 @@ public class MembersFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_members, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         mGroupModel = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
         mGroupService = new GroupService(getActivity().getApplicationContext());
@@ -78,7 +79,7 @@ public class MembersFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
     }
 
     /* ------------------------------------------------------------------------------------------ */

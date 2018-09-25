@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 
 import app.android.ttp.mikazuki.yoshinani.R;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -18,9 +18,9 @@ public class WebViewActivity extends AppCompatActivity {
     public static final String WEBVIEW_TITLE = "title";
     public static final String WEBVIEW_URL = "url";
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView mWebView;
 
     @Override

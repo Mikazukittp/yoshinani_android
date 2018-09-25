@@ -37,9 +37,10 @@ import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.DatePickerDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserMultiSelectDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.viewModel.PostPaymentViewModel;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
@@ -47,18 +48,19 @@ public class PostPaymentFragment extends PostFragment {
 
     private static final int USER_SELECT = 111;
     private static final int DATE_DIALOG_ID = 999;
-    @Bind(R.id.amount)
+    @BindView(R.id.amount)
     EditText mAmount;
-    @Bind(R.id.event)
+    @BindView(R.id.event)
     EditText mEvent;
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     EditText mDescription;
-    @Bind(R.id.date)
+    @BindView(R.id.date)
     Button mDateBtn;
-    @Bind(R.id.participants)
+    @BindView(R.id.participants)
     Button mParticipantsBtn;
-    @Bind(R.id.post)
+    @BindView(R.id.post)
     Button mPost;
+    private Unbinder mUnbinder;
 
     FragmentPostPaymentBinding binding;
     InterstitialAd mInterstitialAd;
@@ -81,7 +83,7 @@ public class PostPaymentFragment extends PostFragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_payment, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         mGroupModel = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
 
@@ -134,7 +136,7 @@ public class PostPaymentFragment extends PostFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
         compositeSubscription.unsubscribe();
     }
 

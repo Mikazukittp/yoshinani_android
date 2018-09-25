@@ -22,7 +22,7 @@ import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -31,15 +31,15 @@ import butterknife.OnClick;
  */
 public class UserSearchDialogFragment extends DialogFragment {
 
-    @Bind(R.id.account)
+    @BindView(R.id.account)
     EditText mAccount;
-    @Bind(R.id.search_result)
+    @BindView(R.id.search_result)
     LinearLayout mSearchResult;
-    @Bind(R.id.found_account)
+    @BindView(R.id.found_account)
     TextView mFoundAccount;
-    @Bind(R.id.found_username)
+    @BindView(R.id.found_username)
     TextView mFoundUsername;
-    @Bind(R.id.search_btn)
+    @BindView(R.id.search_btn)
     Button mSearchBtn;
 
     private GroupModel mGroup;

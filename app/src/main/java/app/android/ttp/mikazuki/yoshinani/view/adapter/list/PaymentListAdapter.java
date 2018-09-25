@@ -14,7 +14,7 @@ import java.util.List;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.databinding.ListPaymentBinding;
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -174,7 +174,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.progress_bar)
+        @BindView(R.id.progress_bar)
         public ProgressBar progressBar;
 
         public ProgressViewHolder(View v) {

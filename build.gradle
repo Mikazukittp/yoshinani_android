@@ -1,15 +1,41 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+
+    ext.supportLibVer = '28.0.0'
+    ext.gmsVer = '15.0.1'
+    ext.gmsAnalyticsVer = '16.0.3'
+    ext.firebaseVer = '16.0.3'
+    ext.multidexVer = '1.0.3'
+
+    ext.butterknifeVer = '8.8.1'
+
+//    ext.retrofitVer='2.4.0'
+//    ext.okhttp3Ver='3.11.0'
+    ext.retrofitVer = '2.0.0-beta3'
+    ext.okhttp3Ver = '3.0.1'
+
+    ext.rxjava1Ver = '1.3.8'
+    ext.rxandroid1Ver = '1.2.1'
+    ext.rxbindingVer = '0.4.0'
+
+    ext.parcelerVer = '1.1.11'
+    ext.stethoVer = '1.5.0'
+    ext.leakcanaryVer = '1.6.1'
+    ext.textdrawableVer = '1.0.1'
+    ext.glideVer = '4.8.0'
+    ext.androidRateVer = '1.0.1'
+
+    ext.crashlyticsVer = '2.5.5'
+
     repositories {
         jcenter()
         mavenCentral()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0-alpha5'
-        classpath 'com.google.gms:google-services:2.0.0-alpha6'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.google.gms:google-services:4.1.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -19,5 +45,6 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        google()
     }
 }

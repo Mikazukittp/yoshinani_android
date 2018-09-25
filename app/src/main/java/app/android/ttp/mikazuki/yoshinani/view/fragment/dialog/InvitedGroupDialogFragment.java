@@ -24,7 +24,7 @@ import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.GroupUserModel;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.InvitedGroupListAdapter;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
@@ -33,7 +33,7 @@ import rx.Observable;
  */
 public class InvitedGroupDialogFragment extends DialogFragment {
 
-    @Bind(R.id.list_view)
+    @BindView(R.id.list_view)
     ListView mListView;
 
     private List<GroupModel> mInvitedGroups;

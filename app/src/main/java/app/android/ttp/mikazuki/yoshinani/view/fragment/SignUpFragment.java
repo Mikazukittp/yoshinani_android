@@ -19,9 +19,10 @@ import org.greenrobot.eventbus.EventBus;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.event.FragmentTransitionEvent;
 import app.android.ttp.mikazuki.yoshinani.services.AuthService;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
@@ -30,17 +31,18 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class SignUpFragment extends Fragment {
 
-    @Bind(R.id.account)
+    @BindView(R.id.account)
     EditText mAccount;
-    @Bind(R.id.email)
+    @BindView(R.id.email)
     EditText mEmail;
-    @Bind(R.id.password)
+    @BindView(R.id.password)
     EditText mPassword;
-    @Bind(R.id.password_confirm)
+    @BindView(R.id.password_confirm)
     EditText mPasswordConfirm;
 
-    @Bind(R.id.register_btn)
+    @BindView(R.id.register_btn)
     Button mRegister;
+    private Unbinder mUnbinder;
 
     private AuthService mAuthService;
 
@@ -52,7 +54,7 @@ public class SignUpFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         mAuthService = new AuthService(getActivity().getApplicationContext());
 
@@ -82,7 +84,7 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
         compositeSubscription.unsubscribe();
     }
 

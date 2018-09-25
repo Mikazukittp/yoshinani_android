@@ -16,7 +16,7 @@ import app.android.ttp.mikazuki.yoshinani.databinding.ActivityEditProfileBinding
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.viewModel.EditProfileViewModel;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -25,7 +25,7 @@ import butterknife.OnClick;
  */
 public class EditProfileActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private ActivityEditProfileBinding mBinding;

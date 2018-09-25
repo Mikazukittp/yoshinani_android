@@ -34,7 +34,7 @@ import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.AboutFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.AccountSettingFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.MainFragment;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import hotchemi.android.rate.AppRate;
 
@@ -44,11 +44,11 @@ import hotchemi.android.rate.AppRate;
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getName();
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @Bind(R.id.navigation)
+    @BindView(R.id.navigation)
     NavigationView mNavigationView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private ActionBarDrawerToggle mDrawerToggle;
 

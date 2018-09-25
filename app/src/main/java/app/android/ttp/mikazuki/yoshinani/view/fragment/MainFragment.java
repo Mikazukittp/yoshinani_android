@@ -38,8 +38,9 @@ import app.android.ttp.mikazuki.yoshinani.view.activity.GroupActivity;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.GroupListAdapter;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.AcceptDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.GroupDetailDialogFragment;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Observable;
 
 /**
@@ -47,14 +48,15 @@ import rx.Observable;
  */
 public class MainFragment extends Fragment {
 
-    @Bind(R.id.swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
-    @Bind(R.id.list_view)
+    @BindView(R.id.list_view)
     ListView mListView;
-    @Bind(R.id.total_amount)
+    @BindView(R.id.total_amount)
     TextView mTotalAmount;
-    @Bind(R.id.adView)
+    @BindView(R.id.adView)
     AdView mAdView;
+    private Unbinder mUnbinder;
 
     private List<GroupModel> mGroups;
     private UserService mUserService;
@@ -67,7 +69,7 @@ public class MainFragment extends Fragment {
                              @Nullable final ViewGroup container,
                              @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         // ListViewの設定
         mSwipeRefresh.setColorSchemeResources(R.color.theme600, R.color.accent600);
@@ -126,7 +128,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
     }
 
     private void refresh() {

@@ -14,9 +14,10 @@ import android.widget.TextView;
 import app.android.ttp.mikazuki.yoshinani.BuildConfig;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.view.activity.WebViewActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * @author haijimakazuki
@@ -26,8 +27,10 @@ public class AboutFragment extends Fragment {
     private static final String LICENSE_URL = "file:///android_asset/license.html";
     private static final String TERMS_URL = "file:///android_asset/terms.html";
 
-    @Bind(R.id.version)
+    @BindView(R.id.version)
     TextView mVersion;
+
+    private Unbinder mUnbinder;
 
     @Nullable
     @Override
@@ -35,7 +38,7 @@ public class AboutFragment extends Fragment {
                              @Nullable final ViewGroup container,
                              @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
         mVersion.setText(getString(R.string.version, BuildConfig.VERSION_NAME));
         return view;
     }
@@ -49,7 +52,7 @@ public class AboutFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
     }
 
     /* ------------------------------------------------------------------------------------------ */

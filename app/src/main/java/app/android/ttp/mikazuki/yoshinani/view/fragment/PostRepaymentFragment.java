@@ -35,9 +35,10 @@ import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.DatePickerDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserSelectDialogFragment;
 import app.android.ttp.mikazuki.yoshinani.viewModel.PostRepaymentViewModel;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
@@ -46,12 +47,13 @@ public class PostRepaymentFragment extends PostFragment {
     private static final int USER_SELECT = 111;
     private static final int DATE_DIALOG_ID = 999;
     private final String TAG = PostPaymentFragment.class.getSimpleName();
-    @Bind(R.id.amount)
+    @BindView(R.id.amount)
     EditText mAmount;
-    @Bind(R.id.participants)
+    @BindView(R.id.participants)
     Button mParticipantsBtn;
-    @Bind(R.id.post)
+    @BindView(R.id.post)
     Button mPost;
+    private Unbinder mUnbinder;
 
     FragmentPostRepaymentBinding binding;
     private UserService mUserService;
@@ -73,7 +75,7 @@ public class PostRepaymentFragment extends PostFragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_repayment, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         mGroupModel = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
 
@@ -119,7 +121,7 @@ public class PostRepaymentFragment extends PostFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
     }
 
     /* ------------------------------------------------------------------------------------------ */

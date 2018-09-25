@@ -13,7 +13,7 @@ import java.util.List;
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.services.GroupService;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -51,13 +51,13 @@ public class InvitedGroupListAdapter extends ArrayAdapter<GroupModel> {
     }
 
     static class ViewHolder {
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.description)
+        @BindView(R.id.description)
         TextView description;
-        @Bind(R.id.accept)
+        @BindView(R.id.accept)
         Button accept;
-        @Bind(R.id.decline)
+        @BindView(R.id.decline)
         Button decline;
 
         public ViewHolder(View view) {

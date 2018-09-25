@@ -10,16 +10,16 @@ import android.view.MenuItem;
 
 import app.android.ttp.mikazuki.yoshinani.R;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.pager.PostPagerAdapter;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PostActivity extends BaseActivity {
 
-    @Bind(R.id.tool_bar)
+    @BindView(R.id.tool_bar)
     Toolbar mToolbar;
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
     @Override

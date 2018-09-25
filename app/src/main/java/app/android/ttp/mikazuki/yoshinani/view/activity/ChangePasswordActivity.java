@@ -14,7 +14,7 @@ import app.android.ttp.mikazuki.yoshinani.databinding.ActivityChangePasswordBind
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.viewModel.ChangePasswordViewModel;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  */
 public class ChangePasswordActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private ActivityChangePasswordBinding mBinding;

@@ -33,9 +33,10 @@ import app.android.ttp.mikazuki.yoshinani.services.AuthService;
 import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils;
 import app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import jp.line.android.sdk.LineSdkContext;
 import jp.line.android.sdk.LineSdkContextManager;
 import jp.line.android.sdk.exception.LineSdkLoginError;
@@ -50,12 +51,13 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class SignInFragment extends Fragment {
 
-    @Bind(R.id.account)
+    @BindView(R.id.account)
     EditText mAccount;
-    @Bind(R.id.password)
+    @BindView(R.id.password)
     EditText mPassword;
-    @Bind(R.id.login_btn)
+    @BindView(R.id.login_btn)
     Button mLogin;
+    private Unbinder mUnbinder;
 
     private AuthService mAuthService;
     private UserService mUserService;
@@ -67,7 +69,7 @@ public class SignInFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
         mAuthService = new AuthService(getActivity().getApplicationContext());
         mUserService = new UserService(getActivity().getApplicationContext());
 
@@ -95,7 +97,7 @@ public class SignInFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
         compositeSubscription.unsubscribe();
     }
 

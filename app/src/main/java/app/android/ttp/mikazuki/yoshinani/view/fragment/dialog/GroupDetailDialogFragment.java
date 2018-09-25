@@ -19,7 +19,7 @@ import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.services.GroupService;
 import app.android.ttp.mikazuki.yoshinani.utils.Constants;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
  */
 public class GroupDetailDialogFragment extends DialogFragment {
 
-    @Bind(R.id.name)
+    @BindView(R.id.name)
     EditText mName;
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     EditText mDescription;
 
     private GroupModel mGroupModel;

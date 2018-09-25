@@ -20,16 +20,18 @@ import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent;
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel;
 import app.android.ttp.mikazuki.yoshinani.model.UserModel;
 import app.android.ttp.mikazuki.yoshinani.services.PaymentService;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author haijimakazuki
  */
 public class PaymentDetailDialogFragment extends DialogFragment {
 
-    @Bind(R.id.participants_list)
+    @BindView(R.id.participants_list)
     LinearLayout mParticipantsList;
+    private Unbinder mUnbinder;
 
     private PaymentService mPaymentService;
 
@@ -40,7 +42,7 @@ public class PaymentDetailDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_payment_detail, null, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         getContext();
         mPaymentService = new PaymentService(getActivity().getApplicationContext());
@@ -80,6 +82,6 @@ public class PaymentDetailDialogFragment extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
     }
 }

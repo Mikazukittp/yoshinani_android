@@ -19,6 +19,7 @@ import app.android.ttp.mikazuki.yoshinani.services.UserService;
 import app.android.ttp.mikazuki.yoshinani.view.activity.EditProfileActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * @author haijimakazuki
@@ -27,13 +28,15 @@ public class AccountSettingFragment extends Fragment {
 
     UserService mUserService;
 
+    private Unbinder mUnbinder;
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater,
                              @Nullable final ViewGroup container,
                              @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_setting, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
         mUserService = new UserService(getActivity().getApplicationContext());
         return view;
     }
@@ -47,7 +50,7 @@ public class AccountSettingFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
     }
 
     /* ------------------------------------------------------------------------------------------ */

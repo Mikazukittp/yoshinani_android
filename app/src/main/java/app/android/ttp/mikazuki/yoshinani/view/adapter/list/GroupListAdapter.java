@@ -17,7 +17,7 @@ import app.android.ttp.mikazuki.yoshinani.binding.BindableString;
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
 import app.android.ttp.mikazuki.yoshinani.model.TotalModel;
 import app.android.ttp.mikazuki.yoshinani.utils.TextUtils;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -74,9 +74,9 @@ public class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListIte
     }
 
     static class ViewHolder {
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.amount)
+        @BindView(R.id.amount)
         TextView amount;
 
         public ViewHolder(View view) {

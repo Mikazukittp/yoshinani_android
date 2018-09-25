@@ -26,7 +26,7 @@ import retrofit2.RxJavaCallAdapterFactory;
  * @author haijimakazuki
  */
 public class ApiUtil {
-    public static final String API_URL = BuildConfig.SERVER_PRODUCTION ? "http://52.69.32.124/api/v1/" : "http://52.193.62.129/api/v1/";
+    public static final String API_URL = BuildConfig.SERVER_PRODUCTION ? "http://52.197.232.13/api/v1/" : "http://52.193.62.129/api/v1/";
 
     /**
      * @return

@@ -29,8 +29,9 @@ import app.android.ttp.mikazuki.yoshinani.utils.Constants;
 import app.android.ttp.mikazuki.yoshinani.view.DividerItemDecoration;
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.PaymentListAdapter;
 import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.PaymentDetailDialogFragment;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,10 +40,11 @@ public class PaymentLogFragment extends Fragment {
 
     private static final int VISIBLE_THRESHOLD = 20;
 
-    @Bind(R.id.swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    private Unbinder mUnbinder;
 
     private PaymentService mPaymentService;
     private GroupModel mGroupModel;
@@ -57,7 +59,7 @@ public class PaymentLogFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_payment_log, container, false);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
 
         mGroupModel = Parcels.unwrap(getArguments().getParcelable(Constants.BUNDLE_GROUP_KEY));
         mPaymentService = new PaymentService(getActivity().getApplicationContext());
@@ -86,7 +88,7 @@ public class PaymentLogFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
     }
 
     public void refresh() {
