@@ -85,9 +85,6 @@ dependencies {
 
     implementation "com.android.support:multidex:${multidexVer}"
 
-    implementation 'com.google.guava:guava:24.1-jre'
-    implementation 'org.apache.commons:commons-lang3:3.7'
-
     implementation "com.jakewharton:butterknife:${butterknifeVer}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVer}"
 

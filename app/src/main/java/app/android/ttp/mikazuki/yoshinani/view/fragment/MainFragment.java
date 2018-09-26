@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -151,10 +151,11 @@ public class MainFragment extends Fragment {
         }
 
         me = event.getData();
-        mGroups = Lists.newArrayList(me.getGroups());
+        mGroups = new ArrayList<>();
+        mGroups.addAll(me.getGroups());
         mGroups.addAll(me.getInvitedGroups());
         // 毎回アクセスするためHashに持つ
-        Map<Integer, TotalModel> totals = Maps.newHashMap();
+        Map<Integer, TotalModel> totals = new HashMap<>();
         for (TotalModel total : me.getTotals()) {
             totals.put(total.getGroupId(), total);
         }

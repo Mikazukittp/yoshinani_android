@@ -14,7 +14,6 @@ import android.widget.EditText;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 
 import java.math.BigInteger;
@@ -74,8 +73,8 @@ public class SignInFragment extends Fragment {
         mUserService = new UserService(getActivity().getApplicationContext());
 
         // バリデーション
-        Observable<Boolean> isAccountCompleted = RxTextView.textChanges(mAccount).map(StringUtils::isNotEmpty);
-        Observable<Boolean> isPasswordCompleted = RxTextView.textChanges(mPassword).map(StringUtils::isNotEmpty);
+        Observable<Boolean> isAccountCompleted = RxTextView.textChanges(mAccount).map(str -> !TextUtils.isEmpty(str));
+        Observable<Boolean> isPasswordCompleted = RxTextView.textChanges(mPassword).map(str -> !TextUtils.isEmpty(str));
         Observable<Boolean> isValidAll = Observable.combineLatest(isAccountCompleted, isPasswordCompleted, (a, p) -> a && p);
         compositeSubscription.add(isValidAll.subscribe(isValid -> mLogin.setEnabled(isValid)));
 

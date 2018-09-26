@@ -3,6 +3,7 @@ package app.android.ttp.mikazuki.yoshinani.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.EditText;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
@@ -88,7 +88,7 @@ public class PostRepaymentFragment extends PostFragment {
         mUserService.getAll(mGroupModel.getId());
 
         // バリデーション
-        Observable<Boolean> isAmountCompleted = RxTextView.textChanges(mAmount).map(StringUtils::isNotEmpty);
+        Observable<Boolean> isAmountCompleted = RxTextView.textChanges(mAmount).map(str -> !TextUtils.isEmpty(str));
         Observable<Boolean> isParticipantsSelected = RxTextView.textChanges(mParticipantsBtn).map(str -> !"返済相手選択".equals(str.toString()));
         Observable<Boolean> isValidAll = Observable.combineLatest(isAmountCompleted, isParticipantsSelected, (a, p) -> a && p);
         compositeSubscription.add(isValidAll.subscribe(isValid -> mPost.setEnabled(isValid)));

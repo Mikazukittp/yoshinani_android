@@ -2,8 +2,7 @@ package app.android.ttp.mikazuki.yoshinani.repository.retrofit.service;
 
 import android.support.annotation.NonNull;
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel;
@@ -69,7 +68,8 @@ public interface RetrofitGroupService {
         public List<PostData> groupUser;
 
         public RequestDataOnInvite(@NonNull final int userId) {
-            this.groupUser = Lists.newArrayList(new PostData(userId));
+            this.groupUser = new ArrayList<>();
+            this.groupUser.add(new PostData(userId));
         }
 
         class PostData {
