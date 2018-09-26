@@ -1,6 +1,5 @@
 package app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity;
 
-import com.google.common.collect.Maps;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 public class APIError {
 
     private String message;
-    private HashMap<String, List<String>> errors = Maps.newHashMap();
+    private HashMap<String, List<String>> errors;
 
     public APIError(String message, HashMap<String, List<String>> errors) {
         this.message = message;

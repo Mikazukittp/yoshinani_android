@@ -9,8 +9,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ListView;
 
-import com.google.common.collect.Lists;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
@@ -47,7 +45,7 @@ public class InvitedGroupDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // 受け取った変数の初期化・整形
-        List<GroupModel> invitedGroups = Lists.newArrayList();
+        List<GroupModel> invitedGroups = new ArrayList<>();
         final ArrayList<Parcelable> parcelables = getArguments().getParcelableArrayList("invitedGroups");
         if (parcelables != null) {
             invitedGroups = Observable.from(parcelables)

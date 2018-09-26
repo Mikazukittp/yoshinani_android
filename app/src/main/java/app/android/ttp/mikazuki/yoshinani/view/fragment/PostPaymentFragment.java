@@ -3,6 +3,7 @@ package app.android.ttp.mikazuki.yoshinani.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.parceler.Parcels;
@@ -101,9 +101,9 @@ public class PostPaymentFragment extends PostFragment {
         requestNewInterstitial();
 
         // バリデーション
-        Observable<Boolean> isAmountCompleted = RxTextView.textChanges(mAmount).map(StringUtils::isNotEmpty);
-        Observable<Boolean> isEventCompleted = RxTextView.textChanges(mEvent).map(StringUtils::isNotEmpty);
-        Observable<Boolean> isDescriptionCompleted = RxTextView.textChanges(mDescription).map(StringUtils::isNotEmpty);
+        Observable<Boolean> isAmountCompleted = RxTextView.textChanges(mAmount).map(str -> !TextUtils.isEmpty(str));
+        Observable<Boolean> isEventCompleted = RxTextView.textChanges(mEvent).map(str -> !TextUtils.isEmpty(str));
+        Observable<Boolean> isDescriptionCompleted = RxTextView.textChanges(mDescription).map(str -> !TextUtils.isEmpty(str));
         Observable<Boolean> isParticipantsSelected = RxTextView.textChanges(mParticipantsBtn).map(str -> !"参加者選択".equals(str.toString()));
         Observable<Boolean> isValidAll = Observable.combineLatest(isAmountCompleted, isEventCompleted, isDescriptionCompleted, isParticipantsSelected, (a, e, d, p) -> a && e && d && p);
         compositeSubscription.add(isValidAll.subscribe(isValid -> mPost.setEnabled(isValid)));

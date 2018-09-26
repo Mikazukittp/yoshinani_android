@@ -1,7 +1,7 @@
 package app.android.ttp.mikazuki.yoshinani.repository.retrofit.service;
 
-import com.google.common.collect.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel;
@@ -69,7 +69,7 @@ public interface RetrofitPaymentService {
 
                 date = payment.getDate();
                 paidUserId = payment.getPaidUser().getId();
-                participantsIds = Lists.newArrayList();
+                participantsIds = new ArrayList<>();
                 for (User participant : payment.getParticipants()) {
                     participantsIds.add(participant.getId());
                 }

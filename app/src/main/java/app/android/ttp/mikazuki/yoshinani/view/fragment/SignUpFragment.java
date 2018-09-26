@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 
 import app.android.ttp.mikazuki.yoshinani.R;
@@ -59,10 +59,10 @@ public class SignUpFragment extends Fragment {
         mAuthService = new AuthService(getActivity().getApplicationContext());
 
         // バリデーション
-        Observable<Boolean> isAccountCompleted = RxTextView.textChanges(mAccount).map(StringUtils::isNotEmpty);
-        Observable<Boolean> isEmailCompleted = RxTextView.textChanges(mEmail).map(StringUtils::isNotEmpty);
-        Observable<Boolean> isPasswordCompleted = RxTextView.textChanges(mPassword).map(StringUtils::isNotEmpty);
-        Observable<Boolean> isPasswordConfirmCompleted = RxTextView.textChanges(mPasswordConfirm).map(StringUtils::isNotEmpty);
+        Observable<Boolean> isAccountCompleted = RxTextView.textChanges(mAccount).map(str -> !TextUtils.isEmpty(str));
+        Observable<Boolean> isEmailCompleted = RxTextView.textChanges(mEmail).map(str -> !TextUtils.isEmpty(str));
+        Observable<Boolean> isPasswordCompleted = RxTextView.textChanges(mPassword).map(str -> !TextUtils.isEmpty(str));
+        Observable<Boolean> isPasswordConfirmCompleted = RxTextView.textChanges(mPasswordConfirm).map(str -> !TextUtils.isEmpty(str));
         Observable<Boolean> isValidAll = Observable.combineLatest(isAccountCompleted, isEmailCompleted, isPasswordCompleted, isPasswordConfirmCompleted, (a, e, p, pc) -> a && e && p && pc);
         compositeSubscription.add(isValidAll.subscribe(isValid -> mRegister.setEnabled(isValid)));
 

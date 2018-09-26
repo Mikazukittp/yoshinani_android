@@ -1,9 +1,9 @@
 package app.android.ttp.mikazuki.yoshinani.model;
 
-import com.google.common.collect.Lists;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.android.ttp.mikazuki.yoshinani.binding.BindableString;
@@ -19,8 +19,8 @@ public class GroupModel {
     int id;
     BindableString name = new BindableString();
     BindableString description = new BindableString();
-    List<UserModel> members = Lists.newArrayList();
-    List<UserModel> invitedMembers = Lists.newArrayList();
+    List<UserModel> members = new ArrayList<>();
+    List<UserModel> invitedMembers = new ArrayList<>();
 
     public GroupModel() {
     }

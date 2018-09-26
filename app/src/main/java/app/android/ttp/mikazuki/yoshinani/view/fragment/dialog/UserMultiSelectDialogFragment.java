@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
-import com.google.common.collect.Lists;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class UserMultiSelectDialogFragment extends DialogFragment {
         }
         mSelected = getArguments().getIntegerArrayList("selected");
         if (mSelected == null) {
-            mSelected = Lists.newArrayList();
+            mSelected = new ArrayList<>();
         }
 
         boolean[] selectedFlags = new boolean[items.length];

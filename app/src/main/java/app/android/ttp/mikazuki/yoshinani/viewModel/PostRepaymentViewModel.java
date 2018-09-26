@@ -4,8 +4,7 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,7 +23,7 @@ import rx.subscriptions.CompositeSubscription;
 public class PostRepaymentViewModel extends BaseObservable implements Subscription {
     private final Context mContext;
     private final int mGroupId;
-    private List<UserModel> mAllUserModels = Lists.newArrayList();
+    private List<UserModel> mAllUserModels = new ArrayList<>();
 
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
@@ -100,7 +99,7 @@ public class PostRepaymentViewModel extends BaseObservable implements Subscripti
         model.setEvent("");
         model.setDescription("");
         model.setDate(mDate);
-        List<UserModel> participants = Lists.newArrayList();
+        List<UserModel> participants = new ArrayList<>();
         participants.add(mAllUserModels.get(mParticipant));
         model.setParticipants(participants);
         return model;

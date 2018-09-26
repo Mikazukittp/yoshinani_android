@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +36,7 @@ public class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListIte
     public static List<GroupListItem> createGroupListItems(List<GroupModel> activeGroups,
                                                            List<GroupModel> invitedGroups,
                                                            Map<Integer, TotalModel> totals) {
-        List<GroupListItem> items = Lists.newArrayList();
+        List<GroupListItem> items = new ArrayList<>();
         for (GroupModel group : activeGroups) {
             items.add(new GroupListItem(group, totals.get(group.getId()), true));
         }

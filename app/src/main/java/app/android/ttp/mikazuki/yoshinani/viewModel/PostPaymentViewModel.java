@@ -4,8 +4,6 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,7 +25,7 @@ public class PostPaymentViewModel extends BaseObservable implements Subscription
 
     private final Context mContext;
     private final int mGroupId;
-    private List<UserModel> mAllUserModels = Lists.newArrayList();
+    private List<UserModel> mAllUserModels = new ArrayList<>();
 
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
@@ -35,7 +33,7 @@ public class PostPaymentViewModel extends BaseObservable implements Subscription
     private BindableString mEvent = new BindableString();
     private BindableString mDescription = new BindableString();
     private Calendar mDate;
-    private List<Integer> mParticipants = Lists.newArrayList();
+    private List<Integer> mParticipants = new ArrayList<>();
     private boolean isParticipantsEnabled;
     private boolean isPostEnabled;
 
@@ -127,7 +125,7 @@ public class PostPaymentViewModel extends BaseObservable implements Subscription
         model.setEvent(mEvent.get());
         model.setDescription(mDescription.get());
         model.setDate(mDate);
-        List<UserModel> participants = Lists.newArrayList();
+        List<UserModel> participants = new ArrayList<>();
         for (int i = 0; i < mParticipants.size(); i++) {
             participants.add(mAllUserModels.get(mParticipants.get(i)));
         }
@@ -140,7 +138,7 @@ public class PostPaymentViewModel extends BaseObservable implements Subscription
         mEvent.set(null);
         mDescription.set(null);
         mDate = ModelUtils.getToday();
-        mParticipants = Lists.newArrayList();
+        mParticipants = new ArrayList<>();
     }
 
     @Override

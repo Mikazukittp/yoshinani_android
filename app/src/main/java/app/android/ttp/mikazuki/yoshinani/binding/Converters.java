@@ -10,7 +10,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.Calendar;
 
@@ -76,7 +75,7 @@ public class Converters {
             TextWatcherAdapter watcher = new TextWatcherAdapter() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (NumberUtils.isDigits(s.toString())) {
+                    if (android.text.TextUtils.isDigitsOnly(s.toString())) {
                         bindableInt.set(Integer.parseInt(s.toString()));
                     }
                 }
