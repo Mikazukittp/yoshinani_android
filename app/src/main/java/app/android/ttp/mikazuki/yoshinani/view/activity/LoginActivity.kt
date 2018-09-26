@@ -2,18 +2,16 @@ package app.android.ttp.mikazuki.yoshinani.view.activity
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-
-import com.crashlytics.android.Crashlytics
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-
+import android.view.View
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.ShowSnackbarEvent
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil
 import app.android.ttp.mikazuki.yoshinani.view.fragment.SignInFragment
 import butterknife.ButterKnife
+import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class LoginActivity : BaseActivity() {
 

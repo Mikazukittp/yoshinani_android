@@ -3,10 +3,6 @@ package app.android.ttp.mikazuki.yoshinani.viewModel
 import android.content.Context
 import android.databinding.BaseObservable
 import android.databinding.Bindable
-
-import java.util.ArrayList
-import java.util.Calendar
-
 import app.android.ttp.mikazuki.yoshinani.binding.BindableString
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel
 import app.android.ttp.mikazuki.yoshinani.model.UserModel
@@ -16,6 +12,7 @@ import app.android.ttp.mikazuki.yoshinani.utils.TextUtils
 import rx.Observable
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
+import java.util.*
 
 /**
  * @author haijimakazuki
@@ -28,12 +25,12 @@ class PostPaymentViewModel(private val mContext: Context, private val mGroupId: 
     val amount = BindableString()
     val event = BindableString()
     val description = BindableString()
-    private var mDate: Calendar? = null
+    private var mDate: Calendar
     private var mParticipants: List<Int> = ArrayList()
     private val isParticipantsEnabled: Boolean = false
     private val isPostEnabled: Boolean = false
 
-    var date: Calendar?
+    var date: Calendar
         @Bindable
         get() = mDate
         set(date) {
@@ -41,8 +38,8 @@ class PostPaymentViewModel(private val mContext: Context, private val mGroupId: 
             notifyChange()
         }
 
-    val participantsIdArray: ArrayList<*>
-        get() = mParticipants as ArrayList<*>
+    val participantsIdArray: ArrayList<Int>
+        get() = mParticipants as ArrayList<Int>
 
     val participants: String
         @Bindable
@@ -88,7 +85,11 @@ class PostPaymentViewModel(private val mContext: Context, private val mGroupId: 
         }
 
     init {
-        reset()
+        amount.set(null)
+        event.set(null)
+        description.set(null)
+        mDate = ModelUtils.today
+        mParticipants = ArrayList()
     }
 
     fun setAllUsers(allUsers: List<UserModel>) {

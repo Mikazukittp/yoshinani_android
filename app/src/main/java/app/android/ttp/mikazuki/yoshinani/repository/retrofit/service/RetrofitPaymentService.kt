@@ -1,20 +1,12 @@
 package app.android.ttp.mikazuki.yoshinani.repository.retrofit.service
 
 
-import java.util.ArrayList
-
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.Payment
-import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import rx.Observable
+import java.util.*
 
 /**
  * @author haijimakazuki
@@ -38,7 +30,7 @@ interface RetrofitPaymentService {
     fun deletePayment(@Path("id") payment_id: Int): Observable<Response<Payment>>
 
     class RequestWrapper(payment: PaymentModel) {
-        var payment: PostData
+        internal var payment: PostData
 
         init {
             this.payment = PostData(payment.createEntity())
@@ -51,7 +43,7 @@ interface RetrofitPaymentService {
             var description: String? = null
             var date: String? = null
             var paidUserId: Int = 0
-            var participantsIds: MutableList<Int>
+            var participantsIds: MutableList<Int> = mutableListOf()
             var isRepayment: Boolean = false
 
             constructor() {}
@@ -76,7 +68,7 @@ interface RetrofitPaymentService {
 
     companion object {
 
-        val PATH_PAYMENTS = "payments"
-        val PATH_PAYMENT_WITH_ID = "payments/{id}"
+        const val PATH_PAYMENTS = "payments"
+        const val PATH_PAYMENT_WITH_ID = "payments/{id}"
     }
 }

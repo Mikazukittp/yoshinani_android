@@ -2,19 +2,18 @@ package app.android.ttp.mikazuki.yoshinani.view.fragment.dialog
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
 import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel
 import app.android.ttp.mikazuki.yoshinani.model.GroupUserModel
-import app.android.ttp.mikazuki.yoshinani.utils.Constants
 import app.android.ttp.mikazuki.yoshinani.services.GroupService
+import app.android.ttp.mikazuki.yoshinani.utils.Constants
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 
 /**
  * @author haijimakazuki

@@ -10,17 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
-
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-
-import java.util.ArrayList
-import java.util.HashMap
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
@@ -38,7 +27,13 @@ import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.GroupDetailDialog
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 import rx.Observable
+import java.util.*
 
 /**
  * @author haijimakazuki
@@ -157,10 +152,10 @@ class MainFragment : Fragment() {
 
         // 各グループでの支払額の合計を算出
         val totalAmount = Observable.from(mGroups!!)
-                .map<Int>(Func1<GroupModel, Int> { it.getId() })
-                .map<TotalModel>(Func1<Int, TotalModel> { totals[it] })
+                .map<Int> { it.id }
+                .map<TotalModel> { totals[it] }
                 .filter { total -> total != null }
-                .map<Int>(Func1<TotalModel, Int> { it.getResult() })
+                .map<Int> { it.result }
                 .defaultIfEmpty(0)
                 .reduce { sum, v -> sum!! + v!! }
                 .toBlocking().single()

@@ -2,14 +2,11 @@ package app.android.ttp.mikazuki.yoshinani.model
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-
-import com.amulyakhare.textdrawable.TextDrawable
-import com.amulyakhare.textdrawable.util.ColorGenerator
-
-import org.parceler.Parcel
-
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User
+import com.amulyakhare.textdrawable.TextDrawable
+import com.amulyakhare.textdrawable.util.ColorGenerator
+import org.parceler.Parcel
 import rx.Observable
 
 /**
@@ -19,13 +16,13 @@ import rx.Observable
 class UserModel {
 
     var id: Int = 0
-    var account: String
-    var username: String? = null
-    var email: String
-    var token: String
-    var totals: List<TotalModel>
-    var groups: List<GroupModel>
-    var invitedGroups: List<GroupModel>
+    var account: String = ""
+    var username: String = ""
+    var email: String = ""
+    var token: String = ""
+    var totals: List<TotalModel> = arrayListOf()
+    var groups: List<GroupModel> = arrayListOf()
+    var invitedGroups: List<GroupModel> = arrayListOf()
 
     val icon: Drawable
         get() = TextDrawable.builder()

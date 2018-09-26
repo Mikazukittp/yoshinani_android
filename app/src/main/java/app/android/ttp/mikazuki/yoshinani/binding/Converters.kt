@@ -1,5 +1,6 @@
 package app.android.ttp.mikazuki.yoshinani.binding
 
+
 import android.databinding.BindingAdapter
 import android.databinding.BindingConversion
 import android.support.v4.util.Pair
@@ -8,14 +9,11 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
-
-
-import java.util.Calendar
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.model.TextWatcherAdapter
 import app.android.ttp.mikazuki.yoshinani.utils.ModelUtils
 import app.android.ttp.mikazuki.yoshinani.utils.TextUtils
+import java.util.*
 
 /**
  * @author haijimakazuki
@@ -43,7 +41,7 @@ object Converters {
 
     @BindingAdapter("android:text")
     fun bindEditText(view: EditText, bindableString: BindableString) {
-        val pair = view.getTag(R.id.bound_observable) as Pair<*, *>
+        val pair = view.getTag(R.id.bound_observable) as Pair<BindableString, TextWatcherAdapter>?
         if (pair == null || pair.first !== bindableString) {
             if (pair != null) {
                 view.removeTextChangedListener(pair.second)
@@ -64,7 +62,7 @@ object Converters {
 
     @BindingAdapter("android:text")
     fun bindEditText(view: EditText, bindableInt: BindableInt) {
-        val pair = view.getTag(R.id.bound_observable) as Pair<*, *>
+        val pair = view.getTag(R.id.bound_observable) as Pair<BindableInt, TextWatcherAdapter>?
         if (pair == null || pair.first !== bindableInt) {
             if (pair != null) {
                 view.removeTextChangedListener(pair.second)

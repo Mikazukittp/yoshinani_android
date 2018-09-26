@@ -3,25 +3,23 @@ package app.android.ttp.mikazuki.yoshinani.view.fragment.dialog
 import android.app.Dialog
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-
-import org.greenrobot.eventbus.EventBus
-import org.parceler.Parcels
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.databinding.DialogPaymentDetailBinding
 import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel
-import app.android.ttp.mikazuki.yoshinani.model.UserModel
 import app.android.ttp.mikazuki.yoshinani.services.PaymentService
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import org.greenrobot.eventbus.EventBus
+import org.parceler.Parcels
 
 /**
  * @author haijimakazuki

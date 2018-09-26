@@ -1,8 +1,7 @@
 package app.android.ttp.mikazuki.yoshinani.model
 
-import org.parceler.Parcel
-
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.GroupUser
+import org.parceler.Parcel
 import rx.Observable
 
 /**
@@ -14,7 +13,7 @@ class GroupUserModel {
     var id: Int = 0
     var groupId: Int = 0
     var userId: Int = 0
-    var status: String
+    var status: String = ""
 
     constructor(id: Int, groupId: Int, userId: Int, status: String) {
         this.id = id

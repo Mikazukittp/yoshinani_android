@@ -1,20 +1,13 @@
 package app.android.ttp.mikazuki.yoshinani.view.fragment
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import android.os.Parcelable
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-
-import com.jakewharton.rxbinding.widget.RxTextView
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.databinding.FragmentPostRepaymentBinding
 import app.android.ttp.mikazuki.yoshinani.event.DateSetEvent
@@ -36,6 +29,10 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
+import com.jakewharton.rxbinding.widget.RxTextView
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 import rx.Observable
 import rx.subscriptions.CompositeSubscription
 
@@ -49,7 +46,7 @@ class PostRepaymentFragment : PostFragment() {
     internal var mPost: Button? = null
     private var mUnbinder: Unbinder? = null
 
-    internal var binding: FragmentPostRepaymentBinding
+    internal lateinit var binding: FragmentPostRepaymentBinding
     private var mUserService: UserService? = null
     private var mPaymentService: PaymentService? = null
 
@@ -159,7 +156,7 @@ class PostRepaymentFragment : PostFragment() {
     @Subscribe
     fun onEvent(event: FetchListDataEvent<UserModel>) {
         mAllUserModels = event.listData
-        mViewModel!!.setAllUsers(mAllUserModels)
+        mViewModel!!.setAllUsers(mAllUserModels ?: arrayListOf())
     }
 
     @Subscribe

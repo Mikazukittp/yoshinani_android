@@ -5,13 +5,10 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
-
-import org.greenrobot.eventbus.EventBus
-
-import java.util.ArrayList
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.UserMultiSelectEvent
+import org.greenrobot.eventbus.EventBus
+import java.util.*
 
 class UserMultiSelectDialogFragment : DialogFragment() {
 
@@ -42,7 +39,9 @@ class UserMultiSelectDialogFragment : DialogFragment() {
                         mSelected!!.remove(Integer.valueOf(which))
                     }
                 }
-                .setPositiveButton(R.string.ok) { dialog: DialogInterface, id: Int -> EventBus.getDefault().post(UserMultiSelectEvent(mSelected)) }
+                .setPositiveButton(R.string.ok) { dialog: DialogInterface, id: Int ->
+                    EventBus.getDefault().post(UserMultiSelectEvent(mSelected ?: arrayListOf()))
+                }
                 .setNegativeButton(R.string.cancel) { dialog: DialogInterface, id: Int -> }
 
         return builder.create()

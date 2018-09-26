@@ -3,9 +3,6 @@ package app.android.ttp.mikazuki.yoshinani.viewModel
 import android.content.Context
 import android.databinding.BaseObservable
 import android.view.View
-
-import org.greenrobot.eventbus.EventBus
-
 import app.android.ttp.mikazuki.yoshinani.binding.BindableString
 import app.android.ttp.mikazuki.yoshinani.event.ErrorEvent
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
@@ -13,6 +10,7 @@ import app.android.ttp.mikazuki.yoshinani.model.UserModel
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil
 import app.android.ttp.mikazuki.yoshinani.services.UserService
 import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils
+import org.greenrobot.eventbus.EventBus
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
 
@@ -32,7 +30,7 @@ class EditProfileViewModel(private val mContext: Context,
     private val compositeSubscription = CompositeSubscription()
 
     val onClick: View.OnClickListener
-        get() = { v ->
+        get() = View.OnClickListener {
             mUserService
                     .update(mId, username.get(), email.get())
                     .subscribe { response ->

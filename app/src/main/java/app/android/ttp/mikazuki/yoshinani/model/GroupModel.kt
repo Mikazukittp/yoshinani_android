@@ -1,13 +1,12 @@
 package app.android.ttp.mikazuki.yoshinani.model
 
 
-import org.parceler.Parcel
-
-import java.util.ArrayList
-
 import app.android.ttp.mikazuki.yoshinani.binding.BindableString
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.Group
+import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User
+import org.parceler.Parcel
 import rx.Observable
+import java.util.*
 
 /**
  * @author haijimakazuki
@@ -20,12 +19,12 @@ class GroupModel {
         internal set
     var description = BindableString()
         internal set
-    var members: List<UserModel> = ArrayList()
-    var invitedMembers: List<UserModel> = ArrayList()
+    var members: List<UserModel>? = ArrayList()
+    var invitedMembers: List<UserModel>? = ArrayList()
 
     constructor() {}
 
-    constructor(id: Int, name: String, description: String, members: List<UserModel>, invitedMembers: List<UserModel>) {
+    constructor(id: Int, name: String?, description: String?, members: List<UserModel>?, invitedMembers: List<UserModel>?) {
         this.id = id
         this.name.set(name)
         this.description.set(description)
@@ -38,8 +37,8 @@ class GroupModel {
                 this.id,
                 this.name.get(),
                 this.description.get(),
-                Observable.from(this.members).map<User>(Func1<UserModel, User> { it.createEntity() }).toList().toBlocking().single(),
-                Observable.from(this.invitedMembers).map<User>(Func1<UserModel, User> { it.createEntity() }).toList().toBlocking().single()
+                Observable.from(this.members).map<User> { it.createEntity() }.toList().toBlocking().single(),
+                Observable.from(this.invitedMembers).map<User> { it.createEntity() }.toList().toBlocking().single()
         )
     }
 
@@ -63,8 +62,8 @@ class GroupModel {
             )
         }
 
-        fun from(entities: List<Group>?): List<GroupModel>? {
-            return if (entities == null) null else Observable.from(entities).map<GroupModel>(Func1<Group, GroupModel> { from(it) }).toList().toBlocking().single()
+        fun from(entities: List<Group>?): List<GroupModel> {
+            return if (entities == null) arrayListOf() else Observable.from(entities).map<GroupModel> { from(it) }.toList().toBlocking().single()
         }
     }
 }

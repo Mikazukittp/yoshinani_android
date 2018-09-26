@@ -3,15 +3,7 @@ package app.android.ttp.mikazuki.yoshinani.repository.retrofit.service
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.ResponseMessage
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.PATCH
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import rx.Observable
 
 /**
@@ -65,7 +57,7 @@ interface RetrofitUserService {
     class RequestWrapper(account: String,
                          email: String,
                          password: String) {
-        var user: PostData
+        internal var user: PostData
 
         init {
             this.user = PostData(account, email, password)
@@ -78,7 +70,7 @@ interface RetrofitUserService {
 
     class UpdateRequestWrapper(username: String,
                                email: String) {
-        var user: PatchData
+        internal var user: PatchData
 
         init {
             this.user = PatchData(username, email)
@@ -89,7 +81,7 @@ interface RetrofitUserService {
     }
 
     class UpdateAccountRequestWrapper(account: String) {
-        var user: PatchData
+        internal var user: PatchData
 
         init {
             this.user = PatchData(account)
@@ -101,7 +93,7 @@ interface RetrofitUserService {
     class ChangePasswordRequestWrapper(password: String,
                                        newPassword: String,
                                        newPasswordConfirmation: String) {
-        var user: PatchData
+        internal var user: PatchData
 
         init {
             this.user = PatchData(password, newPassword, newPasswordConfirmation)
@@ -113,7 +105,7 @@ interface RetrofitUserService {
     }
 
     class ForgetRequestWrapper(email: CharSequence) {
-        var user: PostData
+        internal var user: PostData
 
         init {
             this.user = PostData(email)
@@ -125,7 +117,7 @@ interface RetrofitUserService {
     class ResetPasswordRequestWrapper(resetPasswordToken: CharSequence,
                                       newPassword: CharSequence,
                                       newPasswordConfirmation: CharSequence) {
-        var user: PatchData
+        internal var user: PatchData
 
         init {
             this.user = PatchData(resetPasswordToken, newPassword, newPasswordConfirmation)
@@ -138,7 +130,7 @@ interface RetrofitUserService {
 
     class NotificationRequestWrapper(deviceToken: String,
                                      authDeviceToken: String?) {
-        var notificationToken: Data
+        internal var notificationToken: Data
 
         init {
             this.notificationToken = Data(deviceToken, authDeviceToken)
@@ -153,7 +145,7 @@ interface RetrofitUserService {
     class OAuthRequestWrapper(thirdPartyId: String,
                               oauthId: Int,
                               snsHashId: String) {
-        var oauthRegistration: Data
+        internal var oauthRegistration: Data
 
         init {
             this.oauthRegistration = Data(thirdPartyId, oauthId, snsHashId)
@@ -167,14 +159,14 @@ interface RetrofitUserService {
 
     companion object {
 
-        val PATH_USERS = "users"
-        val PATH_USER = "users/{id}"
-        val PATH_LOGIN = "users/sign_in"
-        val PATH_USER_SEARCH = "users/search"
-        val PATH_PASSWORDS = "passwords"
-        val PATH_PASSWORDS_INIT = "passwords/init"
-        val PATH_PASSWORDS_RESET = "passwords/reset"
-        val PATH_NOTIFICATION_TOKENS = "notification_tokens"
-        val PATH_OAUTH = "oauth_registrations"
+        const val PATH_USERS = "users"
+        const val PATH_USER = "users/{id}"
+        const val PATH_LOGIN = "users/sign_in"
+        const val PATH_USER_SEARCH = "users/search"
+        const val PATH_PASSWORDS = "passwords"
+        const val PATH_PASSWORDS_INIT = "passwords/init"
+        const val PATH_PASSWORDS_RESET = "passwords/reset"
+        const val PATH_NOTIFICATION_TOKENS = "notification_tokens"
+        const val PATH_OAUTH = "oauth_registrations"
     }
 }

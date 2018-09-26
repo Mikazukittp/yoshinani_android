@@ -1,10 +1,7 @@
 package app.android.ttp.mikazuki.yoshinani.binding
 
 import android.databinding.BaseObservable
-
 import org.parceler.Parcel
-
-import java.util.Objects
 
 /**
  * @author haijimakazuki
@@ -21,7 +18,7 @@ class BindableString : BaseObservable() {
         get() = mValue == null || mValue!!.isEmpty()
 
     fun get(): String {
-        return if (mValue != null) mValue else ""
+        return mValue ?: ""
     }
 
     fun set(value: String?) {

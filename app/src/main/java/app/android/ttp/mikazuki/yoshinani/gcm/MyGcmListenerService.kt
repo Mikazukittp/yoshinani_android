@@ -5,22 +5,16 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
-
-import com.google.android.gms.gcm.GcmListenerService
-
-import org.parceler.Parcels
-
-import java.util.Objects
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel
 import app.android.ttp.mikazuki.yoshinani.services.UserService
 import app.android.ttp.mikazuki.yoshinani.utils.Constants
 import app.android.ttp.mikazuki.yoshinani.view.activity.GroupActivity
 import app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity
+import com.google.android.gms.gcm.GcmListenerService
+import org.parceler.Parcels
 
 /**
  * @author haijimakazuki

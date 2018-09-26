@@ -1,20 +1,14 @@
 package app.android.ttp.mikazuki.yoshinani.view.fragment
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-import java.util.Objects
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.FetchListDataEvent
 import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent
@@ -29,6 +23,9 @@ import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.PaymentDetailDial
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 
 /**
  * A placeholder fragment containing a simple view.
@@ -91,10 +88,10 @@ class PaymentLogFragment : Fragment() {
     /* ------------------------------------------------------------------------------------------ */
     @Subscribe
     fun onEvent(event: FetchListDataEvent<PaymentModel>) {
-        if (event.tag == "first") {
-            mPayments = event.listData
+        if (event.getTag() == "first") {
+            mPayments = event.listData?.toMutableList()
             mRecyclerViewAdapter = PaymentListAdapter(mRecyclerView!!, mPayments!!,
-                    { v, position ->
+                    PaymentListAdapter.OnRecyclerListener { v, position ->
                         val dialogEvent = ShowDialogEvent()
                         val bundle = Bundle()
                         bundle.putParcelable("payment", Parcels.wrap(mPayments!![position]))
@@ -102,12 +99,12 @@ class PaymentLogFragment : Fragment() {
                         EventBus.getDefault().post(dialogEvent)
                         true
                     },
-                    { mPaymentService!!.getNext(mGroupModel!!.id, mPayments!![mPayments!!.size - 2].id) }
+                    PaymentListAdapter.OnLoadMoreListener { mPaymentService!!.getNext(mGroupModel!!.id, mPayments!![mPayments!!.size - 2].id) }
             )
             mRecyclerView!!.adapter = mRecyclerViewAdapter
-        } else if (event.tag == "next") {
-            mRecyclerViewAdapter!!.addItems(event.listData)
-            mRecyclerViewAdapter!!.removeItem(null)
+        } else if (event.getTag() == "next") {
+            mRecyclerViewAdapter!!.addItems(event.listData ?: arrayListOf())
+//            mRecyclerViewAdapter!!.removeItem(null)
         }
         //        }
         if (mSwipeRefresh!!.isRefreshing) {

@@ -1,9 +1,6 @@
 package app.android.ttp.mikazuki.yoshinani.services
 
 import android.content.Context
-
-import org.greenrobot.eventbus.EventBus
-
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
 import app.android.ttp.mikazuki.yoshinani.event.FetchListDataEvent
 import app.android.ttp.mikazuki.yoshinani.model.UserModel
@@ -11,6 +8,7 @@ import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.service.RetrofitUserService
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Response
 import rx.Observable
 import rx.Subscription
@@ -22,13 +20,13 @@ class UserService(context: Context) : Subscription {
     private val TAG = this.javaClass.getSimpleName()
     private val eventbus = EventBus.getDefault()
     internal var mAPI: RetrofitUserService
-    private val mContext: Context? = null
+    private val mContext: Context
 
     init {
         this.mContext = context
         mAPI = ApiUtil
                 .buildRESTAdapter(mContext)
-                .create(RetrofitUserService::class.java!!)
+                .create(RetrofitUserService::class.java)
     }
 
     fun getAll(groupId: Int) {
@@ -39,7 +37,7 @@ class UserService(context: Context) : Subscription {
     }
 
     fun getMe() {
-        mAPI.getMe(PreferenceUtil.getUid(mContext))
+        mAPI.getMe(PreferenceUtil.getUid(mContext) ?: "")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->

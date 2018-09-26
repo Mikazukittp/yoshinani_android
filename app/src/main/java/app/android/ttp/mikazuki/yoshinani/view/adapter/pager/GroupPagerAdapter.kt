@@ -6,14 +6,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-
-import org.parceler.Parcels
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel
 import app.android.ttp.mikazuki.yoshinani.utils.Constants
 import app.android.ttp.mikazuki.yoshinani.view.fragment.MembersFragment
 import app.android.ttp.mikazuki.yoshinani.view.fragment.PaymentLogFragment
+import org.parceler.Parcels
 
 /**
  * @author haijimakazuki
@@ -54,7 +52,7 @@ class GroupPagerAdapter(activity: AppCompatActivity,
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        val members = if (mGroup!!.members != null) mGroup!!.members.size else 0
+        val members = mGroup?.members?.size ?: 0
         when (position) {
             0 -> return mContext.getString(R.string.membersWithNum, members)
             1 -> return mContext.getString(R.string.log)

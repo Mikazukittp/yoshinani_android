@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel
-import app.android.ttp.mikazuki.yoshinani.model.TotalModel
 import app.android.ttp.mikazuki.yoshinani.model.UserModel
 import app.android.ttp.mikazuki.yoshinani.utils.TextUtils
 import butterknife.BindView
@@ -44,7 +42,7 @@ class MemberListAdapter(private val mContext: Context, userModels: List<UserMode
         holder.userName!!.text = user.displayName
         val amount = Observable.from(user.totals)
                 .filter { total -> total.groupId == mGroupModel.id }
-                .map<Int>(Func1<TotalModel, Int> { it.getResult() })
+                .map<Int> { it.result }
                 .defaultIfEmpty(0)
                 .toBlocking().single()
         holder.userAmount!!.text = TextUtils.wrapCurrency(amount.toDouble())

@@ -10,14 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-
-import com.jakewharton.rxbinding.widget.RxTextView
-
-import org.greenrobot.eventbus.EventBus
-
-import java.math.BigInteger
-import java.security.MessageDigest
-
 import app.android.ttp.mikazuki.yoshinani.BuildConfig
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent
@@ -26,7 +18,6 @@ import app.android.ttp.mikazuki.yoshinani.event.FragmentTransitionEvent
 import app.android.ttp.mikazuki.yoshinani.event.ShowSnackbarEvent
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.ApiUtil
-import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User
 import app.android.ttp.mikazuki.yoshinani.services.AuthService
 import app.android.ttp.mikazuki.yoshinani.services.UserService
 import app.android.ttp.mikazuki.yoshinani.utils.ViewUtils
@@ -35,14 +26,16 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
-import jp.line.android.sdk.LineSdkContext
+import com.jakewharton.rxbinding.widget.RxTextView
 import jp.line.android.sdk.LineSdkContextManager
 import jp.line.android.sdk.exception.LineSdkLoginError
 import jp.line.android.sdk.exception.LineSdkLoginException
-import jp.line.android.sdk.login.LineAuthManager
 import jp.line.android.sdk.login.LineLoginFuture
+import org.greenrobot.eventbus.EventBus
 import rx.Observable
 import rx.subscriptions.CompositeSubscription
+import java.math.BigInteger
+import java.security.MessageDigest
 
 /**
  * @author haijimakazuki

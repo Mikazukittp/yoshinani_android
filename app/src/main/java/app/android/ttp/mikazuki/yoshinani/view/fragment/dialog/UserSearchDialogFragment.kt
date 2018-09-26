@@ -2,6 +2,7 @@ package app.android.ttp.mikazuki.yoshinani.view.fragment.dialog
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.view.View
@@ -9,11 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel
@@ -24,6 +20,9 @@ import app.android.ttp.mikazuki.yoshinani.utils.Constants
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 
 /**
  * @author haijimakazuki

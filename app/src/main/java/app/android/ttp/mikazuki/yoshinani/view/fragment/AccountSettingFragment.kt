@@ -8,9 +8,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import org.greenrobot.eventbus.EventBus
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.UnauthorizedEvent
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil
@@ -19,13 +16,14 @@ import app.android.ttp.mikazuki.yoshinani.view.activity.EditProfileActivity
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
+import org.greenrobot.eventbus.EventBus
 
 /**
  * @author haijimakazuki
  */
 class AccountSettingFragment : Fragment() {
 
-    internal var mUserService: UserService
+    internal lateinit var mUserService: UserService
 
     private var mUnbinder: Unbinder? = null
 

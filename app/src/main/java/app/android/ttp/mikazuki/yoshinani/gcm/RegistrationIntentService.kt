@@ -3,15 +3,11 @@ package app.android.ttp.mikazuki.yoshinani.gcm
 import android.app.IntentService
 import android.content.Intent
 import android.util.Log
-
-import com.google.android.gms.gcm.GoogleCloudMessaging
-import com.google.android.gms.iid.InstanceID
-
-import java.util.Objects
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil
 import app.android.ttp.mikazuki.yoshinani.services.UserService
+import com.google.android.gms.gcm.GoogleCloudMessaging
+import com.google.android.gms.iid.InstanceID
 
 /**
  * @author haijimakazuki

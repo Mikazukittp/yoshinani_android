@@ -6,13 +6,13 @@ package app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity
 class User {
 
     var id: Int = 0
-    var account: String? = null
-    var username: String? = null
-    var email: String? = null
-    var token: String? = null
-    var totals: List<Total>? = null
-    var activeGroups: List<Group>? = null
-    var invitedGroups: List<Group>? = null
+    var account: String = ""
+    var username: String = ""
+    var email: String = ""
+    var token: String = ""
+    var totals: List<Total> = arrayListOf()
+    var activeGroups: List<Group> = arrayListOf()
+    var invitedGroups: List<Group> = arrayListOf()
 
     constructor() {}
 

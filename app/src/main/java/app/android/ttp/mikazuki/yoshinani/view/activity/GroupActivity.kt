@@ -1,21 +1,15 @@
 package app.android.ttp.mikazuki.yoshinani.view.activity
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TabLayout
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.view.ViewPager
-import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
@@ -29,6 +23,9 @@ import app.android.ttp.mikazuki.yoshinani.view.fragment.dialog.UserSearchDialogF
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 
 /**
  * @author haijimakazuki
@@ -45,7 +42,7 @@ class GroupActivity : BaseActivity() {
     internal var mFab: FloatingActionButton? = null
 
     private var mGroupService: GroupService? = null
-    private var mGroupModel: GroupModel? = null
+    private lateinit var mGroupModel: GroupModel
     private var mPagerAdapter: GroupPagerAdapter? = null
 
     /* ------------------------------------------------------------------------------------------ */
@@ -134,19 +131,19 @@ class GroupActivity : BaseActivity() {
     /* ------------------------------------------------------------------------------------------ */
     @Subscribe
     fun onEvent(event: FetchDataEvent<GroupModel>) {
-        if (!event.isType(GroupModel::class.java!!)) {
+        if (!event.isType(GroupModel::class.java)) {
             return
         }
-        mGroupModel = event.data
-        title = mGroupModel!!.name.get()
-        mToolbar!!.subtitle = mGroupModel!!.description.get()
+        mGroupModel = event.data ?: throw NullPointerException("GroupModel got from Event is null.")
+        title = mGroupModel.name.get()
+        mToolbar!!.subtitle = mGroupModel.description.get()
         mPagerAdapter!!.setGroup(mGroupModel)
         mTabLayout!!.setTabsFromPagerAdapter(mPagerAdapter)
     }
 
     @Subscribe
     override fun onEvent(event: RefreshEvent) {
-        mGroupService!!.get(mGroupModel!!.id)
+        mGroupService!!.get(mGroupModel.id)
     }
 
     /* ------------------------------------------------------------------------------------------ */

@@ -2,15 +2,10 @@ package app.android.ttp.mikazuki.yoshinani.view.activity
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.design.widget.Snackbar
-import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
 import android.view.View
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.databinding.ActivityEditProfileBinding
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
@@ -19,6 +14,9 @@ import app.android.ttp.mikazuki.yoshinani.viewModel.EditProfileViewModel
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 
 /**
  * @author haijimakazuki

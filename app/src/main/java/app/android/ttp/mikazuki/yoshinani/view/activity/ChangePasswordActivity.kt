@@ -3,12 +3,8 @@ package app.android.ttp.mikazuki.yoshinani.view.activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-
+import android.view.View
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.databinding.ActivityChangePasswordBinding
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
@@ -16,6 +12,8 @@ import app.android.ttp.mikazuki.yoshinani.model.UserModel
 import app.android.ttp.mikazuki.yoshinani.viewModel.ChangePasswordViewModel
 import butterknife.BindView
 import butterknife.ButterKnife
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * @author haijimakazuki

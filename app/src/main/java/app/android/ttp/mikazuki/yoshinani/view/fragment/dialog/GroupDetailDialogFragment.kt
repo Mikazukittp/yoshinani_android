@@ -2,6 +2,7 @@ package app.android.ttp.mikazuki.yoshinani.view.fragment.dialog
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.view.View

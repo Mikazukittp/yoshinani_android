@@ -1,12 +1,12 @@
 package app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity
 
 
-import java.util.HashMap
+import java.util.*
 
 /**
  * @author haijimakazuki
  */
-class APIError(var message: String?, var errors: HashMap<String, List<String>>?) {
+class APIError(var message: String, var errors: HashMap<String, List<String>>?) {
 
     val detailedMessage: String
         get() {

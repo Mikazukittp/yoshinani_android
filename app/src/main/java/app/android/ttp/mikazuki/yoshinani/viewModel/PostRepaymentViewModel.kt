@@ -3,10 +3,6 @@ package app.android.ttp.mikazuki.yoshinani.viewModel
 import android.content.Context
 import android.databinding.BaseObservable
 import android.databinding.Bindable
-
-import java.util.ArrayList
-import java.util.Calendar
-
 import app.android.ttp.mikazuki.yoshinani.binding.BindableString
 import app.android.ttp.mikazuki.yoshinani.model.PaymentModel
 import app.android.ttp.mikazuki.yoshinani.model.UserModel
@@ -15,6 +11,7 @@ import app.android.ttp.mikazuki.yoshinani.utils.ModelUtils
 import app.android.ttp.mikazuki.yoshinani.utils.TextUtils
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
+import java.util.*
 
 /**
  * @author haijimakazuki
@@ -25,12 +22,12 @@ class PostRepaymentViewModel(private val mContext: Context, private val mGroupId
     private val compositeSubscription = CompositeSubscription()
 
     val amount = BindableString()
-    private var mDate: Calendar? = null
+    private var mDate: Calendar
     var participantsId = -1
         private set
     private val isPostEnabled: Boolean = false
 
-    var date: Calendar?
+    var date: Calendar
         @Bindable
         get() = mDate
         set(date) {
@@ -70,7 +67,9 @@ class PostRepaymentViewModel(private val mContext: Context, private val mGroupId
         }
 
     init {
-        reset()
+        amount.set(null)
+        mDate = ModelUtils.today
+        participantsId = -1
     }
 
     fun setAllUsers(allUsers: List<UserModel>) {

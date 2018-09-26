@@ -5,15 +5,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
-import android.view.View
 import android.widget.ListView
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-
-import java.util.ArrayList
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
 import app.android.ttp.mikazuki.yoshinani.event.RefreshEvent
@@ -22,7 +14,11 @@ import app.android.ttp.mikazuki.yoshinani.model.GroupUserModel
 import app.android.ttp.mikazuki.yoshinani.view.adapter.list.InvitedGroupListAdapter
 import butterknife.BindView
 import butterknife.ButterKnife
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 import rx.Observable
+import java.util.*
 
 /**
  * @author haijimakazuki
@@ -45,7 +41,7 @@ class InvitedGroupDialogFragment : DialogFragment() {
         val parcelables = arguments!!.getParcelableArrayList<Parcelable>("invitedGroups")
         if (parcelables != null) {
             invitedGroups = Observable.from(parcelables)
-                    .map<Any>(Func1<Parcelable, Any> { Parcels.unwrap(it) })
+                    .map<Any> { Parcels.unwrap(it) }
                     .cast<GroupModel>(GroupModel::class.java)
                     .toList()
                     .toBlocking().single()

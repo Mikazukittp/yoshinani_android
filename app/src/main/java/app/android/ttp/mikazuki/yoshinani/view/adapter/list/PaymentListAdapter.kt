@@ -106,6 +106,7 @@ class PaymentListAdapter(recyclerView: RecyclerView,
 
     @JvmOverloads
     fun addItem(item: PaymentModel?, shouldNotifyChange: Boolean = true) {
+        item ?: return
         if (!mItems!!.contains(item)) {
             mItems.add(item)
             if (shouldNotifyChange) {

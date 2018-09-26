@@ -1,6 +1,7 @@
 package app.android.ttp.mikazuki.yoshinani.view.fragment
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -8,11 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
-
 import app.android.ttp.mikazuki.yoshinani.R
 import app.android.ttp.mikazuki.yoshinani.event.FetchDataEvent
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel
@@ -23,6 +19,9 @@ import app.android.ttp.mikazuki.yoshinani.view.adapter.list.MemberListAdapter
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.parceler.Parcels
 
 class MembersFragment : Fragment() {
 
@@ -84,9 +83,10 @@ class MembersFragment : Fragment() {
         }
         if (event.data != null) {
             val group = event.data
-            mUserModels = group!!.members
-            mUserModels!!.addAll(group.invitedMembers)
-            mListView!!.adapter = MemberListAdapter(activity!!.applicationContext, mUserModels, mGroupModel)
+            mUserModels = group.members?.toMutableList()
+            mUserModels!!.addAll(group.invitedMembers ?: arrayListOf())
+            mListView!!.adapter = MemberListAdapter(activity!!.applicationContext, mUserModels
+                    ?: mutableListOf(), mGroupModel!!)
         }
         if (mSwipeRefresh!!.isRefreshing) {
             mSwipeRefresh!!.isRefreshing = false

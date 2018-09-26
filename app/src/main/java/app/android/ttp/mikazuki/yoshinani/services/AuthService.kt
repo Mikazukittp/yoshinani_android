@@ -2,9 +2,6 @@ package app.android.ttp.mikazuki.yoshinani.services
 
 import android.content.Context
 import android.util.Log
-
-import org.greenrobot.eventbus.EventBus
-
 import app.android.ttp.mikazuki.yoshinani.event.ActivityTransitionEvent
 import app.android.ttp.mikazuki.yoshinani.event.ShowSnackbarEvent
 import app.android.ttp.mikazuki.yoshinani.repository.preference.PreferenceUtil
@@ -13,6 +10,7 @@ import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.ResponseMes
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.User
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.service.RetrofitUserService
 import app.android.ttp.mikazuki.yoshinani.view.activity.MainActivity
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Response
 import rx.Observable
 import rx.Subscription
@@ -26,7 +24,7 @@ class AuthService(context: Context) : Subscription {
 
     private val tag = this.javaClass.getName()
     internal var mAPI: RetrofitUserService
-    private val mContext: Context? = null
+    private val mContext: Context
 
     init {
         this.mContext = context

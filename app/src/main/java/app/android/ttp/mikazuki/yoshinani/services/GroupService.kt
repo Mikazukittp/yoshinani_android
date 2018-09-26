@@ -23,7 +23,7 @@ class GroupService(context: Context) : Subscription {
     private val TAG = this.javaClass.getSimpleName()
     private val eventbus = EventBus.getDefault()
     internal var mAPI: RetrofitGroupService
-    private val mContext: Context? = null
+    private val mContext: Context
 
     init {
         this.mContext = context

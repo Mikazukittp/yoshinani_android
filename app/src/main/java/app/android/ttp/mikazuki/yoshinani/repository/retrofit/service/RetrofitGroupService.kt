@@ -1,18 +1,12 @@
 package app.android.ttp.mikazuki.yoshinani.repository.retrofit.service
 
-import java.util.ArrayList
-
 import app.android.ttp.mikazuki.yoshinani.model.GroupModel
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.Group
 import app.android.ttp.mikazuki.yoshinani.repository.retrofit.entity.GroupUser
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.PATCH
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import rx.Observable
+import java.util.*
 
 /**
  * @author haijimakazuki
@@ -39,7 +33,7 @@ interface RetrofitGroupService {
     fun accept(@Path("group_id") groupId: Int): Observable<Response<GroupUser>>
 
     class RequestDataOnCreate(group: GroupModel) {
-        var group: PostData
+        internal var group: PostData
 
         init {
             this.group = PostData(group.createEntity())
@@ -57,7 +51,7 @@ interface RetrofitGroupService {
     }
 
     class RequestDataOnInvite(userId: Int) {
-        var groupUser: MutableList<PostData>
+        internal var groupUser: MutableList<PostData>
 
         init {
             this.groupUser = ArrayList()
@@ -69,9 +63,9 @@ interface RetrofitGroupService {
 
     companion object {
 
-        val PATH_GROUPS = "groups"
-        val PATH_GROUP_WITH_ID = "groups/{id}"
-        val PATH_GROUP_USER = "groups/{group_id}/users"
-        val PATH_GROUP_USER_ACCEPT = "groups/{group_id}/users/accept"
+        const val PATH_GROUPS = "groups"
+        const val PATH_GROUP_WITH_ID = "groups/{id}"
+        const val PATH_GROUP_USER = "groups/{group_id}/users"
+        const val PATH_GROUP_USER_ACCEPT = "groups/{group_id}/users/accept"
     }
 }
