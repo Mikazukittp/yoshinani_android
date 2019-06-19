@@ -5,6 +5,54 @@
             <item android:drawable="@drawable/shape_btn_line"/>
         </ripple>
     </item>
-    <item android:drawable="@drawable/shape_btn_disabled"
-          android:state_enabled="false"/>
+    <item android:state_enabled="false">
+        <inset
+            android:insetBottom="8dp"
+            android:insetLeft="8dp"
+            android:insetRight="8dp"
+            android:insetTop="8dp">
+
+            <layer-list>
+                <item>
+                    <shape android:shape="rectangle">
+                        <padding
+                            android:bottom="16dp"
+                            android:left="80dp"
+                            android:right="32dp"
+                            android:top="16dp"/>
+                        <corners android:radius="8dp"/>
+                        <solid android:color="#c6c6c6"/>
+                    </shape>
+                </item>
+                <item android:width="1dp"
+                      android:bottom="-16dp"
+                      android:left="-32dp"
+                      android:top="-16dp">
+                    <shape android:shape="rectangle">
+                        <solid android:width="1dp"
+                               android:color="#b5b5b5"/>
+                    </shape>
+                </item>
+                <!-- to draw dark vertical line mask dark rectangle (pre 23) -->
+                <item android:width="1dp"
+                      android:bottom="-16dp"
+                      android:left="-31dp"
+                      android:top="-16dp">
+                    <shape android:shape="rectangle">
+                        <solid android:width="1dp"
+                               android:color="#c6c6c6"/>
+                    </shape>
+                </item>
+                <item
+                    android:width="32dp"
+                    android:height="32dp"
+                    android:bottom="-8dp"
+                    android:left="-72dp"
+                    android:top="-8dp">
+                    <bitmap android:gravity="left"
+                            android:src="@drawable/line_32dp"/>
+                </item>
+            </layer-list>
+        </inset>
+    </item>
 </selector>
